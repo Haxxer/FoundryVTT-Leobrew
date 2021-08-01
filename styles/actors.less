@@ -1,0 +1,335 @@
+@import "variables.less";
+
+@actorNameHeight: 40px;
+
+.leobrew.sheet.actor {
+
+  min-width: 580px;
+  min-height: 650px;
+  max-width: 580px;
+  max-height: 650px;
+
+  /* ----------------------------------------- */
+  /*  Sheet Header                             */
+  /* ----------------------------------------- */
+  .sheet-header {
+    flex: 0 0 120px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+
+    .profile-img {
+      flex: 0 0 110px;
+      height: 110px;
+      margin: 5px;
+    }
+
+    .header-fields {
+      flex: 1;
+      height: 100%;
+      padding:5px;
+
+      ul.resources {
+        flex: 0 0 auto;
+        margin: 0;
+        list-style: none;
+        padding: 3px 2px;
+
+        li.resource {
+          margin: 0 5px 0 0;
+          flex: 0;
+          min-width: 100px;
+
+          .resource-name{
+            text-align:center;
+            flex: 0;
+          }
+
+          .resource-value {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            .modesto();
+
+            &.multiple input {
+                flex: 0 0 33%;
+            }
+
+            input {
+              line-height: 22px;
+              flex: 1 0 auto;
+              font-weight: 400;
+              font-size: 30px;
+              text-align:center;
+            }
+
+            button.level-up{
+              padding:0;
+              font-size: 14px;
+              line-height: 22px;
+
+              &:disabled{
+                color: rgba(16, 16, 16, 0.3);
+              }
+            }
+          }
+
+        }
+
+      }
+
+    }
+
+    // Character Name
+    h1.charname {
+      flex: 0;
+      padding: 0;
+      border-bottom: 0;
+
+      input {
+        background-color: transparent;
+        margin: 0;
+      }
+    }
+  }
+
+  /* ----------------------------------------- */
+  /*  General Styles                           */
+  /* ----------------------------------------- */
+
+  .center-pane{
+
+    padding-right: 5px;
+
+    .resource {
+
+      margin: 2px 0;
+
+      input {
+
+      }
+    }
+  }
+
+  // Box Headers
+  h4.box-title {
+    height: 18px;
+    line-height: 16px;
+    margin: 4px 8px 2px;
+    font-size: 18px;
+    .modesto();
+    color: @colorOlive;
+    border-bottom: 1px solid @colorFaint;
+    white-space: nowrap;
+  }
+
+  /* ----------------------------------------- */
+  /*  Ability Scores                           */
+  /* ----------------------------------------- */
+
+  .ability-scores {
+    flex: 0 0 85px;
+    height: 440px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    .modesto();
+    border: @borderGroove;
+    border-radius: 3px;
+
+    .ability {
+      height: 70px;
+      text-align: center;
+      border-bottom: @borderGroove;
+
+      &:last-child {
+        border-bottom: none;
+        margin-bottom: -3px;
+      }
+
+      input.ability-score {
+        height: 30px;
+        width: 45px;
+        margin: 5px auto;
+        line-height: 32px;
+        font-size: 24px;
+      }
+    }
+  }
+
+  .skills-pane {
+
+    max-height: 439px;
+    max-width: 240px;
+    overflow: hidden;
+    padding-right:5px;
+
+    .skills-list {
+      height: 100%;
+      width: 100%;
+      margin: 0 5px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      border: @borderGroove;
+      align-content: flex-start;
+
+      .skills-list-add{
+        flex: 0 0 100%;
+        padding: 3px 2px;
+      }
+
+      ul {
+        flex: 0 0 100%;
+        margin: 0;
+        list-style: none;
+        padding: 3px 2px;
+
+        li {
+          flex: 0 0 auto;
+          padding: 0 7px 0 2px;
+          margin: 2px 0;
+
+          &:hover .skill-action{
+            opacity:0.5;
+          }
+
+          .skill-action{
+            flex: 0 0 16px;
+            text-align:right;
+            opacity:0.0;
+
+            &:hover{
+              opacity: 1.0;
+            }
+          }
+
+          input {
+            max-width: 24px;
+            text-align:center;
+          }
+
+          label {
+            flex: 1 0 50%;
+            text-align: left;
+            margin-left: 5px;
+            line-height: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  /* ----------------------------------------- */
+  /*  Inventory Lists                          */
+  /* ----------------------------------------- */
+
+  .tab.features,
+  .tab.inventory,
+  .tab.spellbook {
+    overflow-y: hidden;
+  }
+
+  /* Inventory List Filters */
+  .inventory-filters {
+    margin: 0 8px;
+    flex: 0 0 20px;
+    justify-content: flex-end;
+
+    .currency {
+      flex: 0 0 100%;
+      list-style: none;
+      margin: 4px 0 8px;
+      padding: 0;
+      font-size: 12px;
+
+      label {
+        flex: 0;
+        margin-left: 8px;
+        text-align: right;
+        line-height: 20px;
+        color: @colorTan;
+      }
+      input[type="text"] {
+        flex: 0 0 48px;
+        text-align: center;
+        margin-left: 8px;
+        border-bottom: @borderGroove;
+      }
+    }
+  }
+
+  // Inventory item lists
+  .inventory-list, .traits-list {
+    padding: 0 5px;
+    .item-header {
+      width: 100%;
+    }
+    .item:not(.editing) {
+      .item-header .item-name {
+        cursor: pointer;
+        &:hover .item-image {
+          background-image: url("../../icons/svg/d10-grey.svg") !important;
+        }
+        & .item-image:hover {
+          background-image: url("../../icons/dice/d10black.svg") !important;
+        }
+      }
+    }
+
+    // Inventory Header
+    .inventory-header {
+      .item-controls a.item-create {
+        flex: 0 0 100%;
+      }
+    }
+  }
+
+  /* ----------------------------------------- */
+  /*  Item Controls                            */
+  /* ----------------------------------------- */
+
+  .inventory,
+  .spellbook {
+    .item-controls {
+      flex: 0 0 68px;
+      .item-toggle {
+        color: @colorBeige;
+        &.active {
+          color: @colorOlive;
+        }
+        &.fixed {
+          color: @colorCrimson;
+          &:hover {
+            text-shadow: none;
+          }
+        }
+      }
+    }
+  }
+
+  /* ----------------------------------------- */
+  /*  Biography                                */
+  /* ----------------------------------------- */
+
+  .description {
+
+    height:100%;
+
+    .editor, .editor-content {
+      height: 100%;
+    }
+
+    .editor-content {
+      border: @borderGroove;
+      border-radius: 2px;
+      padding: 5px;
+    }
+
+  }
+
+
+}

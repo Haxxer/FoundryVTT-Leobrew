@@ -1,0 +1,285 @@
+@import "variables.less";
+
+@navHeight: 30px;
+
+.leobrew {
+
+  &.custom-dialog {
+
+    &.warning {
+      text-align:center;
+    }
+  }
+
+  button{
+    margin:0;
+  }
+
+  .window-content {
+    height: 100%;
+    padding: 5px;
+    overflow-y: hidden;
+  }
+
+  form {
+    height: 100%;
+  }
+
+  // Item Sheet form fields
+  input[type="text"],
+  input[type="number"],
+  select {
+    height: calc(100% - 2px);
+    border: 1px solid rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0.05);
+    color: @colorDark;
+  }
+
+  .button-select{
+    display:flex;
+    flex-direction: row;
+
+    select {
+      flex: 0;
+    }
+
+    button{
+      flex:1;
+    }
+  }
+
+  // Input Fields
+  input[type="text"],
+  input[type="number"] {
+    &:hover,
+    &:focus {
+      border: 1px solid #111;
+      box-shadow: 0 0 8px red;
+    }
+  }
+
+  // Disabled Fields
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    color: @colorOlive;
+    border: 1px solid transparent !important;
+    outline: none !important;
+    &:hover,
+    &:focus {
+      box-shadow: none !important;
+      border: 1px solid transparent !important;
+      outline: none !important;
+    }
+  }
+
+  // Rollable Titles
+  .editable .rollable:hover {
+    cursor: pointer;
+    color: #000 !important;
+    text-shadow: 0 0 10px red;
+  }
+  .editable h4.rollable:hover,
+  .editable .rollable:hover > h4 {
+    color: #000 !important;
+    text-shadow: 0 0 10px red;
+  }
+
+  /* ----------------------------------------- */
+  /*  Element Styles                           */
+  /* ----------------------------------------- */
+
+  // Separators
+  span.sep {
+    flex: none;
+    margin: 0 1px;
+    display: inline;
+    position: relative;
+    color: @colorTan;
+    font-weight: normal;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  /* ----------------------------------------- */
+  /*  Sheet Navigation                         */
+  /* ----------------------------------------- */
+
+  .sheet-navigation {
+    flex: 0 0 @navHeight;
+    margin-bottom: 5px;
+    .modesto();
+
+    .item {
+      height: 30px;
+      line-height: 32px;
+      margin: 0 24px;
+      border-bottom: 3px solid @colorBeige;
+
+      &.active {
+        border-bottom: 3px solid @colorCrimson;
+      }
+    }
+  }
+
+  /* ----------------------------------------- */
+  /*  Sheet Body                               */
+  /* ----------------------------------------- */
+
+  .sheet-body {
+    flex: 1;
+    overflow: hidden;
+  }
+}
+
+.leobrew.sheet{
+
+  .window-content {
+    overflow-y: hidden;
+    padding: 5px;
+    font-size: 13px;
+    color: @colorDark;
+
+    form {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .tab {
+      height: 100%;
+      overflow-y: auto;
+      align-content: flex-start;
+    }
+  }
+
+  .editor {
+    height: 100%;
+    .tox-toolbar-overlord,
+    .tox-toolbar__primary {
+      background: none;
+    }
+  }
+
+  /* ----------------------------------------- */
+  /*  Items Lists                              */
+  /* ----------------------------------------- */
+
+  .items-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    color: @colorTan;
+
+    // Child lists
+    .item-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    // Item Name
+    .item-name {
+      flex: 2;
+      margin: 0;
+      overflow: hidden;
+      font-size: 13px;
+      text-align: left;
+      align-items: center;
+      h3, h4 {
+        margin: 0;
+        white-space: nowrap;
+        overflow-x: hidden;
+      }
+    }
+
+    // Control Buttons
+    .item-controls {
+      flex: 0 0 60px;
+      justify-content: space-between;
+      a {
+        font-size: 12px;
+        text-align: center;
+      }
+    }
+
+    // Individual Item
+    .item {
+      align-items: center;
+      padding: 3px 2px; // to align with the header border
+      border-bottom: 1px solid @colorFaint;
+      &:last-child { border-bottom: none; }
+
+      .item-name {
+        color: @colorDark;
+        .item-image {
+          flex: 0 0 30px;
+          height: 30px;
+          background-size: 30px;
+          border: none;
+          margin-right: 5px;
+        }
+        .item-quantity{
+          width:24px;
+          text-align:center;
+        }
+      }
+
+      .item-description {
+        display: none;
+        color: black;
+        width: 100%;
+        padding: 5px;
+        margin-top: 5px;
+        border: @borderGroove;
+        border-radius: 2px;
+      }
+
+      &.expanded .item-description{
+        display: block;
+      }
+    }
+
+    // Section Header
+    .items-header {
+      height: 28px;
+      margin: 2px 0;
+      padding: 0;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.05);
+      border: @borderGroove;
+      font-weight: bold;
+      > * {
+        font-size: 12px;
+        text-align: center;
+      }
+      h3 {
+        padding-left: 5px;
+        .modesto();
+        text-align: left;
+        font-size: 16px;
+      }
+    }
+  }
+
+  /* ----------------------------------------- */
+  /*  Active Effects                           */
+  /* ----------------------------------------- */
+
+  .effects .item {
+    .effect-source,
+    .effect-duration,
+    .effect-controls {
+      text-align: center;
+      border-left: 1px solid @colorFaint;
+      border-right: 1px solid @colorFaint;
+      font-size: 12px;
+    }
+    .effect-controls {
+      border: none;
+    }
+  }
+}

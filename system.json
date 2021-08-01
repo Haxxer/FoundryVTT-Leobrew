@@ -1,0 +1,27 @@
+{
+  "name": "leobrew",
+  "title": "Leobrew",
+  "description": "",
+  "version": "0.5.0",
+  "minimumCoreVersion": "0.8.4",
+  "compatibleCoreVersion": "0.8.8",
+  "author": "Wasp",
+  "esmodules": ["leobrew.js"],
+  "styles": ["leobrew.css"],
+  "packs": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    }
+  ],
+  "socket": true,
+  "gridDistance": 5,
+  "gridUnits": "ft",
+  "primaryTokenAttribute": "health",
+  "url": "https://gitlab.com/foundrynet/Leobrew/",
+  "manifest": "https://gitlab.com/foundrynet/Leobrew/raw/0.5.x/system.json",
+  "download": "https://gitlab.com/foundrynet/Leobrew/-/archive/release-050/worldbuilding-release-050.zip",
+  "license": "LICENSE"
+}
