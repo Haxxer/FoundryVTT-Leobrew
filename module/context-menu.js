@@ -24,7 +24,7 @@ export default class ContextMenu extends FormApplication{
 	}
 
 	addMenuItem(label, { data, fa="", callback=false }={}){
-		this.menuItems.push({label, data, fa});
+		this.menuItems.push({label, data, fa, callback});
 		return this;
 	}
 
