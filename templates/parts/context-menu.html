@@ -1,0 +1,7 @@
+<form class="context-menu-content">
+    {{#each menuItems as |menuItem|}}
+    <button class="context-menu-item" data-label="{{ menuItem.label }}">
+        <i class="fa {{ menuItem.fa }}"></i> {{ menuItem.label }}
+    </button>
+    {{/each}}
+</form>

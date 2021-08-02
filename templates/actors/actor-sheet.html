@@ -65,50 +65,39 @@
 
                     <div class="skills-list-add flexcol">
                         <h4 class="box-title">{{ localize "LEOBREW.SkillAddTitle" }}</h4>
-                        <div class="button-select">
-                            <select {{#if allSkillsLearned}} disabled {{/if}}class="global-skill-list">
-                                {{#each globalSkills as |skillGroup skillGroupId|}}
-                                <optgroup value="{{ skillGroupId }}" label="{{ skillGroup.name }}">
-                                    {{#each skillGroup.values as |skill skillId|}}
-                                    <option value="{{ skillId }}">{{ skill.label }}</option>
-                                    {{/each}}
-                                </optgroup>
-                                {{/each}}
-                            </select>
-                            <button {{#if allSkillsLearned}} disabled {{/if}} type="button" class="skill-add">{{ localize "LEOBREW.SkillAdd" }}</button>
+                        <div class="flexrow">
+                            <input type="text" class='skill-name-input' placeholder="Skill name">
+                            <button type="button" class="skill-add">{{ localize "LEOBREW.SkillAdd" }}</button>
                         </div>
                     </div>
 
                     <ul>
                         <h4 class="box-title">Generic</h4>
-                        <li class="skill flexrow" data-group="generic">
+                        <li class="skill flexrow" data-skill="generic">
                             <label class="skill-name rollable">Naked D10 Roll</label>
                         </li>
                     </ul>
 
-                    {{#each data.sortedSkills as |skillGroup skillGroupId|}}
                     <ul>
-                        <h4 class="box-title">{{ skillGroup.label }}</h4>
-                        {{#each skillGroup.subSkills as |skill skillId|}}
-                        <li class="skill flexrow" data-group="{{ skillGroupId }}" data-skill="{{ skillId }}">
-                            <input type="number" value="{{skill.value}}" min="1" max="10" name="data.skills.{{skillGroupId}}.subSkills.{{skillId}}.value">
-                            <label class="skill-name rollable"> - {{ skill.label }}</label>
+                        {{#each data.sortedSkills as |skill skillId|}}
+                        <li class="skill flexrow" data-skill="{{ skillId }}">
+                            <input type="number" value="{{skill.value}}" min="1" max="10" name="data.skills.{{skillId}}.value">
+                            <label class="skill-name rollable {{ skill.cssClass }}"> - {{ skill.label }}</label>
+                            <a class="skill-action skill-magic {{ skill.magicClass }}" title='{{localize "LEOBREW.SkillSetMagic"}}'><i class="fas fa-hat-wizard"></i></a>
                             <a class="skill-action skill-remove" title='{{localize "LEOBREW.SkillRemove"}}'><i class="fas fa-trash"></i></a>
                         </li>
                         {{/each}}
                     </ul>
-                    {{/each}}
                 </div>
 
             </section>
 
             <section class="center-pane flexcol">
-
-                <ul>
-
-
-                </ul>
-
+                <div class="hitboxes">
+                {{#each data.injuries as |injury part|}}
+                    <img class="{{ part }}" src="{{ injury.path }}">
+                {{/each}}
+                </div>
             </section>
 
         </div>

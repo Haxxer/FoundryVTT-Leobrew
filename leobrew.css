@@ -26,6 +26,33 @@
   /*  Sheet Body                               */
   /* ----------------------------------------- */
 }
+.leobrew.context-menu {
+  box-shadow: none;
+}
+.leobrew.context-menu header {
+  display: none;
+}
+.leobrew.context-menu .window-content {
+  padding: 0;
+  background: none;
+}
+.leobrew.context-menu .window-content .context-menu-content {
+  width: 100%;
+  background: #e4e3d9;
+  border-radius: 5px;
+  display: block;
+}
+.leobrew.context-menu .window-content .context-menu-content .context-menu-item {
+  width: 100%;
+  line-height: 14px;
+  font-size: 11px;
+  padding: 2px;
+  border: 0;
+}
+.leobrew.context-menu .window-content .context-menu-content .context-menu-item:hover {
+  background: #a3a3a3;
+  box-shadow: none;
+}
 .leobrew.custom-dialog.warning {
   text-align: center;
 }
@@ -352,8 +379,37 @@
 .leobrew.sheet.actor .center-pane {
   padding-right: 5px;
 }
-.leobrew.sheet.actor .center-pane .resource {
-  margin: 2px 0;
+.leobrew.sheet.actor .center-pane .hitboxes {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+.leobrew.sheet.actor .center-pane .hitboxes img {
+  width: 213px;
+  position: absolute;
+  object-fit: contain;
+  border: 0px;
+}
+.leobrew.sheet.actor .center-pane .hitboxes img.severe-injury {
+  filter: url('#severe-injury');
+}
+.leobrew.sheet.actor .center-pane .hitboxes img.active {
+  filter: drop-shadow(0 0 0.75rem crimson);
+}
+.leobrew.sheet.actor .center-pane .hitboxes .head {
+  z-index: 5;
+}
+.leobrew.sheet.actor .center-pane .hitboxes .arms {
+  z-index: 4;
+}
+.leobrew.sheet.actor .center-pane .hitboxes .legs {
+  z-index: 3;
+}
+.leobrew.sheet.actor .center-pane .hitboxes .guts {
+  z-index: 2;
+}
+.leobrew.sheet.actor .center-pane .hitboxes .chest {
+  z-index: 1;
 }
 .leobrew.sheet.actor h4.box-title {
   height: 18px;
@@ -427,12 +483,21 @@
 .leobrew.sheet.actor .skills-pane .skills-list ul li:hover .skill-action {
   opacity: 0.5;
 }
+.leobrew.sheet.actor .skills-pane .skills-list ul li:hover .skill-action.active {
+  opacity: 1;
+  color: #4b4a44;
+}
 .leobrew.sheet.actor .skills-pane .skills-list ul li .skill-action {
   flex: 0 0 16px;
   text-align: right;
   opacity: 0;
+  color: #b5b3a4;
+}
+.leobrew.sheet.actor .skills-pane .skills-list ul li .skill-action.active {
+  color: #4b4a44;
 }
 .leobrew.sheet.actor .skills-pane .skills-list ul li .skill-action:hover {
+  color: #4b4a44;
   opacity: 1;
 }
 .leobrew.sheet.actor .skills-pane .skills-list ul li input {
@@ -444,6 +509,9 @@
   text-align: left;
   margin-left: 5px;
   line-height: 20px;
+}
+.leobrew.sheet.actor .skills-pane .skills-list ul li label.magic-skill {
+  color: #5d184d;
 }
 .leobrew.sheet.actor .tab.features,
 .leobrew.sheet.actor .tab.inventory,

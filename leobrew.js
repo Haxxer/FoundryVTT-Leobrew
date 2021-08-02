@@ -93,12 +93,12 @@ Hooks.once("setup", function() {
 
 	// Localize CONFIG objects once up-front
 	const toLocalize = [
-		"currencies", "abilities", "abilityAbbreviations", "weapons", "magic", "languages", "skills", "skillList", "resources"
+		"currencies", "abilities", "abilityAbbreviations", "resources"
 	];
 
 	// Exclude some from sorting where the default order matters
 	const noSort = [
-		"abilities", "weapons", "currencies"
+		"abilities", "currencies"
 	];
 
 	// Localize and sort CONFIG objects

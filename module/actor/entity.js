@@ -1,6 +1,7 @@
 import { d10Roll } from "../dice/d10.js";
 import * as Dialogs from "../dialogs.js";
 import {EntitySheetHelper} from "../helper.js";
+import * as lib from "../lib.js";
 
 /**
  * Extend the base Actor document to support attributes and groups with a custom template creation dialog.
@@ -71,7 +72,7 @@ export class LeobrewActor extends Actor {
 		if(rollData.length === 1){
 			return actor.rollGeneric(options);
 		}else if(rollData[1] === "skills"){
-			return actor.rollSkill(rollData[2], rollData[4], options);
+			return actor.rollSkill(rollData[2], options);
 		}else{
 			return actor.rollAbility(rollData[2], options);
 		}
@@ -93,28 +94,38 @@ export class LeobrewActor extends Actor {
 
 	/* -------------------------------------------- */
 
-	async addSkill(group, skill){
-		let key = `data.skills.${group}.subSkills.${skill}.value`;
-		return await this.update({[key]: 1});
+	async addInjury(bodypart, injury){
+		let key = `data.injuries.${bodypart}.value`;
+		return await this.update({[key]: injury});
 	}
 
-	async removeSkill(group, skill, { showDialog = false }={}){
+	/* -------------------------------------------- */
+
+	async addSkill(skill){
+		let key = `data.skills.${lib.slugify(skill)}`;
+		return await this.update({[key]: {
+			value: 1,
+			label: skill,
+			isMagic: false
+		}});
+	}
+
+	async removeSkill(skill, { showDialog = false }={}){
+
 		if(showDialog){
 			if(!await Dialogs.promptWarning({
 				title: "Remove Skill",
-				content: game.i18n.format("LEOBREW.WarningRemoveSkill", { skill: CONFIG.LEOBREW[group][skill] })
+				content: game.i18n.format("LEOBREW.WarningRemoveSkill", { skill: this.data.data.skills[skill].label })
 			})) return;
 		}
 
-
-		let key = `data.skills.${group}.subSkills.-=${skill}`;
+		let key = `data.skills.-=${skill}`;
 		await this.update({[key]: null })
-		if(Object.keys(this.data.data.skills[group].subSkills).length === 0) await this._clearGroup(group);
 	}
 
-	async _clearGroup(group){
-		let key = `data.skills.-=${group}`;
-		await this.update({[key]: null })
+	setSkillIsMagic(skill, isMagic){
+		let key = `data.skills.${skill}.isMagic`;
+		return this.update({[key]: isMagic});
 	}
 
 	/* -------------------------------------------- */
@@ -191,17 +202,13 @@ export class LeobrewActor extends Actor {
 
 	/**
 	 * Roll an Ability Test
-	 * @param {String} groupId    The group ID (e.g. "str")
-	 * @param {String} skillId    The skill ID (e.g. "str")
+	 * @param {String} skillId    The skill ID
 	 * @param {Object} options      Options which configure how ability tests are rolled
 	 * @return {Promise<d10Roll>}      A Promise which resolves to the created Roll instance
 	 */
-	rollSkill(groupId, skillId, options={}) {
+	rollSkill(skillId, options={}) {
 
-		const groupLabel = CONFIG.LEOBREW.skillList[groupId];
-		const skillLabel = CONFIG.LEOBREW[groupId][skillId];
-
-		const skl = this.data.data.skills[groupId].subSkills[skillId];
+		const skl = this.data.data.skills[skillId];
 
 		// Construct parts
 		const parts = ["@value"];
@@ -212,7 +219,7 @@ export class LeobrewActor extends Actor {
 			parts.push(...options.parts);
 		}
 
-		let title = game.i18n.format("LEOBREW.SkillRollTitle", { group: groupLabel, skill: skillLabel })
+		let title = game.i18n.format("LEOBREW.SkillRollTitle", { skill: skl.label })
 
 		if(options?.extraFlavor){
 			title = `${title} (${options?.extraFlavor})`
@@ -227,9 +234,8 @@ export class LeobrewActor extends Actor {
 				speaker: options.speaker || ChatMessage.getSpeaker({actor: this}),
 				"flags.leobrew.roll": {
 					type: "skill",
-					groupId,
 					skillId,
-					rollData: `data.skills.${groupId}.subskills.${skillId}`,
+					rollData: `data.skills.${skillId}`,
 					actorId: this.id
 				}
 			}

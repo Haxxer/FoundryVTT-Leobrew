@@ -22,7 +22,6 @@ export class LeobrewItemSheet extends ItemSheet {
 	/** @inheritdoc */
 	get template() {
 		const path = "systems/leobrew/templates/items";
-		console.log(`${path}/${this.item.data.type}.html`)
 		return `${path}/${this.item.data.type}.html`;
 	}
 

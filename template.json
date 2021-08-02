@@ -40,8 +40,24 @@
       "experience": {
         "value": 0
       },
+      "injuries": {
+        "chest": {
+          "value": ""
+        },
+        "legs": {
+          "value": ""
+        },
+        "guts": {
+          "value": ""
+        },
+        "arms": {
+          "value": ""
+        },
+        "head": {
+          "value": ""
+        }
+      },
       "skills": {},
-      "groups": {},
       "description": {
         "value": ""
       },

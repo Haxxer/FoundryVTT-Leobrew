@@ -1,4 +1,6 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../effects.js";
+import ContextMenu from "../context-menu.js";
+import * as lib from "../lib.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -13,14 +15,39 @@ export class LeobrewActorSheet extends ActorSheet {
 		 * Track the set of item filters which are applied
 		 * @type {Set}
 		 */
-		this._filters = {
-			inventory: new Set(),
-			spellbook: new Set(),
-			features: new Set(),
-			effects: new Set()
+		this._hitboxes = {
+			"head": [[
+				{ x: 90, y: 0 },
+				{ x: 115, y: 38 }
+			]],
+			"arms": [
+				[
+					{ x: 135, y: 42 },
+					{ x: 213, y: 137 }
+				],
+				[
+					{ x: 1, y: 42 },
+					{ x: 79, y: 137 }
+				]
+			],
+			"legs": [[
+				{ x: 71, y: 133 },
+				{ x: 145, y: 280 },
+			]],
+			"guts": [[
+				{ x: 83, y: 84 },
+				{ x: 128, y: 133 },
+			]],
+			"chest": [[
+				{ x: 79, y: 34 },
+				{ x: 135, y: 84 },
+			]]
 		};
 
+		this._lastHitbox = "none";
+
 		this._levelingUp = false;
+		this._addedSkill = false;
 	}
 
 
@@ -78,6 +105,11 @@ export class LeobrewActorSheet extends ActorSheet {
 
 		this._prepareItemCategories(data);
 
+		Object.keys(actorData.data.injuries).forEach(part => {
+			let injury = actorData.data.injuries[part].value;
+			actorData.data.injuries[part].path = `systems/leobrew/images/${part}${injury !== "" ? "_"+injury : ''}.webp`;
+		})
+
 		// Prepare active effects
 		data.effects = prepareActiveEffectCategories(this.actor.effects);
 
@@ -89,57 +121,17 @@ export class LeobrewActorSheet extends ActorSheet {
 
 		if ( actorData.data.skills ) {
 
-			actorData.data.sortedSkills = {}
+			actorData.data.sortedSkills = {};
 
-			let sortedSkills = Object.entries(actorData.data.skills);
-			sortedSkills.sort((a,b) => {
+			let sorted = Object.entries(foundry.utils.duplicate(actorData.data.skills));
+			sorted.sort((a,b) => {
 				return a[0].localeCompare(b[0])
 			})
 
-			for (let [t, type] of sortedSkills) {
-
-				actorData.data.sortedSkills[t] = {
-					label: CONFIG.LEOBREW.skillList[t],
-					subSkills: {}
-				};
-
-				let sorted = Object.entries(foundry.utils.duplicate(type.subSkills));
-				sorted.sort((a,b) => {
-					return a[0].localeCompare(b[0])
-				})
-
-				for (let [s, skill] of sorted) {
-					actorData.data.sortedSkills[t].subSkills[s] = {
-						label: CONFIG.LEOBREW[t][s],
-						value: skill.value
-					}
-				}
-			}
-		}
-
-		data.allSkillsLearned = true;
-		data.globalSkills = {};
-
-		for(let [t, type] of Object.entries(CONFIG.LEOBREW.skillList)){
-
-			let skillList = foundry.utils.duplicate(CONFIG.LEOBREW[t]);
-
-			for(let [s, skill] of Object.entries(skillList)){
-
-				let hasSkill = !!actorData.data.skills[t]?.subSkills?.[s]
-				data.allSkillsLearned = !data.allSkillsLearned ? false : hasSkill;
-				skillList[s] = {
-					label: CONFIG.LEOBREW[t][s]
-				}
-				if(hasSkill) delete skillList[s];
-
-			}
-
-			if(Object.keys(skillList).length > 0) {
-				data.globalSkills[t] = {
-					name: type,
-					values: skillList
-				};
+			for (let [s, skill] of sorted) {
+				skill.magicClass = skill.isMagic ? "active" : "";
+				skill.cssClass = skill.isMagic ? "magic-skill" : "";
+				actorData.data.sortedSkills[s] = skill;
 			}
 		}
 	}
@@ -150,12 +142,12 @@ export class LeobrewActorSheet extends ActorSheet {
 
 		mana.max += actorData.data.abilities.will.value;
 
-		for(let s of Object.keys(CONFIG.LEOBREW.magic)){
+		for(let [s, skl] of Object.entries(actorData.data.skills)){
 
-			let skill = actorData.data.skills?.["magic"]?.subSkills?.[s];
-
-			if(skill && skill.value >= 5){
-				mana.max += skill.value * 3;
+			if(skl?.isMagic) {
+				if (skl.value >= 5) {
+					mana.max += skl.value * 3;
+				}
 			}
 
 		}
@@ -197,8 +189,17 @@ export class LeobrewActorSheet extends ActorSheet {
 
 			html.find('.skill-add').click(this._onAddSkill.bind(this));
 			html.find('.skill-remove').click(this._onRemoveSkill.bind(this));
+			html.find('.skill-magic').click(this._onSetSkillIsMagic.bind(this));
 
-			html.find('.item .item-image').click(event => this._onItemRoll(event));
+			html.find('.skill-name-input').keyup(event => {
+				if (event.keyCode === 13) this._onAddSkill(event);
+			});
+			if(this._addedSkill){
+				this._addedSkill = false;
+				html.find('.skill-name-input').focus();
+			}
+
+			html.find('.item .item-image').click(this._onItemRoll.bind(this));
 			html.find('.item-create').click(this._onItemCreate.bind(this));
 			html.find('.item-delete').click(this._onItemDelete.bind(this));
 			html.find('.item-quantity').change(this._onItemQuantityChange.bind(this));
@@ -208,11 +209,86 @@ export class LeobrewActorSheet extends ActorSheet {
 
 			html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.actor));
 
+			html.find(".hitboxes").mousemove(this._highlightHitBox.bind(this));
+			html.find(".hitboxes").mouseleave(this._highlightHitBox.bind(this));
+			html.find(".hitboxes").contextmenu(this._handleHitboxContextMenu.bind(this));
+
 		}
 
 		super.activateListeners(html);
 
 	}
+
+	/* -------------------------------------------- */
+
+	_getHitboxBodypart(event){
+
+		let hitCoords = {
+			x: event.offsetX,
+			y: event.offsetY
+		}
+
+		let bodypart = false;
+		for(let [hitbox, coordSets] of Object.entries(this._hitboxes)){
+			for(let coordSet of coordSets) {
+				let hitX = hitCoords.x >= coordSet[0].x && hitCoords.x < coordSet[1].x;
+				let hitY = hitCoords.y >= coordSet[0].y && hitCoords.y < coordSet[1].y;
+				if (hitX && hitY) {
+					bodypart = hitbox;
+					break;
+				}
+			}
+		}
+
+		return bodypart;
+
+	}
+
+	_highlightHitBox(event){
+
+		let bodypart = this._getHitboxBodypart(event);
+
+		if(bodypart === this._lastHitbox) return;
+
+		this._lastHitbox = bodypart;
+
+		let hitboxParent = $(event.currentTarget);
+
+		hitboxParent.find(".active").removeClass('active');
+
+		if(!this._lastHitbox) return;
+
+		hitboxParent.find(`.${this._lastHitbox}`).addClass('active');
+
+	}
+
+	async _handleHitboxContextMenu(event){
+
+		let bodypart = this._getHitboxBodypart(event);
+
+		if(!bodypart) return;
+
+		let hitCoords = {
+			x: event.pageX,
+			y: event.pageY
+		}
+
+		new ContextMenu()
+			.setCallback(this._contextMenuCallback.bind(this))
+			.addMenuItem("No Injury", { data: [bodypart, ""] })
+			.addMenuItem("Bruise", { data: [bodypart, "bruise"] })
+			.addMenuItem("Light Injury", { data: [bodypart, "light"] })
+			.addMenuItem("One Severe", { data: [bodypart, "one-severe"] })
+			.addMenuItem("Two Severe", { data: [bodypart, "two-severe"] })
+			.addMenuItem("Critical", { data: [bodypart, "critical"] })
+			.show({ position: { x: hitCoords.x, y: hitCoords.y } })
+
+	}
+
+	_contextMenuCallback(data){
+		this.actor.addInjury(...data);
+	}
+
 
 	/* -------------------------------------------- */
 
@@ -241,10 +317,11 @@ export class LeobrewActorSheet extends ActorSheet {
 	 */
 	async _onAddSkill(event){
 		event.preventDefault();
-		const field = $(event.currentTarget).siblings('.global-skill-list').find("option:selected");
-		let skillGroup = field.closest('optgroup').attr('value');
-		let skill = field.attr('value');
-		await this.actor.addSkill(skillGroup, skill);
+		const field = $(event.currentTarget).parent().find('.skill-name-input');
+		let skill = field.val();
+		field.val("")
+		await this.actor.addSkill(skill);
+		this._addedSkill = true;
 		return this.render();
 	}
 
@@ -258,10 +335,23 @@ export class LeobrewActorSheet extends ActorSheet {
 	async _onRemoveSkill(event){
 		event.preventDefault();
 		const set = event.currentTarget.parentElement.dataset;
-		let skillGroup = set.group;
 		let skill = set.skill;
-		await this.actor.removeSkill(skillGroup, skill, { showDialog: !event.altKey });
+		await this.actor.removeSkill(skill, { showDialog: !event.altKey });
 		return this.render();
+	}
+
+	/* -------------------------------------------- */
+
+	/**
+	 * Handle removing a skill from the sheet
+	 * @param {Event} event   The originating click event
+	 * @private
+	 */
+	async _onSetSkillIsMagic(event){
+		event.preventDefault();
+		const set = event.currentTarget.parentElement.dataset;
+		let skill = this.actor.data.data.skills[set.skill];
+		return this.actor.setSkillIsMagic(set.skill, !skill?.isMagic);
 	}
 
 	/* -------------------------------------------- */
@@ -386,13 +476,12 @@ export class LeobrewActorSheet extends ActorSheet {
 	_onRollSkill(event) {
 		event.preventDefault();
 		let set = event.currentTarget.parentElement.dataset;
-		let group = set.group;
 		let skill = set?.skill ?? "";
 		let options = { event: event };
-		if(group === "generic"){
+		if(skill === "generic"){
 			return this.actor.rollGeneric(options);
 		}
-		return this.actor.rollSkill(group, skill, options);
+		return this.actor.rollSkill(skill, options);
 	}
 	/* -------------------------------------------- */
 

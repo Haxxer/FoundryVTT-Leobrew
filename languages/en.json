@@ -55,7 +55,7 @@
   "LEOBREW.ResourceExperience": "Experience",
 
   "LEOBREW.AbilityRollTitle": "<strong>{ability}</strong> - Ability Check",
-  "LEOBREW.SkillRollTitle": "<strong>{group}</strong>: {skill} - Skill Check",
+  "LEOBREW.SkillRollTitle": "<strong>{skill}</strong> - Skill Check",
   "LEOBREW.GenericSkillRollTitle": "Untrained Skill Check",
 
   "LEOBREW.ChatNaturalConfirm": "Natural confirmed. Your final roll is <strong>{roll}</strong>.",
@@ -73,6 +73,7 @@
   "LEOBREW.SkillAddTitle": "Add new skills:",
   "LEOBREW.SkillAdd": "Add",
   "LEOBREW.SkillRemove": "Remove skill",
+  "LEOBREW.SkillSetMagic": "Toggle magic skill",
 
   "LEOBREW.AbilityStr": "Strength",
   "LEOBREW.AbilityDex": "Dexterity",

@@ -105,12 +105,41 @@
 
     padding-right: 5px;
 
-    .resource {
+    .hitboxes{
+      width: 100%;
+      height: 100%;
+      padding: 10px;
 
-      margin: 2px 0;
+      img {
+        width: 213px;
+        position:absolute;
+        object-fit: contain;
+        border: 0px;
 
-      input {
+        &.severe-injury{
+          filter: url('#severe-injury');
+        }
 
+        &.active{
+          filter: drop-shadow(0 0 0.75rem crimson);
+        }
+
+      }
+
+      .head{
+        z-index: 5;
+      }
+      .arms{
+        z-index: 4;
+      }
+      .legs{
+        z-index: 3;
+      }
+      .guts{
+        z-index: 2;
+      }
+      .chest{
+        z-index: 1;
       }
     }
   }
@@ -195,14 +224,25 @@
 
           &:hover .skill-action{
             opacity:0.5;
+
+            &.active {
+              opacity: 1.0;
+              color: @colorOlive;
+            }
           }
 
           .skill-action{
             flex: 0 0 16px;
             text-align:right;
             opacity:0.0;
+            color: @colorBeige;
+
+            &.active {
+              color: @colorOlive;
+            }
 
             &:hover{
+              color: @colorOlive;
               opacity: 1.0;
             }
           }
@@ -217,6 +257,10 @@
             text-align: left;
             margin-left: 5px;
             line-height: 20px;
+
+            &.magic-skill{
+              color: @colorMagic;
+            }
           }
         }
       }

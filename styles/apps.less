@@ -2,10 +2,44 @@
 
 @navHeight: 30px;
 
+
 .leobrew {
 
-  &.custom-dialog {
+  &.context-menu{
 
+    box-shadow: none;
+
+    header {
+      display: none;
+    }
+
+    .window-content{
+      padding: 0;
+      background: none;
+
+      .context-menu-content{
+        width:100%;
+        background:#e4e3d9;
+        border-radius: 5px;
+        display: block;
+
+        .context-menu-item{
+          width: 100%;
+          line-height: 14px;
+          font-size: 11px;
+          padding: 2px;
+          border: 0;
+
+          &:hover{
+            background: #a3a3a3;
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+
+  &.custom-dialog {
     &.warning {
       text-align:center;
     }

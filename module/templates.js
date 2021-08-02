@@ -8,6 +8,7 @@ export const preloadHandlebarsTemplates = async function() {
 
 		// Shared Partials
 		"systems/leobrew/templates/parts/active-effects.html",
+		"systems/leobrew/templates/parts/context-menu.html",
 		"systems/leobrew/templates/actors/parts/actor-inventory.html",
 		"systems/leobrew/templates/actors/parts/actor-traits.html",
 
