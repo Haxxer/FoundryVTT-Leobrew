@@ -19,6 +19,7 @@
                 </li>
 
                 {{#each data.resources as |resource resourceId|}}
+                {{#if resource.enabled}}
                 <li class="resource" data-ability="{{ resourceId }}">
                     <h4 class="resource-name box-title">
                         {{ resource.label }}
@@ -26,9 +27,10 @@
                     <div class="resource-value multiple">
                         <input type="number" name="data.resources.{{ resourceId }}.value" value="{{ resource.value }}" max="{{ resource.max }}" min="0">
                         <span class="sep">/</span>
-                        <input type="number" disabled value="{{ resource.max }}">
+                        <input type="number" {{#if resource.maxLocked}}disabled{{/if}} {{#unless resource.maxLocked}} name="data.resources.{{ resourceId }}.max" {{/unless}} value="{{ resource.max }}">
                     </div>
                 </li>
+                {{/if}}
                 {{/each}}
             </ul>
         </div>
@@ -66,7 +68,8 @@
                     <div class="skills-list-add flexcol">
                         <h4 class="box-title">{{ localize "LEOBREW.SkillAddTitle" }}</h4>
                         <div class="flexrow">
-                            <input type="text" class='skill-name-input' placeholder="Skill name">
+                            <input type="text" list="skill-autocomplete" class='skill-name-input' placeholder="Skill name">
+                            <datalist id="skill-autocomplete"></datalist>
                             <button type="button" class="skill-add">{{ localize "LEOBREW.SkillAdd" }}</button>
                         </div>
                     </div>
@@ -95,7 +98,7 @@
             <section class="center-pane flexcol">
                 <div class="hitboxes">
                 {{#each data.injuries as |injury part|}}
-                    <img class="{{ part }}" src="{{ injury.path }}">
+                    <img class="{{ part }} {{ injury.value }}" src="{{ injury.path }}">
                 {{/each}}
                 </div>
             </section>

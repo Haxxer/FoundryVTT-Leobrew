@@ -97,7 +97,13 @@ export class LeobrewActorSheet extends ActorSheet {
 
 		for ( let [r, res] of Object.entries(actorData.data.resources)) {
 			res.label = CONFIG.LEOBREW.resources[r];
+			res.enabled = true;
+			res.maxLocked = true;
 		}
+
+		actorData.data.resources.mana.enabled = game.settings.get('leobrew', 'manaEnabled');
+		actorData.data.resources.sanity.enabled = game.settings.get('leobrew', 'sanityEnabled');
+		actorData.data.resources.sanity.maxLocked = false;
 
 		this._prepareSkills(actorData, data);
 
@@ -194,6 +200,11 @@ export class LeobrewActorSheet extends ActorSheet {
 			html.find('.skill-name-input').keyup(event => {
 				if (event.keyCode === 13) this._onAddSkill(event);
 			});
+
+			let skillList = game.settings.get('leobrew', 'skillList').map(entry => `<option>${entry}</option>`);
+
+			html.find('#skill-autocomplete').append(skillList);
+
 			if(this._addedSkill){
 				this._addedSkill = false;
 				html.find('.skill-name-input').focus();

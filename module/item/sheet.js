@@ -10,7 +10,7 @@ export class LeobrewItemSheet extends ItemSheet {
 	static get defaultOptions() {
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ["leobrew", "sheet", "item"],
-			width: 480,
+			width: 630,
 			height: 400,
 			scrollY: [".attributes"],
 			tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "description"}]

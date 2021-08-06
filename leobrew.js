@@ -11,6 +11,8 @@ import { LeobrewActorSheet } from "./module/actor/sheet.js";
 import { LEOBREW } from "./module/config.js";
 import * as chat from "./module/chat.js";
 import { preloadHandlebarsTemplates } from "./module/templates.js";
+import SkillConfigurerFormApplication from "./module/dialoges/skill-dialog.js";
+
 
 /**
  * Init hook.
@@ -47,33 +49,40 @@ Hooks.once("init", async function() {
 	Items.registerSheet("leobrew", LeobrewItemSheet, { makeDefault: true });
 
 	// Register initiative setting.
-	game.settings.register("leobrew", "initFormula", {
-		name: "SETTINGS.SimpleInitFormulaN",
-		hint: "SETTINGS.SimpleInitFormulaL",
+	game.settings.register("leobrew", "skillList", {
 		scope: "world",
-		type: String,
-		default: "1d10",
-		config: true,
-		onChange: formula => _simpleUpdateInit(formula, true)
+		type: Array,
+		default: [],
+		config: false
 	});
 
-	// Retrieve and assign the initiative formula setting.
-	const initFormula = game.settings.get("leobrew", "initFormula");
-	_simpleUpdateInit(initFormula);
+	// Define a settings submenu which handles advanced configuration needs
+	game.settings.registerMenu("leobrew", "skillListMenu", {
+		name: "Custom Leobrew skill list",
+		hint: "This defines a list of skills available by default to players",
+		label: "Configure skill list",
+		icon: "fas fa-bars",
+		type: SkillConfigurerFormApplication,
+		restricted: true
+	});
 
-	/**
-	 * Update the initiative formula.
-	 * @param {string} formula - Dice formula to evaluate.
-	 * @param {boolean} notify - Whether or not to post nofications.
-	 */
-	function _simpleUpdateInit(formula, notify = false) {
-		const isValid = Roll.validate(formula);
-		if ( !isValid ) {
-			if ( notify ) ui.notifications.error(`${game.i18n.localize("LEOBREW.NotifyInitFormulaInvalid")}: ${formula}`);
-			return;
-		}
-		CONFIG.Combat.initiative.formula = formula;
-	}
+	game.settings.register("leobrew", "sanityEnabled", {
+		name: "Use Resource: Sanity",
+		hint: "Enabling this will enable sanity as a resource for characters.",
+		scope: "world",
+		config: true,
+		default: false,
+		type: Boolean
+	});
+
+	game.settings.register("leobrew", "manaEnabled", {
+		name: "Use Resource: Mana",
+		hint: "Enabling this will enable mana as a resource for characters.",
+		scope: "world",
+		config: true,
+		default: true,
+		type: Boolean
+	});
 
 	/**
 	 * Slugify a string.

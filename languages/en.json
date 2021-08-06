@@ -4,6 +4,9 @@
   "LEOBREW.DefineTemplate": "Mark actor as template",
   "LEOBREW.UnsetTemplate": "Unset actor as template",
 
+  "LEOBREW.ConfigureSkillListLabel": "Enter each skill as separated by a new line",
+  "LEOBREW.Confirm": "Confirm",
+
   "LEOBREW.Quantity": "Quantity",
   "LEOBREW.Price": "Price",
   "LEOBREW.Weight": "Weight",
@@ -86,5 +89,6 @@
   "LEOBREW.AbilityConAbbr": "con",
   "LEOBREW.AbilityWillAbbr": "will",
   "LEOBREW.AbilityIntAbbr": "int",
-  "LEOBREW.AbilityAppAbbr": "app",
+  "LEOBREW.AbilityAppAbbr": "app"
+
 }

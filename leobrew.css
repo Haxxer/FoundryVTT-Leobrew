@@ -56,6 +56,12 @@
 .leobrew.custom-dialog.warning {
   text-align: center;
 }
+.leobrew .settings-dialog > * {
+  flex: 0;
+}
+.leobrew .settings-dialog .skills-list-textarea {
+  flex: 1;
+}
 .leobrew button {
   margin: 0;
 }
@@ -282,9 +288,9 @@
   border: none;
 }
 .leobrew.sheet.actor {
-  min-width: 580px;
+  min-width: 630px;
   min-height: 650px;
-  max-width: 580px;
+  max-width: 630px;
   max-height: 650px;
   /* ----------------------------------------- */
   /*  Sheet Header                             */
@@ -452,7 +458,7 @@
 }
 .leobrew.sheet.actor .skills-pane {
   max-height: 439px;
-  max-width: 240px;
+  max-width: 500px;
   overflow: hidden;
   padding-right: 5px;
 }
@@ -468,6 +474,12 @@
 .leobrew.sheet.actor .skills-pane .skills-list .skills-list-add {
   flex: 0 0 100%;
   padding: 3px 2px;
+}
+.leobrew.sheet.actor .skills-pane .skills-list .skills-list-add .skill-name-input {
+  flex: 1;
+}
+.leobrew.sheet.actor .skills-pane .skills-list .skills-list-add .skill-add {
+  flex: 0;
 }
 .leobrew.sheet.actor .skills-pane .skills-list ul {
   flex: 0 0 100%;
