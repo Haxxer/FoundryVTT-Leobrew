@@ -14,6 +14,7 @@ export async function d10Roll({
 	}, messageData)
 
 	if(roll) await roll.toMessage(messageData);
+
 	return roll;
 
 }

@@ -1,6 +1,5 @@
 import {onManageActiveEffect, prepareActiveEffectCategories} from "../effects.js";
 import ContextMenu from "../context-menu.js";
-import * as lib from "../lib.js";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -146,7 +145,7 @@ export class LeobrewActorSheet extends ActorSheet {
 
 		let mana = actorData.data.resources.mana;
 
-		mana.max += actorData.data.abilities.will.value;
+		mana.max += actorData.data.abilities.will.value-1;
 
 		for(let [s, skl] of Object.entries(actorData.data.skills)){
 
@@ -192,6 +191,7 @@ export class LeobrewActorSheet extends ActorSheet {
 
 			html.find('.ability-name').click(this._onRollAbility.bind(this));
 			html.find('.skill-name').click(this._onRollSkill.bind(this));
+			html.find('.skill-name').contextmenu(this._handleSkillContextMenu.bind(this));
 
 			html.find('.skill-add').click(this._onAddSkill.bind(this));
 			html.find('.skill-remove').click(this._onRemoveSkill.bind(this));
@@ -293,6 +293,51 @@ export class LeobrewActorSheet extends ActorSheet {
 			.addMenuItem("Two Severe", { data: [bodypart, "two-severe"] })
 			.addMenuItem("Critical", { data: [bodypart, "critical"] })
 			.show({ position: { x: hitCoords.x, y: hitCoords.y } })
+
+	}
+
+	async _handleSkillContextMenu(event){
+
+		const set = event.currentTarget.parentElement.dataset;
+		let skillName = set.skill;
+
+		if(skillName === 'generic') return;
+
+		let skill = this.actor.data.data.skills[skillName];
+
+		console.log(skill);
+
+		let self = this;
+		new ContextMenu()
+			.setCallback(this._contextMenuCallback.bind(this))
+			.setHeader(skill.label)
+			.addMenuItem("Rename", { fa: "fa-edit", callback: async function(){
+				new Dialog({
+					title: `Rename skill - ${skill.label}`,
+					content: `<input style="margin-bottom: 10px;" type="text" value="${skill.label}" name="skill-name">`,
+					buttons: {
+						one: {
+							label: "Done", callback: async (html) => {
+								let newSkillName = html.find('input[name="skill-name"]').val();
+								let oldValue = skill.value;
+								let oldIsMagic = skill.isMagic;
+								await self.actor.removeSkill(skillName, { showDialog: false });
+								await self.actor.addSkill(newSkillName, { isMagic: oldIsMagic, value: oldValue });
+								self.render();
+							}
+						}
+					}
+				}).render(true);
+			}})
+			.addMenuItem(`Set skill as ${skill.isMagic ? "non-" : ""}magic`, { fa: "fa-hat-wizard", callback: async function(){
+				await self.actor.setSkillIsMagic(skillName, !skill?.isMagic);
+				self.render();
+			}})
+			.addMenuItem("Remove", { fa: "fa-trash", callback: async function(){
+				await self.actor.removeSkill(skillName, { showDialog: true });
+				self.render();
+			}})
+			.show({ position: { x: event.pageX, y: event.pageY } })
 
 	}
 
@@ -399,7 +444,7 @@ export class LeobrewActorSheet extends ActorSheet {
 	 * @param {Event} event   The originating click event
 	 * @private
 	 */
-	_onItemCreate(event) {
+	async _onItemCreate(event) {
 		event.preventDefault();
 		const header = event.currentTarget;
 		const type = header.dataset.type;
@@ -407,7 +452,9 @@ export class LeobrewActorSheet extends ActorSheet {
 			name: game.i18n.format("LEOBREW.ItemNew", { type: type }),
 			type: type
 		};
-		return this.actor.createEmbeddedDocuments("Item", [itemData]);
+		const [ item ] = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+		item.sheet.render(true);
+		return item;
 	}
 
 	/* -------------------------------------------- */
@@ -498,7 +545,6 @@ export class LeobrewActorSheet extends ActorSheet {
 
 	/** @inheritdoc */
 	_getSubmitData(updateData) {
-		let formData = super._getSubmitData(updateData);
-		return formData;
+		return super._getSubmitData(updateData);
 	}
 }

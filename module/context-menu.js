@@ -1,9 +1,10 @@
 export default class ContextMenu extends FormApplication{
 
-
 	constructor({menuItems={}, dialogData={}, options={}}={}) {
 		super(dialogData, options);
 		this.menuItems = [];
+		this.header = "";
+		this.showHeader = false;
 		this.callback = undefined;
 	}
 
@@ -16,6 +17,12 @@ export default class ContextMenu extends FormApplication{
 			classes: ["leobrew", "context-menu"],
 			width: 80,
 		});
+	}
+
+	setHeader(inStr){
+		this.header = inStr;
+		this.showHeader = true;
+		return this;
 	}
 
 	setCallback(callback){
@@ -44,6 +51,8 @@ export default class ContextMenu extends FormApplication{
 	getData() {
 		let data = super.getData();
 		data.menuItems = this.menuItems;
+		data.header = this.header;
+		data.showHeader = this.showHeader;
 		return data;
 	}
 

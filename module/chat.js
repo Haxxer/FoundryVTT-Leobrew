@@ -4,7 +4,11 @@
 export const highlightCriticalSuccessFailure = function(message, html) {
 	if ( !message.isRoll || !message.isContentVisible ) return;
 
-	const { isCritical, isFumble, confirmAction} = _getDiceData(message);
+	let rollData = _getDiceData(message);
+
+	if(!rollData) return;
+
+	const { isCritical, isFumble, confirmAction} = rollData;
 
 	if(isCritical || confirmAction === "confirmed-critical") {
 
@@ -67,11 +71,17 @@ function _getDiceData(message){
  */
 export const automateCriticalSuccessFailure = async function(message, html){
 
+	if(game.user.id !== message.data.user) return;
+
 	const flags = message.getFlag("leobrew", "roll") ?? false;
 
 	if ( !message.isRoll || !message.isContentVisible || !flags) return;
 
-	const { isCritical, isFumble, confirmAction } = _getDiceData(message);
+	let rollData = _getDiceData(message);
+
+	if(!rollData) return;
+
+	const { isCritical, isFumble, confirmAction } = rollData;
 
 	if(isCritical && confirmAction === "confirmed-critical") return _confirmedRoll("LEOBREW.ChatCriticalConfirm", message);
 	if(isFumble && confirmAction === "confirmed-fumble") return _confirmedRoll("LEOBREW.ChatFumbleConfirm", message);
@@ -98,7 +108,7 @@ export const automateCriticalSuccessFailure = async function(message, html){
 
 	const chatData = {
 		user: game.user.id,
-		type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+		type: CONST.CHAT_MESSAGE_TYPES.WHISPER,
 		content: chatCardHtml,
 		flavor: label,
 		whisper: [ game.user.id ],
@@ -114,7 +124,9 @@ export const automateCriticalSuccessFailure = async function(message, html){
 		}
 	};
 
-	ChatMessage.create(chatData);
+	console.log(chatData);
+
+	ChatMessage.create(chatData, {});
 
 }
 

@@ -42,6 +42,12 @@
   border-radius: 5px;
   display: block;
 }
+.leobrew.context-menu .window-content .context-menu-content .content-menu-header {
+  text-align: center;
+  padding: 5px;
+  background: #6f6f6f;
+  color: #e4e3d9;
+}
 .leobrew.context-menu .window-content .context-menu-content .context-menu-item {
   width: 100%;
   line-height: 14px;
@@ -190,14 +196,20 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  overflow-y: auto;
-  scrollbar-width: thin;
   color: #7a7971;
 }
 .leobrew.sheet .items-list .item-list {
+  overflow-y: auto;
+  scrollbar-width: thin;
   list-style: none;
   margin: 0;
   padding: 0;
+}
+.leobrew.sheet .items-list .item-list.item-inventory {
+  max-height: 370px;
+}
+.leobrew.sheet .items-list .item-list.trait-list {
+  max-height: 405px;
 }
 .leobrew.sheet .items-list .item-name {
   flex: 2;

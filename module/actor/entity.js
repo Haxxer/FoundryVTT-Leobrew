@@ -101,12 +101,12 @@ export class LeobrewActor extends Actor {
 
 	/* -------------------------------------------- */
 
-	async addSkill(skill){
+	async addSkill(skill, {isMagic = false, value = 1}={}){
 		let key = `data.skills.${lib.slugify(skill)}`;
 		return await this.update({[key]: {
-			value: 1,
 			label: skill,
-			isMagic: false
+			value: value,
+			isMagic: isMagic
 		}});
 	}
 

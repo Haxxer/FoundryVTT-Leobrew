@@ -5,22 +5,22 @@
       "biography": "",
       "abilities": {
         "str": {
-          "value": 0
+          "value": 1
         },
         "dex": {
-          "value": 0
+          "value": 1
         },
         "con": {
-          "value": 0
+          "value": 1
         },
         "will": {
-          "value": 0
+          "value": 1
         },
         "int": {
-          "value": 0
+          "value": 1
         },
         "app": {
-          "value": 0
+          "value": 1
         }
       },
       "resources": {
@@ -29,8 +29,8 @@
           "value": 0
         },
         "mana": {
-          "max": 5,
-          "value": 5
+          "max": 4,
+          "value": 4
         },
         "sanity": {
           "max": 0,
