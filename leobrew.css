@@ -529,7 +529,7 @@
   text-align: center;
 }
 .leobrew.sheet.actor .skills-pane .skills-list ul li label {
-  flex: 1 0 50%;
+  flex: 0 1 auto;
   text-align: left;
   margin-left: 5px;
   line-height: 20px;

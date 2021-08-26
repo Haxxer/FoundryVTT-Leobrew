@@ -145,16 +145,14 @@ export class LeobrewActorSheet extends ActorSheet {
 
 		let mana = actorData.data.resources.mana;
 
-		mana.max += actorData.data.abilities.will.value-1;
+		mana.max = 5 + actorData.data.abilities.will.value;
 
-		for(let [s, skl] of Object.entries(actorData.data.skills)){
-
-			if(skl?.isMagic) {
-				if (skl.value >= 5) {
-					mana.max += skl.value * 3;
+		for(let skill of Object.values(actorData.data.skills)){
+			if(skill?.isMagic) {
+				if (skill.value >= 5) {
+					mana.max += skill.value * 3;
 				}
 			}
-
 		}
 
 		mana.value = Math.min(mana.value, mana.max);
@@ -192,18 +190,15 @@ export class LeobrewActorSheet extends ActorSheet {
 			html.find('.ability-name').click(this._onRollAbility.bind(this));
 			html.find('.skill-name').click(this._onRollSkill.bind(this));
 			html.find('.skill-name').contextmenu(this._handleSkillContextMenu.bind(this));
-
 			html.find('.skill-add').click(this._onAddSkill.bind(this));
-			html.find('.skill-remove').click(this._onRemoveSkill.bind(this));
-			html.find('.skill-magic').click(this._onSetSkillIsMagic.bind(this));
-
-			html.find('.skill-name-input').keyup(event => {
-				if (event.keyCode === 13) this._onAddSkill(event);
-			});
 
 			let skillList = game.settings.get('leobrew', 'skillList').map(entry => `<option>${entry}</option>`);
 
 			html.find('#skill-autocomplete').append(skillList);
+
+			html.find('.skill-name-input').keyup(event => {
+				if (event.keyCode === 13) this._onAddSkill(event);
+			});
 
 			if(this._addedSkill){
 				this._addedSkill = false;
@@ -304,8 +299,6 @@ export class LeobrewActorSheet extends ActorSheet {
 		if(skillName === 'generic') return;
 
 		let skill = this.actor.data.data.skills[skillName];
-
-		console.log(skill);
 
 		let self = this;
 		new ContextMenu()

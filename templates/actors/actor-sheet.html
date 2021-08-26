@@ -86,7 +86,6 @@
                         <li class="skill flexrow" data-skill="{{ skillId }}">
                             <input type="number" value="{{skill.value}}" min="1" max="10" name="data.skills.{{skillId}}.value">
                             <label class="skill-name rollable {{ skill.cssClass }}"> - {{ skill.label }}</label>
-                            <a class="skill-action skill-remove" title='{{localize "LEOBREW.SkillRemove"}}'><i class="fas fa-trash"></i></a>
                         </li>
                         {{/each}}
                     </ul>

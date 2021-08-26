@@ -83,9 +83,9 @@ export const automateCriticalSuccessFailure = async function(message, html){
 
 	const { isCritical, isFumble, confirmAction } = rollData;
 
-	if(isCritical && confirmAction === "confirmed-critical") return _confirmedRoll("LEOBREW.ChatCriticalConfirm", message);
-	if(isFumble && confirmAction === "confirmed-fumble") return _confirmedRoll("LEOBREW.ChatFumbleConfirm", message);
-	if(!(isCritical || isFumble) && confirmAction === "confirmed-natural") return _confirmedRoll("LEOBREW.ChatNaturalConfirm", message);
+	if(isCritical && confirmAction === "confirmed-critical") return _confirmedCriticalFumble("LEOBREW.ChatCriticalConfirm", message);
+	if(isFumble && confirmAction === "confirmed-fumble") return _confirmedCriticalFumble("LEOBREW.ChatFumbleConfirm", message);
+	if(!(isCritical || isFumble) && confirmAction === "confirmed-natural") return _confirmedNatural("LEOBREW.ChatNaturalConfirm", message);
 	if(!(isCritical || isFumble) && confirmAction === "") return;
 
 	const label = isCritical ? game.i18n.format("LEOBREW.ChatCriticalConfirmText") : game.i18n.format("LEOBREW.ChatFumbleConfirmText");
@@ -103,7 +103,7 @@ export const automateCriticalSuccessFailure = async function(message, html){
 
 	const chatCardHtml = await renderTemplate("systems/leobrew/templates/chat/critical-fumble-card.html", templateData);
 
-	let originalMessageId = flags?.originalMessageId && !isCritical ? flags?.originalMessageId : message.id;
+	let originalMessageId = flags?.originalMessageId && isCritical ? flags?.originalMessageId : message.id;
 	let totalCriticalConfirms = typeof flags?.totalCriticalConfirms === "number" && isCritical ? flags.totalCriticalConfirms + 1 : 1;
 
 	const chatData = {
@@ -124,21 +124,39 @@ export const automateCriticalSuccessFailure = async function(message, html){
 		}
 	};
 
-	console.log(chatData);
-
 	ChatMessage.create(chatData, {});
 
 }
 
-async function _confirmedRoll(localization, message){
+async function _confirmedNatural(localization, message){
 
 	const flags = message.getFlag("leobrew", "roll");
 
-	const actor = game.actors.get(flags.actorId);
+	let originalMessage = flags.confirmAction === "confirm-fumble" ? message : game.messages.get(flags.originalMessageId);
+
+	let { roll } = _getDiceData(originalMessage);
+
+	_sendConfirmedCard(localization, message, roll)
+
+}
+
+async function _confirmedCriticalFumble(localization, message){
+
+	const flags = message.getFlag("leobrew", "roll");
 
 	let originalMessage = game.messages.get(flags.originalMessageId);
 
 	let { roll } = _getDiceData(originalMessage);
+
+	_sendConfirmedCard(localization, message, roll)
+
+}
+
+async function _sendConfirmedCard(localization, message, roll){
+
+	const flags = message.getFlag("leobrew", "roll");
+
+	const actor = game.actors.get(flags.actorId);
 
 	ChatMessage.create({
 		user: game.user.id,
