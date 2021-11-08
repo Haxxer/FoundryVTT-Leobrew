@@ -163,7 +163,7 @@ async function _sendConfirmedCard(localization, message, roll){
 	ChatMessage.create({
 		user: message.data.user,
 		type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-		content: game.i18n.format(localization, { roll: roll.total }),
+		content: game.i18n.format(localization, { roll: roll.total, rounded: lib.roundDownRoll(roll.total) }),
 		speaker: ChatMessage.getSpeaker({actor: actor}),
 		flags: { "core.canPopout": false }
 	});

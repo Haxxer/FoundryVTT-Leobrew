@@ -23,3 +23,7 @@ export function isResponsibleGM() {
     const connectedGMs = game.users.filter(user => user.active && user.isGM);
     return !connectedGMs.some(other => other.data._id < game.user.data._id);
 }
+
+export function roundDownRoll(roll){
+    return Math.floor((roll/3))*3;
+}

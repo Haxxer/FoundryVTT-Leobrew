@@ -61,7 +61,7 @@
   "LEOBREW.SkillRollTitle": "<strong>{skill}</strong> - Skill Check",
   "LEOBREW.GenericSkillRollTitle": "Untrained Skill Check",
 
-  "LEOBREW.ChatNaturalConfirm": "Natural confirmed. Your final roll is <strong>{roll}</strong>.",
+  "LEOBREW.ChatNaturalConfirm": "Natural confirmed. Your final roll is {roll}, which is <strong>{rounded}</strong>.",
 
   "LEOBREW.ChatCriticalConfirmText": "Nice! You rolled a natural 10, roll again to confirm the critical! If you roll 1 to 3, you confirm the critical.",
   "LEOBREW.ChatCriticalConfirmFlavor": "Confirming Critical",
