@@ -29,7 +29,7 @@
                         {{ resource.label }}
                     </h4>
                     <div class="resource-value multiple">
-                        <input type="number" name="data.resources.{{ resourceId }}.value" value="{{ resource.value }}" max="{{ resource.max }}" min="0">
+                        <input type="number" name="data.resources.{{ resourceId }}.value" value="{{ resource.value }}" min="0">
                         <span class="sep">/</span>
                         <input type="number" {{#if resource.maxLocked}}disabled{{/if}} {{#unless resource.maxLocked}} name="data.resources.{{ resourceId }}.max" {{/unless}} value="{{ resource.max }}">
                     </div>

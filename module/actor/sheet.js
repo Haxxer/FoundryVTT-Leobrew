@@ -45,7 +45,6 @@ export class LeobrewActorSheet extends ActorSheet {
 
 		this._lastHitbox = "none";
 
-		this._levelingUp = false;
 		this._addedSkill = false;
 	}
 
@@ -154,8 +153,6 @@ export class LeobrewActorSheet extends ActorSheet {
 				}
 			}
 		}
-
-		mana.value = Math.min(mana.value, mana.max);
 
 	}
 
