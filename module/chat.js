@@ -1,3 +1,5 @@
+import * as lib from "./lib.js";
+
 /**
  * Highlight critical success or failure on d10 rolls
  */
@@ -71,7 +73,7 @@ function _getDiceData(message){
  */
 export const automateCriticalSuccessFailure = async function(message, html){
 
-	if(game.user.id !== message.data.user) return;
+	if(!lib.isResponsibleGM()) return;
 
 	const flags = message.getFlag("leobrew", "roll") ?? false;
 
@@ -103,15 +105,15 @@ export const automateCriticalSuccessFailure = async function(message, html){
 
 	const chatCardHtml = await renderTemplate("systems/leobrew/templates/chat/critical-fumble-card.html", templateData);
 
-	let originalMessageId = flags?.originalMessageId && isCritical ? flags?.originalMessageId : message.id;
+	let originalMessageId = flags?.originalMessageId && !isCritical ? flags?.originalMessageId : message.id;
 	let totalCriticalConfirms = typeof flags?.totalCriticalConfirms === "number" && isCritical ? flags.totalCriticalConfirms + 1 : 1;
 
 	const chatData = {
-		user: game.user.id,
+		user: message.data.user,
 		type: CONST.CHAT_MESSAGE_TYPES.WHISPER,
 		content: chatCardHtml,
 		flavor: label,
-		whisper: [ game.user.id ],
+		whisper: [ message.data.user ],
 		speaker: ChatMessage.getSpeaker({actor: actor}),
 		flags: {
 			"core.canPopout": false,
@@ -159,7 +161,7 @@ async function _sendConfirmedCard(localization, message, roll){
 	const actor = game.actors.get(flags.actorId);
 
 	ChatMessage.create({
-		user: game.user.id,
+		user: message.data.user,
 		type: CONST.CHAT_MESSAGE_TYPES.OTHER,
 		content: game.i18n.format(localization, { roll: roll.total }),
 		speaker: ChatMessage.getSpeaker({actor: actor}),

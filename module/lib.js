@@ -17,3 +17,9 @@ export function slugify(str){
 	return str;
 
 }
+
+export function isResponsibleGM() {
+    if (!game.user.isGM) return false;
+    const connectedGMs = game.users.filter(user => user.active && user.isGM);
+    return !connectedGMs.some(other => other.data._id < game.user.data._id);
+}
