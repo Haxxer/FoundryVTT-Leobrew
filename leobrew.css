@@ -337,6 +337,11 @@
   flex: 0 0 110px;
   height: 110px;
   margin: 5px;
+  justify-content: center;
+  display: flex;
+}
+.leobrew.sheet.actor .sheet-header .profile-img img {
+  height: 100%;
 }
 .leobrew.sheet.actor .sheet-header .header-fields {
   flex: 1;
