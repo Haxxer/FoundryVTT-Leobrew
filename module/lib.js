@@ -25,5 +25,5 @@ export function isResponsibleGM() {
 }
 
 export function roundDownRoll(roll){
-    return Math.floor((roll/3))*3;
+    return Math.max(3, Math.floor((roll/3))*3);
 }

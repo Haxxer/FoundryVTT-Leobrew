@@ -679,6 +679,20 @@
   font-size: 12px;
   line-height: 18px;
 }
+.dice-roll .dice-flex {
+  flex: 1 !important;
+}
+.dice-roll .dice-flex:last-child {
+  padding-left: 5px;
+}
+.dice-roll .dice-flex:first-child {
+  padding-left: 0;
+}
+.dice-roll .fumble-confirmed {
+  padding-top: 5px;
+  color: #b21a1a;
+  font-weight: bold;
+}
 .dice-roll .dice-total.success {
   color: inherit;
   background: #c7d0c0;

@@ -5,9 +5,9 @@ const less = require('gulp-less');
 /*  Compile LESS
 /* ----------------------------------------- */
 
-const D10_LESS = ["styles/*.less"];
+const D10_LESS = ["./styles/*.less"];
 function compileLESS() {
-  return gulp.src("styles/leobrew.less")
+  return gulp.src("./styles/leobrew.less")
     .pipe(less())
     .pipe(gulp.dest("./"))
 }

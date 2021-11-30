@@ -1,21 +1,40 @@
-.dice-roll .dice-total {
-  &.success {
-    color: inherit;
-    background: #c7d0c0;
-    border: 1px solid #006c00;
+.dice-roll{
+
+  & .dice-flex{
+    flex: 1 !important;
+    &:last-child{
+      padding-left:5px;
+    }
+    &:first-child{
+      padding-left:0;
+    }
   }
-  &.failure {
-    color: inherit;
-    background: #ffdddd;
-    border: 1px solid #6e0000;
+
+  & .fumble-confirmed{
+    padding-top:5px;
+    color: #b21a1a;
+    font-weight:bold;
   }
-  &.critical {
-    color: green;
-    box-shadow: inset 0px 0px 5px -1px green;
-  }
-  &.fumble {
-    color: red;
-    box-shadow: inset 0px 0px 5px -1px red;
+
+  & .dice-total {
+    &.success {
+      color: inherit;
+      background: #c7d0c0;
+      border: 1px solid #006c00;
+    }
+    &.failure {
+      color: inherit;
+      background: #ffdddd;
+      border: 1px solid #6e0000;
+    }
+    &.critical {
+      color: green;
+      box-shadow: inset 0px 0px 5px -1px green;
+    }
+    &.fumble {
+      color: red;
+      box-shadow: inset 0px 0px 5px -1px red;
+    }
   }
 }
 
