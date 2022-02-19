@@ -4,6 +4,8 @@
 
 .leobrew.sheet.actor {
 
+  min-width: 245px;
+
   padding:5px;
 
   /* ----------------------------------------- */
@@ -18,6 +20,7 @@
     justify-content: flex-start;
 
     .profile-img {
+      margin-left:5px;
       flex: 0 0 110px;
       height: 110px;
       justify-content: center;
@@ -205,9 +208,14 @@
     }
   }
 
+  .main-container{
+    flex-wrap: nowrap;
+  }
+
   .skills-pane {
     display: inline-flex;
     flex-direction: column;
+    min-width: 225px;
     max-width: 225px;
     overflow: hidden;
     padding: 5px;

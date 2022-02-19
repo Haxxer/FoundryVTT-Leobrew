@@ -1,6 +1,8 @@
 export default async function runMigrations(){
 
-    if(game.world.data._source["systemVersion"] === '0.6.0') {
+    let migrationRan = false
+
+    if(isNewerVersion("0.6.0", game.settings.get("leobrew", "migration-version"))) {
 
         for(const actor of Array.from(game.actors)){
             await actor.update({
@@ -8,9 +10,15 @@ export default async function runMigrations(){
             })
         }
 
-        ui.notifications.info("Leobrew migrated to 0.6.0")
+        await game.settings.set("leobrew", "migration-version", "0.6.0")
+
+        migrationRan = true;
 
     }
 
+    if(migrationRan) ui.notifications.info("Leobrew migrated to latest version!")
 
 }
+
+
+

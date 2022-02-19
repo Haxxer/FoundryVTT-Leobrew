@@ -85,6 +85,13 @@ Hooks.once("init", async function() {
 		type: Boolean
 	});
 
+	game.settings.register("leobrew", "migration-version", {
+		scope: "world",
+		config: false,
+		default: "",
+		type: String
+	});
+
 	/**
 	 * Slugify a string.
 	 */
@@ -125,9 +132,8 @@ Hooks.once("setup", function() {
 })
 
 Hooks.once("ready", () => {
-    game.actors.getName("Test").sheet.render(true)
-    runMigrations();
     if(!game.user.isGM) return;
+    runMigrations();
 })
 
 Hooks.on("renderChatMessage", (app, html, data) => {

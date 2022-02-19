@@ -296,6 +296,7 @@
   border: none;
 }
 .leobrew.sheet.actor {
+  min-width: 245px;
   padding: 5px;
   /* ----------------------------------------- */
   /*  Sheet Header                             */
@@ -326,6 +327,7 @@
   justify-content: flex-start;
 }
 .leobrew.sheet.actor .sheet-header .profile-img {
+  margin-left: 5px;
   flex: 0 0 110px;
   height: 110px;
   justify-content: center;
@@ -474,9 +476,13 @@
   margin: 0 auto 5px auto;
   font-size: 24px;
 }
+.leobrew.sheet.actor .main-container {
+  flex-wrap: nowrap;
+}
 .leobrew.sheet.actor .skills-pane {
   display: inline-flex;
   flex-direction: column;
+  min-width: 225px;
   max-width: 225px;
   overflow: hidden;
   padding: 5px;

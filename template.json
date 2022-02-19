@@ -81,7 +81,7 @@
             "weight": "",
             "price": "1 sp",
             "equipped": false,
-            "skillBonuses": {},
+            "skillBonuses": [],
             "armorBonuses": {}
         },
         "trait": {

@@ -51,7 +51,8 @@ export class LeobrewItem extends Item {
     }
 
     getArmorBonus(bodyPart){
-	    return this.data?.data?.armorBonuses?.[bodyPart] ?? 0;
+	    const bonus = this.data?.data?.armorBonuses?.[bodyPart];
+	    return this.data?.data?.equipped && bonus ? bonus : 0;
     }
 
 	/* -------------------------------------------- */
