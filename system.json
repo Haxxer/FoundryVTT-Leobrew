@@ -2,12 +2,12 @@
   "name": "leobrew",
   "title": "Leobrew",
   "description": "",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "minimumCoreVersion": "0.8.4",
-  "compatibleCoreVersion": "0.8.8",
+  "compatibleCoreVersion": "9",
   "author": "Wasp",
   "esmodules": ["leobrew.js"],
-  "styles": ["leobrew.css"],
+  "styles": ["styles/leobrew.css"],
   "packs": [],
   "languages": [
     {

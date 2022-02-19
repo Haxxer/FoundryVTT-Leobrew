@@ -2,8 +2,13 @@ import { roundDownRoll } from "../lib.js";
 
 export async function d10Roll({
 		parts=[], data={}, // Roll creation
-		title="", flavor, messageData={}
+		title="", flavor, messageData={},
+        situationalBonus = false
 	}={}) {
+
+    if(situationalBonus){
+        parts.push(situationalBonus)
+    }
 
 	const formula = ["1d10"].concat(parts).join(" + ");
 	const roll = new Roll(formula, data);

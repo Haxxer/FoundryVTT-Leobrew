@@ -1,4 +1,4 @@
-export class EntitySheetHelper {
+export class DocumentSheetHelper {
 	/**
 	 * @see ClientDocumentMixin.createDialog
 	 */
@@ -8,7 +8,7 @@ export class EntitySheetHelper {
 		const documentName = this.metadata.name;
 		const folders = game.folders.filter(f => (f.data.type === documentName) && f.displayed);
 		const label = game.i18n.localize(this.metadata.label);
-		const title = game.i18n.format("ENTITY.Create", {entity: label});
+		const title = game.i18n.format("DOCUMENT.Create", {type: label});
 
 		// Identify the template Actor types
 		const collection = game.collections.get(this.documentName);
@@ -22,9 +22,9 @@ export class EntitySheetHelper {
 		}
 
 		// Render the entity creation form
-		const html = await renderTemplate(`templates/sidebar/entity-create.html`, {
-			name: data.name || game.i18n.format("ENTITY.New", {entity: label}),
-			folder: data.folder,
+		const html = await renderTemplate(`templates/sidebar/document-create.html`, {
+            name: data.name || game.i18n.format("DOCUMENT.New", {type: label}),
+            folder: data.folder,
 			folders: folders,
 			hasFolders: folders.length > 1,
 			type: defaultType,

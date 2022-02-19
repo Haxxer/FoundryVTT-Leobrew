@@ -46,6 +46,8 @@ export class LeobrewActorSheet extends ActorSheet {
 		this._lastHitbox = "none";
 
 		this._addedSkill = false;
+
+        this.itemFilter = false;
 	}
 
 
@@ -54,9 +56,8 @@ export class LeobrewActorSheet extends ActorSheet {
 		return foundry.utils.mergeObject(super.defaultOptions, {
 			classes: ["leobrew", "sheet", "actor"],
 			template: "systems/leobrew/templates/actors/actor-sheet.html",
-			width: 570,
+			width: 600,
 			height: 640,
-			resizable: false,
 			tabs: [{navSelector: ".sheet-navigation", contentSelector: ".sheet-body", initial: "attributes"}],
 			scrollY: [".biography", ".items", ".attributes"],
 			dragDrop: [{dragSelector: ".item-list .item", dropSelector: null}]
@@ -90,7 +91,7 @@ export class LeobrewActorSheet extends ActorSheet {
 		data.filters = this._filters;
 
 		for ( let [a, abl] of Object.entries(actorData.data.abilities)) {
-			abl.label = CONFIG.LEOBREW.abilities[a];
+			abl.label = CONFIG.LEOBREW.abilityAbbreviations[a];
 		}
 
 		for ( let [r, res] of Object.entries(actorData.data.resources)) {
@@ -102,6 +103,8 @@ export class LeobrewActorSheet extends ActorSheet {
 		actorData.data.resources.mana.enabled = game.settings.get('leobrew', 'manaEnabled');
 		actorData.data.resources.sanity.enabled = game.settings.get('leobrew', 'sanityEnabled');
 		actorData.data.resources.sanity.maxLocked = false;
+
+		actorData.data.armorBonuses = this.actor.armorBonuses;
 
 		this._prepareSkills(actorData, data);
 
@@ -161,6 +164,12 @@ export class LeobrewActorSheet extends ActorSheet {
 		data.traits = data.items.filter(i => i.type === "trait");
 		data.items = data.items.filter(i => i.type === "item");
 
+        data.items = data.items.filter(item => !this.itemFilter
+            || (this.itemFilter === "Yes" && item.data.equipped)
+            || (this.itemFilter === "No" && !item.data.equipped));
+        data.itemFilterText = this.itemFilter || "All";
+        data.filterItemsByEquippedClass = this.itemFilter === "Yes" ? "active" : "";
+
 		data.items.forEach(item => {
 			const isActive = getProperty(item.data, "equipped");
 			item.toggleClass = isActive ? "active" : "";
@@ -202,6 +211,8 @@ export class LeobrewActorSheet extends ActorSheet {
 				html.find('.skill-name-input').focus();
 			}
 
+			html.find('.sort-equipped').click(this._onSortItems.bind(this));
+
 			html.find('.item .item-image').click(this._onItemRoll.bind(this));
 			html.find('.item-create').click(this._onItemCreate.bind(this));
 			html.find('.item-delete').click(this._onItemDelete.bind(this));
@@ -223,6 +234,20 @@ export class LeobrewActorSheet extends ActorSheet {
 	}
 
 	/* -------------------------------------------- */
+
+    _onSortItems(event){
+
+        if(!this.itemFilter) {
+            this.itemFilter = "Yes"
+        }else if (this.itemFilter === "Yes"){
+            this.itemFilter = "No"
+        }else{
+            this.itemFilter = false;
+        }
+
+        this.render(false);
+
+    }
 
 	_getHitboxBodypart(event){
 
@@ -510,10 +535,25 @@ export class LeobrewActorSheet extends ActorSheet {
 	 * @param {Event} event   The originating click event
 	 * @private
 	 */
-	_onRollAbility(event) {
+	async _onRollAbility(event) {
 		event.preventDefault();
 		let ability = event.currentTarget.parentElement.dataset.ability;
-		return this.actor.rollAbility(ability, { event: event });
+        let options = { event: event };
+        if(event.ctrlKey){
+            await Dialog.prompt({
+                title: "Situational Bonus",
+                label: "Ok",
+                content: `
+                    <p style="text-align: center;">Do you want to add a situational bonus to this roll?</p>
+                    <p><input type="number" value="0"></p>
+                `,
+                callback: (html) => {
+                    options.situationalBonus = html.find('input').val();
+                },
+                options: { width: 200 }
+            })
+        }
+		return this.actor.rollAbility(ability, options);
 	}
 
 	/**
@@ -521,11 +561,25 @@ export class LeobrewActorSheet extends ActorSheet {
 	 * @param {Event} event   The originating click event
 	 * @private
 	 */
-	_onRollSkill(event) {
+	async _onRollSkill(event) {
 		event.preventDefault();
-		let set = event.currentTarget.parentElement.dataset;
-		let skill = set?.skill ?? "";
-		let options = { event: event };
+        let set = event.currentTarget.parentElement.dataset;
+        let skill = set?.skill ?? "";
+        let options = { event: event };
+		if(event.ctrlKey){
+		    await Dialog.prompt({
+                title: "Situational Bonus",
+                label: "Ok",
+                content: `
+                    <p style="text-align: center;">Do you want to add a situational bonus to this roll?</p>
+                    <p><input type="number" value="0"></p>
+                `,
+                callback: (html) => {
+                    options.situationalBonus = html.find('input').val();
+                },
+                options: { width: 200 }
+            })
+        }
 		if(skill === "generic"){
 			return this.actor.rollGeneric(options);
 		}

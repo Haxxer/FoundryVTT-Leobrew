@@ -1,4 +1,4 @@
-import {onManageActiveEffect, prepareActiveEffectCategories} from "../effects.js";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../effects.js";
 
 /**
  * Extend the basic ItemSheet with some very simple modifications
@@ -41,7 +41,16 @@ export class LeobrewItemSheet extends ItemSheet {
 		data.item = itemData;
 		data.data = itemData.data;
 
-		return data;
+        data.skills = Object.fromEntries(Object.entries(this.actor.data.data.skills).map(entry => [entry[0], entry[1].label]));
+        data.armorBonuses = Object.entries(CONFIG.LEOBREW.bodyParts).map(entry => {
+            return {
+                name: entry[0],
+                label: entry[1],
+                value: data.data?.armorBonuses?.[entry[0]] ?? 0
+            }
+        })
+
+        return data;
 	}
 
 	/** @inheritdoc */
@@ -55,11 +64,40 @@ export class LeobrewItemSheet extends ItemSheet {
 				onManageActiveEffect(ev, this.item)
 			});
 
+			html.find(".item-add-skill-bonus").click(this._onAddSkillBonus.bind(this));
+			html.find(".item-remove-skill-bonus").click(this._onRemoveSkillBonus.bind(this));
+			html.find(".item-skill-bonus-name").change(this._updateSkillBonuses.bind(this));
+			html.find(".item-skill-bonus-value").change(this._updateSkillBonuses.bind(this));
+
 		}
 
 		super.activateListeners(html);
 
 	}
+
+    async _onAddSkillBonus(event){
+        event.preventDefault();
+        await this.item.addSkillBonus();
+        return this.render(true);
+    }
+
+    async _onRemoveSkillBonus(event){
+        event.preventDefault();
+        const tr = event.currentTarget.closest("tr");
+        const bonusId = tr.dataset.bonusId;
+        await this.item.removeSkillBonus(bonusId);
+        return this.render(true);
+    }
+
+    async _updateSkillBonuses(event){
+        event.preventDefault();
+        const element = $(event.currentTarget.closest("tr"));
+        const index = Number(element.attr("data-bonus-id"))
+        const name = element.find(".item-skill-bonus-name").val();
+        const value = Number(element.find(".item-skill-bonus-value").val()) || 0;
+        await this.item.updateSkillBonus(index, name, value);
+        return this.render(true);
+    }
 
 	/* -------------------------------------------- */
 

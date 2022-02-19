@@ -5,11 +5,11 @@ const less = require('gulp-less');
 /*  Compile LESS
 /* ----------------------------------------- */
 
-const D10_LESS = ["./styles/*.less"];
+const SIMPLE_LESS = ["styles/*.less"];
 function compileLESS() {
-  return gulp.src("./styles/leobrew.less")
-    .pipe(less())
-    .pipe(gulp.dest("./"))
+    return gulp.src("styles/leobrew.less")
+        .pipe(less())
+        .pipe(gulp.dest("./"))
 }
 const css = gulp.series(compileLESS);
 
@@ -18,7 +18,7 @@ const css = gulp.series(compileLESS);
 /* ----------------------------------------- */
 
 function watchUpdates() {
-  gulp.watch(D10_LESS, css);
+    gulp.watch(SIMPLE_LESS, css);
 }
 
 /* ----------------------------------------- */
@@ -26,7 +26,7 @@ function watchUpdates() {
 /* ----------------------------------------- */
 
 exports.default = gulp.series(
-  gulp.parallel(css),
-  watchUpdates
+    gulp.parallel(css),
+    watchUpdates
 );
 exports.css = css;

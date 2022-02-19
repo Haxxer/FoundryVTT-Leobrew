@@ -1,85 +1,91 @@
 {
-  "Actor": {
-    "types": ["character"],
-    "character": {
-      "biography": "",
-      "abilities": {
-        "str": {
-          "value": 1
-        },
-        "dex": {
-          "value": 1
-        },
-        "con": {
-          "value": 1
-        },
-        "will": {
-          "value": 1
-        },
-        "int": {
-          "value": 1
-        },
-        "app": {
-          "value": 1
+    "Actor": {
+        "types": [
+            "character"
+        ],
+        "character": {
+            "biography": "",
+            "abilities": {
+                "str": {
+                    "value": 1
+                },
+                "dex": {
+                    "value": 1
+                },
+                "con": {
+                    "value": 1
+                },
+                "will": {
+                    "value": 1
+                },
+                "int": {
+                    "value": 1
+                },
+                "app": {
+                    "value": 1
+                }
+            },
+            "resources": {
+                "luck": {
+                    "max": 3,
+                    "value": 0
+                },
+                "mana": {
+                    "max": 4,
+                    "value": 4
+                },
+                "sanity": {
+                    "max": 0,
+                    "value": 0
+                }
+            },
+            "experience": {
+                "value": 0
+            },
+            "injuries": {
+                "chest": {
+                    "value": ""
+                },
+                "legs": {
+                    "value": ""
+                },
+                "guts": {
+                    "value": ""
+                },
+                "arms": {
+                    "value": ""
+                },
+                "head": {
+                    "value": ""
+                }
+            },
+            "skills": {},
+            "description": {
+                "value": ""
+            },
+            "currency": {
+                "gp": 0,
+                "sp": 0,
+                "cp": 0
+            }
         }
-      },
-      "resources": {
-        "luck": {
-          "max": 3,
-          "value": 0
-        },
-        "mana": {
-          "max": 4,
-          "value": 4
-        },
-        "sanity": {
-          "max": 0,
-          "value": 0
-        }
-      },
-      "experience": {
-        "value": 0
-      },
-      "injuries": {
-        "chest": {
-          "value": ""
-        },
-        "legs": {
-          "value": ""
-        },
-        "guts": {
-          "value": ""
-        },
-        "arms": {
-          "value": ""
-        },
-        "head": {
-          "value": ""
-        }
-      },
-      "skills": {},
-      "description": {
-        "value": ""
-      },
-      "currency": {
-        "pp": 0,
-        "gp": 0,
-        "sp": 0,
-        "cp": 0
-      }
-    }
-  },
-  "Item": {
-    "types": ["item", "trait"],
-    "item": {
-      "description": "",
-      "quantity": 1,
-      "weight": "1 kg",
-      "price": "1 gp",
-      "equipped": false
     },
-    "trait": {
-      "description": ""
+    "Item": {
+        "types": [
+            "item",
+            "trait"
+        ],
+        "item": {
+            "description": "",
+            "quantity": 1,
+            "weight": "",
+            "price": "1 sp",
+            "equipped": false,
+            "skillBonuses": {},
+            "armorBonuses": {}
+        },
+        "trait": {
+            "description": ""
+        }
     }
-  }
 }

@@ -16,5 +16,8 @@
   "dependencies": {
     "gulp": "^4.0.2",
     "gulp-less": "^4.0.1"
+  },
+  "devDependencies": {
+    "@league-of-foundry-developers/foundry-vtt-types": "^9.249.4"
   }
 }

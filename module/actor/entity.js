@@ -1,6 +1,6 @@
 import { d10Roll } from "../dice/d10.js";
 import * as Dialogs from "../dialogs.js";
-import {EntitySheetHelper} from "../helper.js";
+import {DocumentSheetHelper} from "../helper.js";
 import * as lib from "../lib.js";
 
 /**
@@ -13,7 +13,7 @@ export class LeobrewActor extends Actor {
 
 	/** @override */
 	static async createDialog(data={}, options={}) {
-		return EntitySheetHelper.createDialog.call(this, data, options);
+		return DocumentSheetHelper.createDialog.call(this, data, options);
 	}
 
 	/* -------------------------------------------- */
@@ -154,6 +154,19 @@ export class LeobrewActor extends Actor {
 		return d10Roll(rollData);
 	}
 
+	get armorBonuses(){
+        const items = this.items.filter(item => item.type === "item");
+        return Object.entries(CONFIG.LEOBREW.bodyParts)
+            .map(entry => {
+                return {
+                    label: entry[1],
+                    value: items.map(item => item.getArmorBonus(entry[0])).reduce((acc, bonus) => {
+                        return acc + bonus;
+                    }, 0)
+                }
+            })
+    }
+
 	/**
 	 * Roll an Ability Test
 	 * Prompt the user for input regarding Advantage/Disadvantage and any Situational Bonus
@@ -167,7 +180,7 @@ export class LeobrewActor extends Actor {
 		const abl = this.data.data.abilities[abilityId];
 
 		// Construct parts
-		const parts = ["@value"];
+		const parts = ["@value+@bonus"];
 		const data = { value: abl.value };
 
 		// Add provided extra roll parts now because they will get clobbered by mergeObject below
@@ -210,9 +223,19 @@ export class LeobrewActor extends Actor {
 
 		const skl = this.data.data.skills[skillId];
 
+        const bonus = Array.from(this.items)
+            .filter(item => item.type === "item" && item.data.data.equipped)
+            .reduce((acc, item) => {
+                return acc + item.bonusForSkill(skillId);
+            }, 0);
+
 		// Construct parts
 		const parts = ["@value"];
-		const data = { value: skl.value };
+		const data = { value: skl.value, bonus: bonus };
+
+		if(bonus) {
+            parts.push("@bonus")
+        }
 
 		// Add provided extra roll parts now because they will get clobbered by mergeObject below
 		if (options.parts?.length > 0) {

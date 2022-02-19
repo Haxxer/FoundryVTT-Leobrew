@@ -12,6 +12,7 @@ import { LEOBREW } from "./module/config.js";
 import * as chat from "./module/chat.js";
 import { preloadHandlebarsTemplates } from "./module/templates.js";
 import SkillConfigurerFormApplication from "./module/dialoges/skill-dialog.js";
+import runMigrations from "./module/migrations.js";
 
 
 /**
@@ -102,7 +103,7 @@ Hooks.once("setup", function() {
 
 	// Localize CONFIG objects once up-front
 	const toLocalize = [
-		"currencies", "abilities", "abilityAbbreviations", "resources"
+		"currencies", "abilities", "abilityAbbreviations", "resources", "bodyParts"
 	];
 
 	// Exclude some from sorting where the default order matters
@@ -123,6 +124,11 @@ Hooks.once("setup", function() {
 	}
 })
 
+Hooks.once("ready", () => {
+    game.actors.getName("Test").sheet.render(true)
+    runMigrations();
+    if(!game.user.isGM) return;
+})
 
 Hooks.on("renderChatMessage", (app, html, data) => {
 	chat.displayChatActionButtons(app, html, data);

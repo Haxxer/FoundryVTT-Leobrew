@@ -1,9 +1,6 @@
 <div class="inventory-filters flexrow">
 
     <ol class="currency flexrow">
-        <h3>
-            {{localize "LEOBREW.Currency"}}
-        </h3>
         {{#each data.currency as |v k|}}
         <label class="denomination {{k}}">{{ lookup ../config.currencies k }}</label>
         <input type="text" name="data.currency.{{k}}" value="{{v}}" data-dtype="Number"/>
@@ -16,14 +13,13 @@
 
     <li class="items-header flexrow">
 
-        <h3 class="item-name flexrow">{{localize "LEOBREW.Items"}}</h3>
+        <h3 class="item-name flexrow">{{localize "LEOBREW.Items"}} </h3>
 
         {{#if owner}}
-        <div class="item-controls flexrow">
-            <a class="item-control item-create" title='{{localize "LEOBREW.ItemCreate"}}' data-type="item">
-            <i class="fas fa-plus"></i> {{localize "LEOBREW.Add"}}
+            <a style="flex:0 1 auto; margin-right:10px;" class="sort-equipped {{filterItemsByEquippedClass}}"><i class="fas fa-shield-alt"></i> {{itemFilterText}}</a>
+            <a style="flex:0 1 auto; margin-right:10px;" class="item-control item-create" title='{{localize "LEOBREW.ItemCreate"}}' data-type="item">
+                <i class="fas fa-plus"></i> {{localize "LEOBREW.Add"}}
             </a>
-        </div>
         {{/if}}
     </li>
 
@@ -39,13 +35,12 @@
                 </div>
                 {{#if ../owner}}
                 <div class="item-controls flexrow">
-
                     <a class="item-control item-toggle {{item.toggleClass}}" title='{{item.toggleTitle}}'><i class="fas fa-shield-alt"></i></a>
                     <a class="item-control item-edit" title='{{localize "LEOBREW.ItemEdit"}}'><i class="fas fa-edit"></i></a>
                     <a class="item-control item-delete" title='{{localize "LEOBREW.ItemDelete"}}'><i class="fas fa-trash"></i></a>
                 </div>
+                {{/if}}
             </div>
-            {{/if}}
             <div class="item-description">
                 {{{ item.data.description }}}
             </div>

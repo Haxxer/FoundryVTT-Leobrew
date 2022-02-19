@@ -4,10 +4,7 @@
 
 .leobrew.sheet.actor {
 
-  min-width: 630px;
-  min-height: 650px;
-  max-width: 630px;
-  max-height: 650px;
+  padding:5px;
 
   /* ----------------------------------------- */
   /*  Sheet Header                             */
@@ -19,12 +16,10 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin-bottom: 10px;
 
     .profile-img {
       flex: 0 0 110px;
       height: 110px;
-      margin: 5px;
       justify-content: center;
       display: flex;
 
@@ -36,7 +31,6 @@
     .header-fields {
       flex: 1;
       height: 100%;
-      padding:5px;
 
       ul.resources {
         flex: 0 0 auto;
@@ -110,11 +104,29 @@
   .center-pane{
 
     padding-right: 5px;
+    overflow: hidden;
+    height: 100%;
+
+    .armor-table{
+      margin-top:50px;
+      flex:0 1 auto;
+      text-align: center;
+
+      table {
+        th {
+          padding:5px;
+        }
+        td{
+          padding:5px;
+        }
+      }
+    }
 
     .hitboxes{
-      width: 100%;
+      width: 225px;
       height: 100%;
-      padding: 10px;
+      left: 10px;
+      position: relative;
 
       img {
         width: 213px;
@@ -167,49 +179,48 @@
   /* ----------------------------------------- */
 
   .ability-scores {
-    flex: 0 0 85px;
-    height: 440px;
+    flex: 0 0 auto;
     list-style: none;
-    margin: 0;
     padding: 0;
+    margin:0;
     .modesto();
-    border: @borderGroove;
-    border-radius: 3px;
 
     .ability {
-      height: 70px;
       text-align: center;
-      border-bottom: @borderGroove;
+      border: @borderGroove;
+      border-radius: 5px;
+      padding: 0 5px;
+      margin-bottom: 5px;
 
-      &:last-child {
-        border-bottom: none;
-        margin-bottom: -3px;
+      &:not(:last-child){
+        margin-right: 5px;
       }
 
       input.ability-score {
         height: 30px;
-        width: 45px;
-        margin: 5px auto;
-        line-height: 32px;
+        width: 100%;
+        margin: 0 auto 5px auto;
         font-size: 24px;
       }
     }
   }
 
   .skills-pane {
-
-    max-height: 439px;
-    max-width: 500px;
+    display: inline-flex;
+    flex-direction: column;
+    max-width: 225px;
     overflow: hidden;
-    padding-right:5px;
+    padding: 5px;
+    margin-right:5px;
+    border: @borderGroove;
+    border-radius: 5px;
 
     .skills-list {
-      height: 100%;
+      flex: 1 0 0;
       width: 100%;
       margin: 0 5px;
       overflow-y: scroll;
       overflow-x: hidden;
-      border: @borderGroove;
       align-content: flex-start;
 
       .skills-list-add{
@@ -285,9 +296,8 @@
   /*  Inventory Lists                          */
   /* ----------------------------------------- */
 
-  .tab.features,
-  .tab.inventory,
-  .tab.spellbook {
+  .tab.traits,
+  .tab.inventory{
     overflow-y: hidden;
   }
 
@@ -312,7 +322,7 @@
         color: @colorTan;
       }
       input[type="text"] {
-        flex: 0 0 48px;
+        flex: 0 0 38px;
         text-align: center;
         margin-left: 8px;
         border-bottom: @borderGroove;
@@ -322,6 +332,9 @@
 
   // Inventory item lists
   .inventory-list, .traits-list {
+    display:inline-flex;
+    flex-direction: column;
+    flex:1;
     padding: 0 5px;
     .item-header {
       width: 100%;
@@ -350,8 +363,7 @@
   /*  Item Controls                            */
   /* ----------------------------------------- */
 
-  .inventory,
-  .spellbook {
+  .inventory {
     .item-controls {
       flex: 0 0 68px;
       .item-toggle {
@@ -367,6 +379,10 @@
         }
       }
     }
+  }
+
+  .active {
+    color: @colorOlive;
   }
 
   /* ----------------------------------------- */

@@ -17,6 +17,43 @@ export class LeobrewItem extends Item {
 
 	}
 
+	addSkillBonus(){
+	    const skills = Object.keys(this.actor.data.data.skills);
+	    if(!skills.length) return;
+	    const currentSkills = this.data.data.skillBonuses;
+        currentSkills.push({
+            name: skills[0],
+            value: 0
+        })
+	    return this.update({ "data.skillBonuses": currentSkills });
+    }
+
+    removeSkillBonus(index){
+        const currentSkills = this.data.data.skillBonuses;
+        currentSkills.splice(index, 1);
+        return this.update({ "data.skillBonuses": currentSkills });
+    }
+
+    updateSkillBonus(index, name, value){
+        const currentSkills = this.data.data.skillBonuses;
+        currentSkills[index].name = name;
+        currentSkills[index].value = value;
+        return this.update({ "data.skillBonuses": currentSkills });
+    }
+
+    bonusForSkill(skillId){
+	    if(this.type !== "item") return 0;
+	    return (this.data.data.skillBonuses ?? [])
+            .filter(bonus => bonus.name === skillId)
+            .reduce((acc, bonus) => {
+                return acc + Number(bonus.value);
+            }, 0)
+    }
+
+    getArmorBonus(bodyPart){
+	    return this.data?.data?.armorBonuses?.[bodyPart] ?? 0;
+    }
+
 	/* -------------------------------------------- */
 
 	/**

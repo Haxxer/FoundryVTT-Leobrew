@@ -1,7 +1,6 @@
 export const LEOBREW = {};
 
 LEOBREW.currencies = {
-	"pp": "LEOBREW.CurrencyPP",
 	"gp": "LEOBREW.CurrencyGP",
 	"sp": "LEOBREW.CurrencySP",
 	"cp": "LEOBREW.CurrencyCP",
@@ -30,4 +29,12 @@ LEOBREW.abilityAbbreviations = {
     "will": "LEOBREW.AbilityWillAbbr",
     "int": "LEOBREW.AbilityIntAbbr",
     "app": "LEOBREW.AbilityAppAbbr"
+};
+
+LEOBREW.bodyParts = {
+    "head": "LEOBREW.BodyPartHead",
+    "chest": "LEOBREW.BodyPartChest",
+    "arms": "LEOBREW.BodyPartArms",
+    "guts": "LEOBREW.BodyPartGuts",
+    "legs": "LEOBREW.BodyPartLegs",
 };

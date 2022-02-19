@@ -152,7 +152,7 @@
 .leobrew .sheet-navigation .item {
   height: 30px;
   line-height: 32px;
-  margin: 0 24px;
+  margin: 0 5px;
   border-bottom: 3px solid #b5b3a4;
 }
 .leobrew .sheet-navigation .item.active {
@@ -197,6 +197,7 @@
   margin: 0;
   padding: 0;
   color: #7a7971;
+  flex: 1;
 }
 .leobrew.sheet .items-list .item-list {
   overflow-y: auto;
@@ -204,12 +205,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
-}
-.leobrew.sheet .items-list .item-list.item-inventory {
-  max-height: 370px;
-}
-.leobrew.sheet .items-list .item-list.trait-list {
-  max-height: 405px;
+  flex: 1 0 0;
 }
 .leobrew.sheet .items-list .item-name {
   flex: 2;
@@ -300,10 +296,7 @@
   border: none;
 }
 .leobrew.sheet.actor {
-  min-width: 630px;
-  min-height: 650px;
-  max-width: 630px;
-  max-height: 650px;
+  padding: 5px;
   /* ----------------------------------------- */
   /*  Sheet Header                             */
   /* ----------------------------------------- */
@@ -331,12 +324,10 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin-bottom: 10px;
 }
 .leobrew.sheet.actor .sheet-header .profile-img {
   flex: 0 0 110px;
   height: 110px;
-  margin: 5px;
   justify-content: center;
   display: flex;
 }
@@ -346,7 +337,6 @@
 .leobrew.sheet.actor .sheet-header .header-fields {
   flex: 1;
   height: 100%;
-  padding: 5px;
 }
 .leobrew.sheet.actor .sheet-header .header-fields ul.resources {
   flex: 0 0 auto;
@@ -401,11 +391,25 @@
 }
 .leobrew.sheet.actor .center-pane {
   padding-right: 5px;
+  overflow: hidden;
+  height: 100%;
+}
+.leobrew.sheet.actor .center-pane .armor-table {
+  margin-top: 50px;
+  flex: 0 1 auto;
+  text-align: center;
+}
+.leobrew.sheet.actor .center-pane .armor-table table th {
+  padding: 5px;
+}
+.leobrew.sheet.actor .center-pane .armor-table table td {
+  padding: 5px;
 }
 .leobrew.sheet.actor .center-pane .hitboxes {
-  width: 100%;
+  width: 225px;
   height: 100%;
-  padding: 10px;
+  left: 10px;
+  position: relative;
 }
 .leobrew.sheet.actor .center-pane .hitboxes img {
   width: 213px;
@@ -446,46 +450,46 @@
   white-space: nowrap;
 }
 .leobrew.sheet.actor .ability-scores {
-  flex: 0 0 85px;
-  height: 440px;
+  flex: 0 0 auto;
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
   font-family: "Modesto Condensed", "Palatino Linotype", serif;
   font-size: 18px;
   font-weight: 700;
-  border: 2px groove #eeede0;
-  border-radius: 3px;
 }
 .leobrew.sheet.actor .ability-scores .ability {
-  height: 70px;
   text-align: center;
-  border-bottom: 2px groove #eeede0;
+  border: 2px groove #eeede0;
+  border-radius: 5px;
+  padding: 0 5px;
+  margin-bottom: 5px;
 }
-.leobrew.sheet.actor .ability-scores .ability:last-child {
-  border-bottom: none;
-  margin-bottom: -3px;
+.leobrew.sheet.actor .ability-scores .ability:not(:last-child) {
+  margin-right: 5px;
 }
 .leobrew.sheet.actor .ability-scores .ability input.ability-score {
   height: 30px;
-  width: 45px;
-  margin: 5px auto;
-  line-height: 32px;
+  width: 100%;
+  margin: 0 auto 5px auto;
   font-size: 24px;
 }
 .leobrew.sheet.actor .skills-pane {
-  max-height: 439px;
-  max-width: 500px;
+  display: inline-flex;
+  flex-direction: column;
+  max-width: 225px;
   overflow: hidden;
-  padding-right: 5px;
+  padding: 5px;
+  margin-right: 5px;
+  border: 2px groove #eeede0;
+  border-radius: 5px;
 }
 .leobrew.sheet.actor .skills-pane .skills-list {
-  height: 100%;
+  flex: 1 0 0;
   width: 100%;
   margin: 0 5px;
   overflow-y: scroll;
   overflow-x: hidden;
-  border: 2px groove #eeede0;
   align-content: flex-start;
 }
 .leobrew.sheet.actor .skills-pane .skills-list .skills-list-add {
@@ -542,9 +546,8 @@
 .leobrew.sheet.actor .skills-pane .skills-list ul li label.magic-skill {
   color: #5d184d;
 }
-.leobrew.sheet.actor .tab.features,
-.leobrew.sheet.actor .tab.inventory,
-.leobrew.sheet.actor .tab.spellbook {
+.leobrew.sheet.actor .tab.traits,
+.leobrew.sheet.actor .tab.inventory {
   overflow-y: hidden;
 }
 .leobrew.sheet.actor .inventory-filters {
@@ -567,13 +570,16 @@
   color: #7a7971;
 }
 .leobrew.sheet.actor .inventory-filters .currency input[type="text"] {
-  flex: 0 0 48px;
+  flex: 0 0 38px;
   text-align: center;
   margin-left: 8px;
   border-bottom: 2px groove #eeede0;
 }
 .leobrew.sheet.actor .inventory-list,
 .leobrew.sheet.actor .traits-list {
+  display: inline-flex;
+  flex-direction: column;
+  flex: 1;
   padding: 0 5px;
 }
 .leobrew.sheet.actor .inventory-list .item-header,
@@ -596,25 +602,23 @@
 .leobrew.sheet.actor .traits-list .inventory-header .item-controls a.item-create {
   flex: 0 0 100%;
 }
-.leobrew.sheet.actor .inventory .item-controls,
-.leobrew.sheet.actor .spellbook .item-controls {
+.leobrew.sheet.actor .inventory .item-controls {
   flex: 0 0 68px;
 }
-.leobrew.sheet.actor .inventory .item-controls .item-toggle,
-.leobrew.sheet.actor .spellbook .item-controls .item-toggle {
+.leobrew.sheet.actor .inventory .item-controls .item-toggle {
   color: #b5b3a4;
 }
-.leobrew.sheet.actor .inventory .item-controls .item-toggle.active,
-.leobrew.sheet.actor .spellbook .item-controls .item-toggle.active {
+.leobrew.sheet.actor .inventory .item-controls .item-toggle.active {
   color: #4b4a44;
 }
-.leobrew.sheet.actor .inventory .item-controls .item-toggle.fixed,
-.leobrew.sheet.actor .spellbook .item-controls .item-toggle.fixed {
+.leobrew.sheet.actor .inventory .item-controls .item-toggle.fixed {
   color: #44191A;
 }
-.leobrew.sheet.actor .inventory .item-controls .item-toggle.fixed:hover,
-.leobrew.sheet.actor .spellbook .item-controls .item-toggle.fixed:hover {
+.leobrew.sheet.actor .inventory .item-controls .item-toggle.fixed:hover {
   text-shadow: none;
+}
+.leobrew.sheet.actor .active {
+  color: #4b4a44;
 }
 .leobrew.sheet.actor .description {
   height: 100%;
@@ -629,9 +633,6 @@
   padding: 5px;
 }
 .leobrew.sheet.item {
-  min-height: 400px;
-  max-height: 95%;
-  min-width: 480px;
   /* ----------------------------------------- */
   /*  Sheet Header                             */
   /* ----------------------------------------- */
@@ -642,12 +643,22 @@
 .leobrew.sheet.item .sheet-header img.profile {
   border: 2px solid #000;
 }
+.leobrew.sheet.item .form-group {
+  flex: 0 1 auto;
+}
 .leobrew.sheet.item .sheet-body {
   overflow: hidden;
 }
 .leobrew.sheet.item .sheet-body .tab {
   padding: 0 5px;
   overflow: hidden auto;
+}
+.leobrew.sheet.item .sheet-body .item-details table span {
+  text-align: center;
+  width: 100%;
+}
+.leobrew.sheet.item .sheet-body .item-details table tbody tr:nth-child(odd) {
+  background-color: #c5c4b9;
 }
 .leobrew.sheet.item .sheet-body .item-properties {
   flex: 0 0 auto;
@@ -751,3 +762,4 @@
   -ms-user-select: text;
   user-select: text;
 }
+/*# sourceMappingURL=leobrew.css.map */
