@@ -212,11 +212,15 @@
     flex-wrap: nowrap;
   }
 
+  .character-information{
+    flex: 2;
+  }
+
   .skills-pane {
+    flex: 1;
     display: inline-flex;
     flex-direction: column;
     min-width: 225px;
-    max-width: 225px;
     overflow: hidden;
     padding: 5px;
     margin-right:5px;
@@ -399,10 +403,12 @@
 
   .description {
 
-    height:100%;
+    width: 100%;
 
-    .editor, .editor-content {
-      height: 100%;
+    display: inline-flex;
+
+    .editor{
+      flex: 1 0 0;
     }
 
     .editor-content {

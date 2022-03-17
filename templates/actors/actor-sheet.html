@@ -85,7 +85,7 @@
 
         </div>
 
-        <div class="flexcol">
+        <div class="flexcol character-information">
 
             {{!-- Sheet Tab Navigation --}}
             <nav class="sheet-navigation tabs" data-group="primary">
@@ -144,7 +144,7 @@
                 </div>
 
                 {{!-- Biography Tab --}}
-                <div class="tab description flexrow" data-group="primary" data-tab="description">
+                <div class="tab description flexcol" data-group="primary" data-tab="description">
                     {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable rollData=rollData}}
                 </div>
 

@@ -479,11 +479,14 @@
 .leobrew.sheet.actor .main-container {
   flex-wrap: nowrap;
 }
+.leobrew.sheet.actor .character-information {
+  flex: 2;
+}
 .leobrew.sheet.actor .skills-pane {
+  flex: 1;
   display: inline-flex;
   flex-direction: column;
   min-width: 225px;
-  max-width: 225px;
   overflow: hidden;
   padding: 5px;
   margin-right: 5px;
@@ -627,11 +630,11 @@
   color: #4b4a44;
 }
 .leobrew.sheet.actor .description {
-  height: 100%;
+  width: 100%;
+  display: inline-flex;
 }
-.leobrew.sheet.actor .description .editor,
-.leobrew.sheet.actor .description .editor-content {
-  height: 100%;
+.leobrew.sheet.actor .description .editor {
+  flex: 1 0 0;
 }
 .leobrew.sheet.actor .description .editor-content {
   border: 2px groove #eeede0;
