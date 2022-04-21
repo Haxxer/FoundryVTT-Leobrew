@@ -156,11 +156,11 @@ Hooks.on("getActorDirectoryEntryContext", (html, options) => {
 		name: game.i18n.localize("LEOBREW.DefineTemplate"),
 		icon: '<i class="fas fa-stamp"></i>',
 		condition: li => {
-			const actor = game.actors.get(li.data("entityId"));
+			const actor = game.actors.get(li.data("documentId"));
 			return !actor.getFlag("leobrew", "isTemplate");
 		},
 		callback: li => {
-			const actor = game.actors.get(li.data("entityId"));
+			const actor = game.actors.get(li.data("documentId"));
 			actor.setFlag("leobrew", "isTemplate", true);
 		}
 	});
@@ -170,11 +170,11 @@ Hooks.on("getActorDirectoryEntryContext", (html, options) => {
 		name: game.i18n.localize("LEOBREW.UnsetTemplate"),
 		icon: '<i class="fas fa-times"></i>',
 		condition: li => {
-			const actor = game.actors.get(li.data("entityId"));
+			const actor = game.actors.get(li.data("documentId"));
 			return actor.getFlag("leobrew", "isTemplate");
 		},
 		callback: li => {
-			const actor = game.actors.get(li.data("entityId"));
+			const actor = game.actors.get(li.data("documentId"));
 			actor.setFlag("leobrew", "isTemplate", false);
 		}
 	});
@@ -189,11 +189,11 @@ Hooks.on("getItemDirectoryEntryContext", (html, options) => {
 		name: game.i18n.localize("LEOBREW.DefineTemplate"),
 		icon: '<i class="fas fa-stamp"></i>',
 		condition: li => {
-			const item = game.items.get(li.data("entityId"));
+			const item = game.items.get(li.data("documentId"));
 			return !item.getFlag("leobrew", "isTemplate");
 		},
 		callback: li => {
-			const item = game.items.get(li.data("entityId"));
+			const item = game.items.get(li.data("documentId"));
 			item.setFlag("leobrew", "isTemplate", true);
 		}
 	});
@@ -203,11 +203,11 @@ Hooks.on("getItemDirectoryEntryContext", (html, options) => {
 		name: game.i18n.localize("LEOBREW.UnsetTemplate"),
 		icon: '<i class="fas fa-times"></i>',
 		condition: li => {
-			const item = game.items.get(li.data("entityId"));
+			const item = game.items.get(li.data("documentId"));
 			return item.getFlag("leobrew", "isTemplate");
 		},
 		callback: li => {
-			const item = game.items.get(li.data("entityId"));
+			const item = game.items.get(li.data("documentId"));
 			item.setFlag("leobrew", "isTemplate", false);
 		}
 	});
