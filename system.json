@@ -2,26 +2,24 @@
   "name": "leobrew",
   "title": "Leobrew",
   "description": "",
-  "version": "0.6.0",
+  "version": "",
   "minimumCoreVersion": "0.8.4",
   "compatibleCoreVersion": "9",
   "author": "Wasp",
-  "esmodules": ["leobrew.js"],
-  "styles": ["styles/leobrew.css"],
-  "packs": [],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "languages/en.json"
-    }
+  "esmodules": [
+    "./dist/leobrew.js"
   ],
+  "styles": [
+    "./dist/leobrew.css"
+  ],
+  "packs": [],
+  "languages": [],
   "socket": true,
   "gridDistance": 5,
   "gridUnits": "ft",
-  "primaryTokenAttribute": "health",
-  "url": "https://gitlab.com/foundrynet/Leobrew/",
-  "manifest": "https://gitlab.com/foundrynet/Leobrew/raw/0.5.x/system.json",
-  "download": "https://gitlab.com/foundrynet/Leobrew/-/archive/release-050/worldbuilding-release-050.zip",
+  "primaryTokenAttribute": "",
+  "url": "https://github.com/Haxxer/FoundryVTT-Leobrew",
+  "manifest": "",
+  "download": "",
   "license": "LICENSE"
 }
