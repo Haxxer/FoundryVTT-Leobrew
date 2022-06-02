@@ -18,6 +18,12 @@ export default class LeobrewActorSheet extends SvelteApplication {
             ...options
         }, dialogData);
 
+        this.actor = actor;
+
+    }
+
+    get title(){
+        return this.actor.name;
     }
 
     static get defaultOptions() {
@@ -28,4 +34,25 @@ export default class LeobrewActorSheet extends SvelteApplication {
         })
     }
 
+    /** @inheritdoc */
+    _getHeaderButtons() {
+        let buttons = super._getHeaderButtons();
+        const canConfigure = game.user.isGM || (this.actor.isOwner && game.user.can("TOKEN_CONFIGURE"));
+        if (this.options.editable && canConfigure) {
+            buttons.splice(0, 0, {
+                label: this.token ? "Token" : "TOKEN.TitlePrototype",
+                class: "configure-token",
+                icon: "fas fa-user-circle",
+                onclick: ev => this._onConfigureToken(ev)
+            });
+        }
+        return buttons
+    }
+
+    _onConfigureToken() {
+        new CONFIG.Token.prototypeSheetClass(this.token ?? this.actor, {
+            left: Math.max(this.position.left - 560 - 10, 10),
+            top: this.position.top
+        }).render(true);
+    }
 }
