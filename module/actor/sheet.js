@@ -98,6 +98,7 @@ export class LeobrewActorSheet extends ActorSheet {
 			res.label = CONFIG.LEOBREW.resources[r];
 			res.enabled = true;
 			res.maxLocked = true;
+            res.max += res.bonus;
 		}
 
 		actorData.data.resources.mana.enabled = game.settings.get('leobrew', 'manaEnabled');
@@ -106,7 +107,7 @@ export class LeobrewActorSheet extends ActorSheet {
 
 		actorData.data.armorBonuses = this.actor.armorBonuses;
 
-		this._prepareSkills(actorData, data);
+		this._prepareSkills(actorData);
 
 		this._prepareMana(actorData);
 
@@ -124,7 +125,7 @@ export class LeobrewActorSheet extends ActorSheet {
 
 	}
 
-	_prepareSkills(actorData, data){
+	_prepareSkills(actorData){
 
 		if ( actorData.data.skills ) {
 
@@ -145,17 +146,14 @@ export class LeobrewActorSheet extends ActorSheet {
 
 	_prepareMana(actorData){
 
-		let mana = actorData.data.resources.mana;
-
-		mana.max = 5 + actorData.data.abilities.will.value;
-
-		for(let skill of Object.values(actorData.data.skills)){
-			if(skill?.isMagic) {
-				if (skill.value >= 5) {
-					mana.max += skill.value * 3;
-				}
-			}
-		}
+		actorData.data.resources.mana.max = 5;
+		actorData.data.resources.mana.max += actorData.data.abilities.will.value
+        actorData.data.resources.mana.max += actorData.data.resources.mana.bonus ?? 0;
+        actorData.data.resources.mana.max += Object.values(actorData.data.skills).reduce((max, skill) => {
+            return skill?.isMagic && skill.value >= 5 && (skill.value * 3) > max
+                ? skill.value * 3
+                : max;
+        }, 0);
 
 	}
 

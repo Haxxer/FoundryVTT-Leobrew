@@ -404,17 +404,31 @@
   .description {
 
     width: 100%;
-
-    display: inline-flex;
+    display: none;
 
     .editor{
       flex: 1 0 0;
+    }
+
+    &.active{
+      display: inline-flex;
     }
 
     .editor-content {
       border: @borderGroove;
       border-radius: 2px;
       padding: 5px;
+    }
+
+  }
+
+  .effects {
+
+    width: 100%;
+    display: none;
+
+    &.active{
+      display: inline-flex;
     }
 
   }

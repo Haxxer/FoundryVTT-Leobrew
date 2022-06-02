@@ -28,15 +28,18 @@
             "resources": {
                 "luck": {
                     "max": 3,
-                    "value": 0
+                    "value": 0,
+                    "bonus": 0
                 },
                 "mana": {
                     "max": 4,
-                    "value": 4
+                    "value": 4,
+                    "bonus": 0
                 },
                 "sanity": {
                     "max": 0,
-                    "value": 0
+                    "value": 0,
+                    "bonus": 0
                 }
             },
             "experience": {

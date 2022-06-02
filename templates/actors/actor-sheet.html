@@ -144,13 +144,12 @@
                 </div>
 
                 {{!-- Biography Tab --}}
-                <div class="tab description flexcol" data-group="primary" data-tab="description">
+                <div class="tab description flexrow" data-group="primary" data-tab="description">
                     {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable rollData=rollData}}
                 </div>
 
-
                 {{!-- Effects Tab --}}
-                <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+                <div class="tab effects flexrow" data-group="primary" data-tab="effects">
                     {{> "systems/leobrew/templates/parts/active-effects.html"}}
                 </div>
 

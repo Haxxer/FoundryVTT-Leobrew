@@ -1,3 +1,16 @@
+<div class="inventory-filters flexrow">
+
+    <ol class="currency flexrow">
+        {{#each data.resources as |resource resourceId|}}
+        {{#if resource.enabled}}
+        <label class="denomination">{{ resource.label }}</label>
+        <input type="text" name="data.resources.{{ resourceId }}.bonus" value="{{ resource.bonus }}" min="0" data-dtype="Number"/>
+        {{/if}}
+        {{/each}}
+    </ol>
+
+</div>
+
 <ol class="items-list traits-list">
 
     <li class="items-header flexrow">
