@@ -1,13 +1,16 @@
 {
-  "name": "leobrew",
+  "id": "leobrew",
   "title": "Leobrew",
   "description": "",
   "version": "0.6.0",
-  "minimumCoreVersion": "0.8.4",
-  "compatibleCoreVersion": "9",
+  "minimumCoreVersion": "10",
+  "compatibility": {
+    "minimum": "10",
+    "verified": "10"
+  },
   "author": "Wasp",
-  "esmodules": ["leobrew.js"],
-  "styles": ["styles/leobrew.css"],
+  "esmodules": ["system.js"],
+  "styles": ["style.css"],
   "packs": [],
   "languages": [
     {

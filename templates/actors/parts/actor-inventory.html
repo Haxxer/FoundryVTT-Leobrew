@@ -1,0 +1,51 @@
+<div class="inventory-filters flexrow">
+
+    <ol class="currency flexrow">
+        {{#each data.currency as |v k|}}
+        <label class="denomination {{k}}">{{ lookup ../config.currencies k }}</label>
+        <input type="text" name="data.currency.{{k}}" value="{{v}}" data-dtype="Number"/>
+        {{/each}}
+    </ol>
+
+</div>
+
+<ol class="items-list inventory-list">
+
+    <li class="items-header flexrow">
+
+        <h3 class="item-name flexrow">{{localize "LEOBREW.Items"}} </h3>
+
+        {{#if owner}}
+            <a style="flex:0 1 auto; margin-right:10px;" class="sort-equipped {{filterItemsByEquippedClass}}"><i class="fas fa-shield-alt"></i> {{itemFilterText}}</a>
+            <a style="flex:0 1 auto; margin-right:10px;" class="item-control item-create" title='{{localize "LEOBREW.ItemCreate"}}' data-type="item">
+                <i class="fas fa-plus"></i> {{localize "LEOBREW.Add"}}
+            </a>
+        {{/if}}
+    </li>
+
+    <ol class="item-list item-inventory">
+        {{#each items as |item iid|}}
+        <li class="item flexcol {{section.css}}" data-item-id="{{item._id}}">
+            <div class="item-header flexrow">
+                <div class="item-name flexrow">
+                    <div class="item-image" style="background-image: url('{{item.img}}')"></div>
+                    <h4>
+                        <span class="item-expand rollable">{{ item.name }}</span> (<input class="item-quantity" min="0" type="number" value="{{item.data.quantity}}">)
+                    </h4>
+                </div>
+                {{#if ../owner}}
+                <div class="item-controls flexrow">
+                    <a class="item-control item-toggle {{item.toggleClass}}" title='{{item.toggleTitle}}'><i class="fas fa-shield-alt"></i></a>
+                    <a class="item-control item-edit" title='{{localize "LEOBREW.ItemEdit"}}'><i class="fas fa-edit"></i></a>
+                    <a class="item-control item-delete" title='{{localize "LEOBREW.ItemDelete"}}'><i class="fas fa-trash"></i></a>
+                </div>
+                {{/if}}
+            </div>
+            <div class="item-description">
+                {{{ item.data.description }}}
+            </div>
+        </li>
+        {{/each}}
+    </ol>
+
+</ol>

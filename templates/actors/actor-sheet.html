@@ -1,0 +1,161 @@
+<form class="flexcol {{cssClass}}" autocomplete="off">
+
+    {{!-- Sheet Header --}}
+    <header class="sheet-header">
+
+        <div class="profile-img">
+            <img src="{{actor.img}}" data-edit="img" title="{{actor.name}}" />
+        </div>
+
+        <div class="header-fields flexcol">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{actor.name}}" placeholder="Name" />
+            </h1>
+            <ul class="flexrow resources">
+
+                <li class="resource">
+                    <h4 class="resource-name box-title">
+                        {{ localize "LEOBREW.ResourceExperience" }}
+                    </h4>
+                    <div class="resource-value">
+                        <input type="number" name="data.experience.value" value="{{data.experience.value}}" min="0">
+                    </div>
+                </li>
+
+                {{#each data.resources as |resource resourceId|}}
+                {{#if resource.enabled}}
+                <li class="resource" data-ability="{{ resourceId }}">
+                    <h4 class="resource-name box-title">
+                        {{ resource.label }}
+                    </h4>
+                    <div class="resource-value multiple">
+                        <input type="number" name="data.resources.{{ resourceId }}.value" value="{{ resource.value }}" min="0">
+                        <span class="sep">/</span>
+                        <input type="number" {{#if resource.maxLocked}}disabled{{/if}} {{#unless resource.maxLocked}} name="data.resources.{{ resourceId }}.max" {{/unless}} value="{{ resource.max }}">
+                    </div>
+                </li>
+                {{/if}}
+                {{/each}}
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Ability Scores --}}
+    <ul class="ability-scores flexrow">
+        {{#each data.abilities as |ability id|}}
+        <li class="ability" data-ability="{{id}}">
+            <h4 class="ability-name box-title rollable">{{ ability.label }}</h4>
+            <input class="ability-score" name="data.abilities.{{id}}.value" type="number" value="{{ability.value}}" placeholder="1"/>
+        </li>
+        {{/each}}
+    </ul>
+
+    <div class="main-container flexrow">
+
+        <div class="skills-pane">
+
+            {{!-- Skills --}}
+            <div class="flexrow skills-list">
+
+                <div class="skills-list-add flexcol">
+                    <h4 class="box-title">{{ localize "LEOBREW.SkillAddTitle" }}</h4>
+                    <div class="flexrow">
+                        <input type="text" list="skill-autocomplete" class='skill-name-input' placeholder="Skill name">
+                        <datalist id="skill-autocomplete"></datalist>
+                        <button type="button" class="skill-add">{{ localize "LEOBREW.SkillAdd" }}</button>
+                    </div>
+                </div>
+
+                <ul>
+                    <h4 class="box-title">Generic</h4>
+                    <li class="skill flexrow" data-skill="generic">
+                        <label class="skill-name rollable">Naked D10 Roll</label>
+                    </li>
+                </ul>
+
+                <ul>
+                    {{#each data.sortedSkills as |skill skillId|}}
+                    <li class="skill flexrow" data-skill="{{ skillId }}">
+                        <input type="number" value="{{skill.value}}" min="1" max="10" name="data.skills.{{skillId}}.value">
+                        <label class="skill-name rollable {{ skill.cssClass }}"> - {{ skill.label }}</label>
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="flexcol character-information">
+
+            {{!-- Sheet Tab Navigation --}}
+            <nav class="sheet-navigation tabs" data-group="primary">
+                <a class="item" data-tab="inventory">Inventory</a>
+                <a class="item" data-tab="traits">Traits</a>
+                <a class="item" data-tab="injuries">Injuries</a>
+                <a class="item" data-tab="description">Biography</a>
+                <a class="item" data-tab="effects">Effects</a>
+            </nav>
+
+            {{!-- Sheet Body --}}
+            <section class="sheet-body">
+
+                {{!-- Owned Items Tab --}}
+                <div class="tab inventory flexcol" data-group="primary" data-tab="inventory">
+                    {{> "systems/leobrew/templates/actors/parts/actor-inventory.html"}}
+                </div>
+
+                {{!-- Traits Tab --}}
+                <div class="tab traits flexcol" data-group="primary" data-tab="traits">
+                    {{> "systems/leobrew/templates/actors/parts/actor-traits.html"}}
+                </div>
+
+                {{!-- Injuries Tab --}}
+                <div class="tab injuries flexrow" data-group="primary" data-tab="injuries">
+
+                    <section class="center-pane flexrow">
+
+                        <div class="armor-table">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Part</th>
+                                    <th>Def</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each data.armorBonuses as |bodyPart id|}}
+                                <tr>
+                                    <td>{{bodyPart.label}}</td>
+                                    <td>{{bodyPart.value}}</td>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="hitboxes">
+                            {{#each data.injuries as |injury part|}}
+                            <img class="{{ part }} {{ injury.value }}" src="{{ injury.path }}">
+                            {{/each}}
+                        </div>
+
+                    </section>
+
+                </div>
+
+                {{!-- Biography Tab --}}
+                <div class="tab description flexrow" data-group="primary" data-tab="description">
+                    {{editor content=data.description.value target="data.description.value" button=true owner=owner editable=editable rollData=rollData}}
+                </div>
+
+                {{!-- Effects Tab --}}
+                <div class="tab effects flexrow" data-group="primary" data-tab="effects">
+                    {{> "systems/leobrew/templates/parts/active-effects.html"}}
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+</form>

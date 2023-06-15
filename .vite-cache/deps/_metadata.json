@@ -1,0 +1,101 @@
+{
+  "hash": "5b97c933",
+  "browserHash": "4be63ff5",
+  "optimized": {
+    "svelte/animate": {
+      "src": "../../node_modules/svelte/animate/index.mjs",
+      "file": "svelte_animate.js",
+      "fileHash": "a54215cd",
+      "needsInterop": false
+    },
+    "svelte/easing": {
+      "src": "../../node_modules/svelte/easing/index.mjs",
+      "file": "svelte_easing.js",
+      "fileHash": "b521c64e",
+      "needsInterop": false
+    },
+    "svelte/internal": {
+      "src": "../../node_modules/svelte/internal/index.mjs",
+      "file": "svelte_internal.js",
+      "fileHash": "ca011828",
+      "needsInterop": false
+    },
+    "svelte/motion": {
+      "src": "../../node_modules/svelte/motion/index.mjs",
+      "file": "svelte_motion.js",
+      "fileHash": "eafb5625",
+      "needsInterop": false
+    },
+    "svelte/store": {
+      "src": "../../node_modules/svelte/store/index.mjs",
+      "file": "svelte_store.js",
+      "fileHash": "610f9f26",
+      "needsInterop": false
+    },
+    "svelte/transition": {
+      "src": "../../node_modules/svelte/transition/index.mjs",
+      "file": "svelte_transition.js",
+      "fileHash": "01f41430",
+      "needsInterop": false
+    },
+    "svelte": {
+      "src": "../../node_modules/svelte/index.mjs",
+      "file": "svelte.js",
+      "fileHash": "893758e7",
+      "needsInterop": false
+    },
+    "@typhonjs-fvtt/runtime/svelte/component/core": {
+      "src": "../../node_modules/@typhonjs-fvtt/runtime/_dist/svelte/component/core/index.js",
+      "file": "@typhonjs-fvtt_runtime_svelte_component_core.js",
+      "fileHash": "5195faf7",
+      "needsInterop": false
+    },
+    "@typhonjs-fvtt/runtime/svelte/helper": {
+      "src": "../../node_modules/@typhonjs-fvtt/runtime/_dist/svelte/helper/index.js",
+      "file": "@typhonjs-fvtt_runtime_svelte_helper.js",
+      "fileHash": "e3e6f07f",
+      "needsInterop": false
+    },
+    "@typhonjs-fvtt/runtime/svelte/application": {
+      "src": "../../node_modules/@typhonjs-fvtt/runtime/_dist/svelte/application/index.js",
+      "file": "@typhonjs-fvtt_runtime_svelte_application.js",
+      "fileHash": "2d068922",
+      "needsInterop": false
+    },
+    "@typhonjs-fvtt/runtime/svelte/store": {
+      "src": "../../node_modules/@typhonjs-fvtt/runtime/_dist/svelte/store/index.js",
+      "file": "@typhonjs-fvtt_runtime_svelte_store.js",
+      "fileHash": "be20ac7b",
+      "needsInterop": false
+    }
+  },
+  "chunks": {
+    "chunk-QTJSIEUT": {
+      "file": "chunk-QTJSIEUT.js"
+    },
+    "chunk-O4YYAJH7": {
+      "file": "chunk-O4YYAJH7.js"
+    },
+    "chunk-LQAXH3JU": {
+      "file": "chunk-LQAXH3JU.js"
+    },
+    "chunk-4JE7W25I": {
+      "file": "chunk-4JE7W25I.js"
+    },
+    "chunk-PP4QODU7": {
+      "file": "chunk-PP4QODU7.js"
+    },
+    "chunk-AFTQYMJX": {
+      "file": "chunk-AFTQYMJX.js"
+    },
+    "chunk-6A2TAOKG": {
+      "file": "chunk-6A2TAOKG.js"
+    },
+    "chunk-U7IU7IO7": {
+      "file": "chunk-U7IU7IO7.js"
+    },
+    "chunk-7HFSXBDU": {
+      "file": "chunk-7HFSXBDU.js"
+    }
+  }
+}

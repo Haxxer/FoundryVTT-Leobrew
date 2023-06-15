@@ -1,94 +1,131 @@
 {
-    "Actor": {
-        "types": [
-            "character"
-        ],
-        "character": {
-            "biography": "",
-            "abilities": {
-                "str": {
-                    "value": 1
-                },
-                "dex": {
-                    "value": 1
-                },
-                "con": {
-                    "value": 1
-                },
-                "will": {
-                    "value": 1
-                },
-                "int": {
-                    "value": 1
-                },
-                "app": {
-                    "value": 1
-                }
-            },
-            "resources": {
-                "luck": {
-                    "max": 3,
-                    "value": 0,
-                    "bonus": 0
-                },
-                "mana": {
-                    "max": 4,
-                    "value": 4,
-                    "bonus": 0
-                },
-                "sanity": {
-                    "max": 0,
-                    "value": 0,
-                    "bonus": 0
-                }
-            },
-            "experience": {
-                "value": 0
-            },
-            "injuries": {
-                "chest": {
-                    "value": ""
-                },
-                "legs": {
-                    "value": ""
-                },
-                "guts": {
-                    "value": ""
-                },
-                "arms": {
-                    "value": ""
-                },
-                "head": {
-                    "value": ""
-                }
-            },
-            "skills": {},
-            "description": {
-                "value": ""
-            },
-            "currency": {
-                "gp": 0,
-                "sp": 0,
-                "cp": 0
-            }
-        }
-    },
-    "Item": {
-        "types": [
-            "item",
-            "trait"
-        ],
-        "item": {
-            "description": "",
-            "quantity": 1,
-            "weight": "",
-            "price": "1 sp",
-            "equipped": false,
-            "skillBonuses": [],
-            "armorBonuses": {}
+  "Actor": {
+    "types": [
+      "character"
+    ],
+    "character": {
+      "biography": "",
+      "abilities": {
+        "str": {
+          "value": 1
         },
-        "trait": {
-            "description": ""
+        "dex": {
+          "value": 1
+        },
+        "con": {
+          "value": 1
+        },
+        "will": {
+          "value": 1
+        },
+        "int": {
+          "value": 1
+        },
+        "app": {
+          "value": 1
         }
+      },
+      "resources": {
+        "luck": {
+          "max": 3,
+          "value": 0,
+          "bonus": 0
+        },
+        "mana": {
+          "max": 4,
+          "value": 0,
+          "bonus": 0
+        },
+        "sanity": {
+          "max": 0,
+          "value": 0,
+          "bonus": 0
+        }
+      },
+      "experience": {
+        "value": 0,
+        "spent": 0,
+        "starting": 0
+      },
+      "injuries": {
+        "chest": {
+          "value": ""
+        },
+        "legs": {
+          "value": ""
+        },
+        "guts": {
+          "value": ""
+        },
+        "arms": {
+          "value": ""
+        },
+        "head": {
+          "value": ""
+        }
+      },
+      "description": {
+        "value": ""
+      },
+      "currency": {
+        "gp": 0,
+        "sp": 0,
+        "cp": 0
+      }
     }
+  },
+  "Item": {
+    "types": [
+      "item",
+      "trait",
+      "skill"
+    ],
+    "item": {
+      "templates": ["physicalItem", "descriptive", "categorized"],
+      "tiedSkills": [],
+      "armorBonuses": {
+        "chest": 0,
+        "legs": 0,
+        "guts":  0,
+        "arms": 0,
+        "head":  0
+      }
+    },
+    "trait": {
+      "templates": ["descriptive", "categorized"],
+      "uses": {
+        "value": 1,
+        "max": 1,
+        "per": "Day"
+      }
+    },
+    "skill": {
+      "templates": ["categorized"],
+      "level": 0,
+      "startingLevel": 0,
+      "isMagic": false
+    },
+    "templates": {
+      "htmlFields": ["description.value"],
+      "descriptive": {
+        "description": {
+          "value": ""
+        }
+      },
+      "categorized": {
+        "category": ""
+      },
+      "physicalItem": {
+        "quantity": 1,
+        "equipped": false,
+        "usesQuantity": false,
+        "weight": "",
+        "price": {
+          "gp": 0,
+          "sp": 0,
+          "cp": 0
+        }
+      }
+    }
+  }
 }

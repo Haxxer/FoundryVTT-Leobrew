@@ -1,0 +1,121 @@
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+
+        <img class="profile" src="{{item.img}}" title="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'LEOBREW.ItemName' }}"/>
+            </h1>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "LEOBREW.Description" }}</a>
+        <a class="item" data-tab="details">{{ localize "LEOBREW.Details" }}</a>
+        <a class="item" data-tab="effects">{{ localize "LEOBREW.Effects" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+
+    <section class="sheet-body">
+
+        <div class="tab flexcol active" data-group="primary" data-tab="description">
+
+            <div class="item-properties flexrow">
+
+                <div class="form-group">
+                    <label>{{ localize "LEOBREW.Quantity" }}:</label>
+                    <input type="text" name="data.quantity" value="{{data.quantity}}" data-dtype="Number"/>
+                </div>
+
+                <div class="form-group">
+                    <label>{{ localize "LEOBREW.Weight" }}:</label>
+                    <input type="text" name="data.weight" value="{{data.weight}}"/>
+                </div>
+
+                <div class="form-group">
+                    <label>{{ localize "LEOBREW.Price" }}:</label>
+                    <input type="text" name="data.price" value="{{data.price}}"/>
+                </div>
+
+            </div>
+
+            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div>
+
+        <div class="tab flexrow item-details" data-group="primary" data-tab="details">
+
+            <div style="flex: 1; margin-right:5px;">
+
+                <h2>Armor Bonuses:</h2>
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Body Part</th>
+                        <th>Armor Bonus</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {{#each armorBonuses as |bodyPart id|}}
+                        <tr>
+                            <td class="flexcol"><span>{{bodyPart.label}}</span></td>
+                            <td><input type="text" name="data.armorBonuses.{{bodyPart.name}}" value="{{bodyPart.value}}" data-dtype="Number"/></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div style="flex: 2;">
+
+                <h2>Skill Bonuses:</h2>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Skill</th>
+                            <th>Value</th>
+                            <th style="text-align: right; padding-right:5px;"><a class="item-add-skill-bonus"><i class="fas fa-plus"></i> Add</a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each data.skillBonuses as |skill id|}}
+                        <tr data-bonus-id="{{id}}">
+                            <td class="flexcol">
+                                <select class="item-skill-bonus-name">
+                                    {{#select skill.name}}
+                                    {{#each @root.skills as |skillName skillId|}}
+                                        <option value="{{skillId}}">{{skillName}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                            </td>
+                            <td>
+                                <input type="text" class="item-skill-bonus-value" value="{{skill.value}}" data-dtype="Number"/>
+                            </td>
+                            <td style="text-align: right; padding-right:5px;">
+                                <a class="item-remove-skill-bonus"><i class="fas fa-times"></i> Remove</a>
+                            </td>
+                        <tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+        {{!-- Effects Tab --}}
+        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+            {{> "systems/leobrew/templates/parts/active-effects.html"}}
+        </div>
+
+    </section>
+
+</form>
