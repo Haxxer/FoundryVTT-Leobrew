@@ -3,18 +3,18 @@
   import { getContext } from "svelte";
   import ActorAbility from "./Components/ActorAbility.svelte";
 
-  const document = getContext("DocumentStore");
+  const doc = getContext("DocumentStore");
   const appState = getContext("ApplicationStateStore");
 
 </script>
 
 <div class="actor-top-bar modesto">
 
-	<img class="actor-image" src="{$document.img}" title="{$document.name}"/>
+	<img class="actor-image" src="{$doc.img}" title="{$doc.name}"/>
 
 	<div class="actor-resource-bar-container">
 
-		<input bind:value="{$document.name}" class="actor-name-input form-control" placeholder="Name" type="text"/>
+		<input bind:value="{$doc.name}" class="actor-name-input form-control" placeholder="Name" type="text"/>
 
 		<div class="actor-resource-bar">
 
@@ -27,7 +27,7 @@
 							}}></i>
 					{/if}
 					<input disabled min="0" type="number"
-								 value="{$document.system.experience.value - $appState.levelUpExperience}"/>
+								 value="{$doc.system.experience.value - $appState.levelUpExperience}"/>
 					{#if $appState.levelingUp}
 						<i class="fas fa-check clickable clickable-faint clickable-green" on:click={() => {
                 appState.confirmLevelUp();
@@ -40,7 +40,7 @@
 				</div>
 			</div>
 
-			{#each Object.entries($document.system.resources) as [key, resource], index (resource)}
+			{#each Object.entries($doc.system.resources) as [key, resource], index (resource)}
 				{#if resource.enabled}
 					<div class="actor-resource">
 						<label>{CONFIG.LEOBREW.resources[key]}</label>
@@ -59,7 +59,7 @@
 </div>
 
 <div class="actor-ability-bar modesto">
-	{#each Object.entries($document.system.abilities) as [key, ability]}
+	{#each Object.entries($doc.system.abilities) as [key, ability]}
 		<ActorAbility {key} {ability}/>
 	{/each}
 </div>
@@ -74,6 +74,7 @@
       max-width: 110px;
       min-width: 110px;
       margin-right: 0.5rem;
+			border-radius: 5px;
     }
 
     .actor-resource-bar-container {

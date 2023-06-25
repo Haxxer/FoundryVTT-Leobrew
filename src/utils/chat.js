@@ -71,7 +71,7 @@ function _getDiceData(message) {
 /**
  * Handle automated critical successes and fumbles
  */
-export const automateCriticalSuccessFailure = async function (message, html) {
+export const automateCriticalSuccessFailure = async function (message) {
 
   if (!lib.isResponsibleGM()) return;
 
@@ -159,4 +159,81 @@ export function displayChatActionButtons(message, html, data) {
       btn.disabled = true;
     });
   }
+}
+
+export function registerChatListeners(){
+
+  $(".chat-control-icon")
+    .children()
+    .eq(0)
+    .removeClass("fa-dice-d20")
+    .addClass("clickable clickable-red fa-dice-d10")
+    .on("click", function() {
+      new Roll("1d10").toMessage();
+    });
+
+  $(document).on('click', '.confirm-button', async (event) => {
+
+    event.preventDefault();
+
+    // Extract card data
+    const button = event.currentTarget;
+    const card = button.closest(".chat-card");
+    const messageId = card.closest(".message").dataset.messageId;
+    const message = game.messages.get(messageId);
+
+    if (!(game.user.isGM || message.isAuthor)) return;
+
+    button.disabled = true;
+
+    let actor;
+    let item;
+
+    const flags = message.getFlag("leobrew", "roll") ?? false;
+
+    if(!flags) return;
+
+    if(flags.actorUuid){
+      actor = fromUuidSync(flags.actorUuid);
+    }else {
+      item = fromUuidSync(flags.source);
+      actor = item?.parent;
+    }
+    if (!actor) return;
+
+    const dataset = button.dataset;
+    const action = dataset.action;
+
+    const flavor = action === "confirm-critical"
+      ? game.i18n.localize("LEOBREW.ChatCriticalConfirmFlavor")
+      : game.i18n.localize("LEOBREW.ChatFumbleConfirmFlavor");
+
+    // Roll and return
+    const options = {
+      extraTitle: flags?.extraTitle ?? "",
+      subSkill: flags?.subSkill ?? null,
+      extraFlavor: flavor,
+      messageData: {
+        "flags.leobrew.roll": {
+          confirmAction: action,
+          actorUuid: flags?.actorUuid ?? false,
+          source: flags?.source ?? false,
+          originalMessageId: flags.originalMessageId,
+          totalCriticalConfirms: flags.totalCriticalConfirms
+        }
+      }
+    };
+
+    await message.delete();
+
+    if(item) {
+      return item.roll(options);
+    }else if(flags.type === "ability"){
+      return actor.rollAbility(flags.abilityId, options);
+    }
+
+    return actor.rollGeneric(options);
+
+  });
+
 }

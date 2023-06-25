@@ -2,6 +2,17 @@
 
 	<div class="dice-result dice-flex">
 		<div class="dice-formula">{{ roll.formula }}</div>
+		<div class="dice-tooltip">
+			<section class="tooltip-part">
+				<div class="dice">
+					{{#each roll.dice}}
+						<ol class="dice-rolls">
+							<li class="roll die d10">{{ total }}</li>
+						</ol>
+					{{/each}}
+				</div>
+			</section>
+		</div>
 		<h4 class="dice-total">{{ roll.total }}</h4>
 	</div>
 
@@ -34,6 +45,21 @@
 
 </div>
 
-{{#if confirmedCritical}}
-	<div class="critical-confirm">Total confirms: {{ totalCriticalConfirms }}</div>
+{{#if weaponSkill}}
+	<div class="critical-confirm">
+		{{{ hitLocation }}}
+		{{#if totalCriticalConfirms}}
+			{{#if confirmedCritical}}
+				| Total confirms: {{ totalCriticalConfirms }}
+			{{/if}}
+		{{/if}}
+	</div>
+{{else}}
+	{{#if totalCriticalConfirms}}
+		{{#if confirmedCritical}}
+			<div class="critical-confirm">
+				Total confirms: {{ totalCriticalConfirms }}
+			</div>
+		{{/if}}
+	{{/if}}
 {{/if}}

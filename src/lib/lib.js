@@ -18,6 +18,10 @@ export function slugify(str){
 
 }
 
+export function capitalizeFirstLetter(str){
+  return str.slice(0,1).toUpperCase() + str.slice(1);
+}
+
 export function isResponsibleGM() {
     if (!game.user.isGM) return false;
     const connectedGMs = game.users.filter(user => user.active && user.isGM);
@@ -26,4 +30,22 @@ export function isResponsibleGM() {
 
 export function roundDownRoll(roll){
     return Math.max(3, Math.floor((roll/3))*3);
+}
+
+export function promptSituationalBonus(title){
+  return new Promise(resolve => {
+    Dialog.prompt({
+      title: `Situational Bonus`,
+      label: "Ok",
+      content: `
+              <p style="text-align: center;">Do you want to add a situational bonus to this "${title}" roll?</p>
+              <p style="text-align: center;"><input type="number" value="0"></p>
+          `,
+      callback: (html) => {
+        resolve(html.find('input').val() ?? 0);
+      },
+      options: { width: 200 }
+    })
+  })
+
 }

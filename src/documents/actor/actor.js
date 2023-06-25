@@ -1,5 +1,6 @@
 import DocumentSheetHelper from "../../lib/helper.js";
 import { d10Roll } from "../../utils/d10.js";
+import { promptSituationalBonus } from "../../lib/lib.js";
 
 export default class LeobrewActor extends Actor {
 
@@ -8,15 +9,19 @@ export default class LeobrewActor extends Actor {
   }
 
   get magicSkills(){
-    return this.skills.filter(item => item.system.isMagic);
+    return this.skills.filter(skill => skill.system.isMagic);
   }
 
   get regularItems(){
-    return this.items.filter(item => item.type === "item");
+    return this.items.filter(item => item.type === "equipment");
+  }
+
+  get equippedItems(){
+    return this.regularItems.filter(item => item.system.equipped);
   }
 
   get armorBonuses() {
-    const items = this.items.filter(item => item.type === "item");
+    const items = this.equippedItems;
     return Object.entries(CONFIG.LEOBREW.bodyParts)
       .map(entry => {
         return {
@@ -25,6 +30,45 @@ export default class LeobrewActor extends Actor {
           }, 0)
         }
       })
+  }
+
+  getBonusForSkill(skill, subSkill = false){
+    return this.equippedItems
+      .filter(item => item.system.tiedSkills[skill.id])
+      .reduce((totalBonus, item) => {
+        const tiedSkillConfig = item.system.tiedSkills[skill.id];
+        tiedSkillConfig
+          .filter(tiedSkill => {
+            if(subSkill){
+              return  subSkill === tiedSkill.name || !tiedSkill.isSubSkill
+            }
+            return !tiedSkill.isSubSkill;
+          })
+          .forEach(tiedSkill => {
+          if(tiedSkill.bonus) {
+            totalBonus += tiedSkill.bonus;
+          }
+        });
+        return totalBonus;
+      }, 0);
+  }
+
+  getSubSkills(skill){
+    return this.equippedItems
+      .filter(item => item.system.tiedSkills[skill.id] && item.system.tiedSkills[skill.id].some(tiedSkill => {
+        return tiedSkill.isSubSkill;
+      }))
+      .map(item => {
+        return item.system.tiedSkills[skill.id]
+          .filter(tiedSkill => tiedSkill.isSubSkill);
+      })
+      .deepFlatten()
+      .map(subSkill => foundry.utils.deepClone(subSkill))
+      .map(subSkill => {
+        subSkill.bonus += skill.system.level;
+        return subSkill;
+      })
+      .sort((a, b) => a.name > b.name);
   }
 
   // Prepare Player type specific data
@@ -48,10 +92,11 @@ export default class LeobrewActor extends Actor {
     mana.max += this.system.abilities.will.value;
     mana.max += mana.bonus;
     mana.max += this.magicSkills.reduce((max, skill) => {
-      return skill.value >= 5 && (skill.value * 3) > max
-        ? skill.value * 3
+      return skill.system.level >= 5 && (skill.system.level * 3) > max
+        ? skill.system.level * 3
         : max;
     }, 0);
+
   }
 
   /* -------------------------------------------- */
@@ -69,9 +114,13 @@ export default class LeobrewActor extends Actor {
 
   /* -------------------------------------------- */
 
-  rollGeneric(options = {}) {
+  async rollGeneric(options = {}) {
 
     let title = game.i18n.format("LEOBREW.GenericSkillRollTitle");
+
+    if (options?.event?.ctrlKey) {
+      options.situationalBonus = await promptSituationalBonus(title);
+    }
 
     if (options?.extraFlavor) {
       title = `${title} (${options?.extraFlavor})`
@@ -85,7 +134,8 @@ export default class LeobrewActor extends Actor {
         speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
         "flags.leobrew.roll": {
           type: "generic",
-          actorUuid: this.uuid
+          actorUuid: this.uuid,
+          extraFlavor: options?.extraFlavor ?? ""
         }
       }
     });
@@ -100,21 +150,33 @@ export default class LeobrewActor extends Actor {
    * @param {Object} options      Options which configure how ability tests are rolled
    * @return {Promise<d10Roll>}      A Promise which resolves to the created Roll instance
    */
-  rollAbility(abilityId, options = {}) {
+  async rollAbility(abilityId, options = {}) {
 
-    const label = CONFIG.LEOBREW.abilities[abilityId];
-    const abl = this.data.data.abilities[abilityId];
+    let label = CONFIG.LEOBREW.abilities[abilityId];
+    const abl = this.system.abilities[abilityId];
 
     // Construct parts
-    const parts = ["@value+@bonus"];
-    const data = { value: abl.value };
+    const parts = ["@value"];
+    const data = { value: abl.value, bonus: options?.bonus ?? 0 };
+
+    if(data.bonus){
+      parts.push("@bonus")
+    }
 
     // Add provided extra roll parts now because they will get clobbered by mergeObject below
     if (options.parts?.length > 0) {
       parts.push(...options.parts);
     }
 
-    let title = game.i18n.format("LEOBREW.AbilityRollTitle", { ability: label });
+    if (options?.extraTitle) {
+      label += ` (${options?.extraTitle})`
+    }
+
+    if (options?.event?.ctrlKey) {
+      options.situationalBonus = await promptSituationalBonus(label);
+    }
+
+    let title = game.i18n.format("LEOBREW.AbilityRollTitle", { name: label });
 
     if (options?.extraFlavor) {
       title = `${title} (${options?.extraFlavor})`
@@ -126,8 +188,13 @@ export default class LeobrewActor extends Actor {
       data: data,
       title: title,
       messageData: {
-        speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }), "flags.leobrew.roll": {
-          type: "ability", abilityId, rollData: `data.abilities.${abilityId}`, actorId: this.id
+        speaker: options.speaker || ChatMessage.getSpeaker({ actor: this }),
+        "flags.leobrew.roll": {
+          abilityId,
+          type: "ability",
+          rollData: `data.abilities.${abilityId}`,
+          actorUuid: this.uuid,
+          extraFlavor: options?.extraFlavor ?? ""
         }
       }
     });

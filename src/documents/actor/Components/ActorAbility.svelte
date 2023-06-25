@@ -3,7 +3,7 @@
   import { getContext } from "svelte";
 
   const { application } = getContext('#external');
-  const document = getContext("DocumentStore");
+  const doc = getContext("DocumentStore");
 
   const widthStore = application.position.stores.width;
   const appState = getContext("ApplicationStateStore");
@@ -29,7 +29,7 @@
 	class:actor-ability-container-small={$widthStore <= 550}
 	class:actor-ability-container-small-leveling={$appState.levelingUp}
 >
-	<span class="clickable clickable-red">
+	<span class="clickable clickable-red" on:click={(event) => { $doc.rollAbility(key, { event })}}>
 		{$widthStore > 550 ? CONFIG.LEOBREW.abilities[key] : CONFIG.LEOBREW.abilityAbbreviations[key]}
 	</span>
 	<div class="actor-ability-input-container">

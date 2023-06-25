@@ -1,12 +1,12 @@
 <script>
 	import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
-  import { getContext } from "svelte";
+  import { getContext, onDestroy } from "svelte";
   import ActorSkill from "./Components/ActorSkill.svelte";
 
   const appState = getContext("ApplicationStateStore");
-  const document = getContext("DocumentStore");
+  const doc = getContext("DocumentStore");
 
-  const allSkills = document.embedded.create("Item", {
+  const allSkills = doc.embedded.create("Item", {
     name: "skills",
 		filters: [(item) => {
       return item.type === "skill";
@@ -14,16 +14,23 @@
 	});
 
 	$: categorizedSkills = Object.entries([...$allSkills]
-		.reduce((acc, skill) => {
-			if(!acc[skill.system.category]) acc[skill.system.category] = []
-			acc[skill.system.category].push(skill)
-			acc[skill.system.category].sort((a,b) => {
-				return b.name > a.name;
-			})
-			return acc;
-		}, {})).sort((a,b) => {
-			return b[0] > a[0];
-		});
+      .reduce((acc, skill) => {
+        if (!acc[skill.system.category]) acc[skill.system.category] = []
+        acc[skill.system.category].push(skill)
+        acc[skill.system.category].sort((a, b) => {
+          return b.name > a.name ? -1 : 1;
+        })
+        return acc;
+      }, {})).sort((a, b) => {
+      return b[0] > a[0] ? -1 : 1;
+    });
+
+  let newSkillName = ""
+
+	function createNewSkill(){
+    appState.addSkill(newSkillName);
+    newSkillName = "";
+	}
 
 </script>
 
@@ -32,9 +39,13 @@
 	<div class="actor-skills-list-add">
 		<span class="skill-category-title modesto">{localize("LEOBREW.SkillAddTitle")}</span>
 		<div class="actor-skills-list-add-container">
-			<input type="text" list="skill-autocomplete" class='actor-skill-name-input' placeholder="Skill name">
-			<datalist id="skill-autocomplete"></datalist>
-			<button type="button" class="skill-add">
+			<input type="text" class='actor-skill-name-input' placeholder="Skill name" bind:value={newSkillName}
+				on:keydown={(event) => {
+					if(event.code !== "Enter") return;
+					createNewSkill();
+				}}
+			/>
+			<button type="button" class="skill-add" on:click={async () => createNewSkill()}>
 				<i class="fas fa-plus"></i>
 			</button>
 		</div>
@@ -44,8 +55,8 @@
 
 		<span class="skill-category-title modesto">Generic</span>
 		<div class="actor-skill">
-			<label class="skill-name clickable clickable-red" on:click={() => {
-        $document.rollGeneric();
+			<label class="skill-name clickable clickable-red" on:click={(event) => {
+        $doc.rollGeneric({ event });
 			}}>Naked D10 Roll</label>
 		</div>
 

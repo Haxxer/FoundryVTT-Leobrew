@@ -2,20 +2,26 @@ import {
   localize
 } from "./chunk-O4YYAJH7.js";
 import {
+  isUpdatableStore,
+  isWritableStore
+} from "./chunk-DTH3B6LV.js";
+import {
   A11yHelper,
   StyleManager,
+  debounce,
+  hasSetter,
   isIterable,
   isObject,
   isSvelteComponent,
-  isUpdatableStore,
   parseSvelteConfig,
   styleParsePixels
-} from "./chunk-LQAXH3JU.js";
+} from "./chunk-IDJAAY4H.js";
 import {
   writable
 } from "./chunk-4JE7W25I.js";
 import {
-  fade
+  fade,
+  slide
 } from "./chunk-PP4QODU7.js";
 import {
   cubicOut
@@ -55,6 +61,7 @@ import {
   get_spread_update,
   globals,
   group_outros,
+  identity,
   init,
   insert_dev,
   is_function,
@@ -796,6 +803,43 @@ function s_UPDATE_SUBSCRIBER(subscriber, contentWidth, contentHeight) {
       break;
   }
 }
+function applyScrolltop(element2, store) {
+  if (!isWritableStore(store)) {
+    throw new TypeError(`applyScrolltop error: 'store' must be a writable Svelte store.`);
+  }
+  function storeUpdate(value) {
+    if (!Number.isFinite(value)) {
+      return;
+    }
+    setTimeout(() => element2.scrollTop = value, 0);
+  }
+  let unsubscribe = store.subscribe(storeUpdate);
+  const resizeControl = resizeObserver(element2, debounce(() => {
+    if (element2.isConnected) {
+      store.set(element2.scrollTop);
+    }
+  }, 500));
+  function onScroll(event) {
+    store.set(event.target.scrollTop);
+  }
+  const debounceFn = debounce((e) => onScroll(e), 500);
+  element2.addEventListener("scroll", debounceFn);
+  return {
+    update: (newStore) => {
+      unsubscribe();
+      store = newStore;
+      if (!isWritableStore(store)) {
+        throw new TypeError(`applyScrolltop.update error: 'store' must be a writable Svelte store.`);
+      }
+      unsubscribe = store.subscribe(storeUpdate);
+    },
+    destroy: () => {
+      element2.removeEventListener("scroll", debounceFn);
+      unsubscribe();
+      resizeControl.destroy();
+    }
+  };
+}
 function applyStyles(node, properties) {
   function setProperties() {
     if (typeof properties !== "object") {
@@ -810,6 +854,30 @@ function applyStyles(node, properties) {
     update(newProperties) {
       properties = newProperties;
       setProperties();
+    }
+  };
+}
+function applyPosition(node, position) {
+  if (hasSetter(position, "parent")) {
+    position.parent = node;
+  }
+  return {
+    update: (newPosition) => {
+      if (newPosition === position && newPosition.parent === position.parent) {
+        return;
+      }
+      if (hasSetter(position)) {
+        position.parent = void 0;
+      }
+      position = newPosition;
+      if (hasSetter(position, "parent")) {
+        position.parent = node;
+      }
+    },
+    destroy: () => {
+      if (hasSetter(position, "parent")) {
+        position.parent = void 0;
+      }
     }
   };
 }
@@ -4422,7 +4490,7 @@ function copy$1(out, a) {
   out[7] = a[7];
   return out;
 }
-function identity(out) {
+function identity2(out) {
   out[0] = 0;
   out[1] = 0;
   out[2] = 0;
@@ -4704,7 +4772,7 @@ var quat2 = Object.freeze({
   getDual,
   getReal,
   getTranslation,
-  identity,
+  identity: identity2,
   invert,
   len: len$1,
   length: length$1,
@@ -5197,6 +5265,22 @@ _velSmooth = new WeakMap();
 _velUsed = new WeakMap();
 
 // node_modules/@typhonjs-fvtt/runtime/_dist/svelte/transition/index.js
+function slideFade(node, options) {
+  const fadeEasing = options.easingFade || options.easing || identity;
+  const slideEasing = options.easingSlide || options.easing || identity;
+  const fadeTransition = fade(node);
+  const slideTransition = slide(node);
+  return {
+    delay: options.delay || 0,
+    duration: options.duration || 500,
+    easing: identity,
+    css: (t) => {
+      const fadeT = fadeEasing(t);
+      const slideT = slideEasing(t);
+      return `${slideTransition.css(slideT, 1 - slideT)}; ${fadeTransition.css(fadeT, 1 - fadeT)}`;
+    }
+  };
+}
 var s_DEFAULT_TRANSITION = () => void 0;
 var s_DEFAULT_TRANSITION_OPTIONS = {};
 
@@ -13035,10 +13119,14 @@ cssVariables.setProperties({
 export {
   TJSContainer_default,
   TJSComponentShell_default,
+  applyScrolltop,
+  applyStyles,
+  applyPosition,
   lerp$5,
   degToRad,
   mat4,
   vec3,
+  slideFade,
   TJSGlassPane_default,
   AppShellContextInternal,
   TJSHeaderButton_default,
@@ -13050,4 +13138,4 @@ export {
   DialogContent_default,
   DialogShell_default
 };
-//# sourceMappingURL=chunk-QTJSIEUT.js.map
+//# sourceMappingURL=chunk-2NWJHYI2.js.map

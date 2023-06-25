@@ -45,7 +45,7 @@
       "experience": {
         "value": 0,
         "spent": 0,
-        "starting": 0
+        "initialized": false
       },
       "injuries": {
         "chest": {
@@ -76,13 +76,13 @@
   },
   "Item": {
     "types": [
-      "item",
+      "equipment",
       "trait",
       "skill"
     ],
-    "item": {
-      "templates": ["physicalItem", "descriptive", "categorized"],
-      "tiedSkills": [],
+    "equipment": {
+      "templates": ["physical", "descriptive", "categorized"],
+      "tiedSkills": {},
       "armorBonuses": {
         "chest": 0,
         "legs": 0,
@@ -115,7 +115,7 @@
       "categorized": {
         "category": ""
       },
-      "physicalItem": {
+      "physical": {
         "quantity": 1,
         "equipped": false,
         "usesQuantity": false,

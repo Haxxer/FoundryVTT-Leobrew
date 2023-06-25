@@ -1,10 +1,11 @@
 export default class ContextMenu extends FormApplication{
 
-	constructor({menuItems={}, dialogData={}, options={}}={}) {
+	constructor({menuItems=[], selectedItem="", dialogData={}, options={}}={}) {
 		super(dialogData, options);
-		this.menuItems = [];
-		this.header = "";
-		this.showHeader = false;
+		this.menuItems = menuItems;
+    this.selectedItem = selectedItem;
+    this.header = "";
+    this.showHeader = false;
 		this.callback = undefined;
 	}
 
@@ -15,7 +16,7 @@ export default class ContextMenu extends FormApplication{
 		return mergeObject(super.defaultOptions, {
 			template: `systems/leobrew/templates/parts/context-menu.html`,
 			classes: ["leobrew", "context-menu"],
-			width: 80,
+			width: 80
 		});
 	}
 
@@ -30,8 +31,11 @@ export default class ContextMenu extends FormApplication{
 		return this;
 	}
 
-	addMenuItem(label, { data, fa="", callback=false }={}){
-		this.menuItems.push({label, data, fa, callback});
+	addMenuItem(label, options={}){
+		this.menuItems.push(foundry.utils.mergeObject(
+      { label, data: false, fa: "", "class": "", "callback": false },
+      options
+    ));
 		return this;
 	}
 
@@ -51,6 +55,15 @@ export default class ContextMenu extends FormApplication{
 	getData() {
 		let data = super.getData();
 		data.menuItems = this.menuItems;
+    if(this.selectedItem !== false) {
+      data.menuItems.forEach(item => {
+        console.log(this.selectedItem)
+        if (item.id === this.selectedItem) {
+          item.class = "selected";
+          console.log(item);
+        }
+      })
+    }
 		data.header = this.header;
 		data.showHeader = this.showHeader;
 		return data;

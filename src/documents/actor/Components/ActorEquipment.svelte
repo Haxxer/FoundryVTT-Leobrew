@@ -18,8 +18,10 @@
 	<div class="item-header">
 		<div class="item-name">
 			<div class="item-image-container">
-				<img class="clickable clickable-red item-image" src="{item.img}"/>
-				<img class="clickable clickable-red item-rollable-image" src="icons/dice/d10black.svg">
+				<img class="item-image" src="{item.img}"/>
+				<img class="clickable clickable-red item-rollable-image" src="icons/dice/d10black.svg" on:click={() => {
+          item.roll();
+				}}>
 			</div>
 			<span
 				class="item-expand clickable clickable-red"
@@ -44,19 +46,19 @@
 				}}>
 				<i class="fas fa-shield-alt"></i>
 			</a>
-			<a class="item-control item-edit" data-tooltip={localize("LEOBREW.ItemEdit")} on:click={() => {
+			<a class="item-control item-edit" data-tooltip={localize("LEOBREW.EquipmentEdit")} on:click={() => {
         item.sheet.render(true);
 			}}>
 				<i class="fas fa-edit"></i>
 			</a>
-			<a class="item-control item-delete" data-tooltip={localize("LEOBREW.ItemDelete")} on:click={() => {
+			<a class="item-control item-delete" data-tooltip={localize("LEOBREW.EquipmentDelete")} on:click={() => {
         TJSDialog.confirm({
-        	title: "Delete item",
-        	content: "<p style='text-align: center;'>Are you sure you want to delete this item?</p>",
+        	title: "Delete Equipment",
+        	content: `<p style='text-align: center;'>Are you sure you want to delete "${item.name}"?</p>`,
         	onYes: () => {
             item.delete();
         	}
-        }, { width: 270, height: 120 });
+        }, { width: 270, height: "auto" });
 			}}>
 				<i class="fas fa-trash"></i>
 			</a>

@@ -2,12 +2,12 @@ import LEOBREW from "./constants/config.js";
 import LeobrewActorSheet from "./documents/actor/actor-sheet.js";
 import LeobrewActor from "./documents/actor/actor.js";
 import LeobrewItem from "./documents/item/item.js";
+import LeobrewItemSheet from "./documents/item/item-sheet.js";
 
 export function setupSystem(){
   registerConstants();
   registerSheets();
   registerSettings();
-  registerListeners();
 }
 
 function registerConstants(){
@@ -35,8 +35,8 @@ function registerSheets(){
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("leobrew", LeobrewActorSheet, { makeDefault: true })
 
-  // Items.unregisterSheet("core", ItemSheet);
-  // Items.registerSheet("leobrew", LeobrewItemSheet, { makeDefault: true });
+  Items.unregisterSheet("core", ItemSheet);
+  Items.registerSheet("leobrew", LeobrewItemSheet, { makeDefault: true });
 
 }
 
@@ -123,70 +123,6 @@ function registerSettings(){
     config: false,
     default: "",
     type: String
-  });
-
-}
-
-function registerListeners(){
-
-  $(document).on('click', '.confirm-button', async (event) => {
-
-    event.preventDefault();
-
-    // Extract card data
-    const button = event.currentTarget;
-    const card = button.closest(".chat-card");
-    const messageId = card.closest(".message").dataset.messageId;
-    const message = game.messages.get(messageId);
-
-    if (!(game.user.isGM || message.isAuthor)) return;
-
-    button.disabled = true;
-
-    let actor;
-    let item;
-
-    const flags = message.getFlag("leobrew", "roll") ?? false;
-
-    if(!flags) return;
-
-    if(flags.actorUuid){
-      actor = fromUuidSync(flags.actorUuid);
-    }else {
-      item = fromUuidSync(flags.source);
-      actor = item?.parent;
-    }
-    if (!actor) return;
-
-    const dataset = button.dataset;
-    const action = dataset.action;
-
-    const flavor = action === "confirm-critical"
-      ? game.i18n.localize("LEOBREW.ChatCriticalConfirmFlavor")
-      : game.i18n.localize("LEOBREW.ChatFumbleConfirmFlavor");
-
-    // Roll and return
-    const options = {
-      extraFlavor: flavor,
-      messageData: {
-        "flags.leobrew.roll": {
-          confirmAction: action,
-          actorUuid: flags?.actorUuid ?? false,
-          source: flags?.source ?? false,
-          originalMessageId: flags.originalMessageId,
-          totalCriticalConfirms: flags.totalCriticalConfirms
-        }
-      }
-    };
-
-    await message.delete();
-
-    if(item) {
-      return item.roll(options);
-    }
-
-    return actor.rollGeneric(options);
-
   });
 
 }

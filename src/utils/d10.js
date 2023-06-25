@@ -24,6 +24,8 @@ export async function d10Roll({
     confirmedCritical: false,
     confirmedFumble: false,
     confirmedNatural: false,
+    weaponSkill: false,
+    hitLocation: false,
     natural: !fumbleCritical,
     totalCriticalConfirms: 0,
     roll
@@ -32,6 +34,7 @@ export async function d10Roll({
   let rollToRound = roll;
 
   const previousRollData = messageData?.flags?.leobrew?.roll;
+
   if (previousRollData?.confirmAction) {
 
     messageData.natural = false;
@@ -48,6 +51,23 @@ export async function d10Roll({
 
     messageData.totalCriticalConfirms = originalMessage.getFlag("leobrew", "roll").totalCriticalConfirms ?? 0;
 
+  }
+
+  if(previousRollData?.subSkill?.isWeaponSkill && !fumbleCritical){
+    messageData.weaponSkill = true;
+    if(rollToRound.total >= 15) {
+      messageData.hitLocation = "Instant Kill"
+    }else if(rollToRound.total === 11) {
+      messageData.hitLocation = "Roll d10 to see if hit is to chest or leg<br>Below 5 leg - 5 reroll - Above 5 chest";
+    }else{
+      messageData.hitLocation = {
+        "9": "Hits Arm",
+        "10": "Hits Leg",
+        "12": "Hits Chest",
+        "13": "Hits Guts",
+        "14": "Hits Head",
+      }[rollToRound.total] ?? "No hit";
+    }
   }
 
   messageData.roundedRoll = roundDownRoll(rollToRound.total);

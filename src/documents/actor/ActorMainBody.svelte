@@ -7,22 +7,13 @@
 
   const appState = getContext("ApplicationStateStore");
 
-  const tabs = [
-    { value: "inventory", label: "Inventory", component: ActorInventory },
-    { value: "traits", label: "Traits", component: ActorTraits },
-    { value: "injuries", label: "Injuries" },
-    { value: "biography", label: "Biography" },
-    { value: "effects", label: "Effects" },
-	]
-  let activeTab = tabs[0];
-
 </script>
 
 <div class="actor-main-body">
 	<ActorSkills/>
 	<div class="actor-center-section">
-		<Tabs bind:activeTab {tabs} underscore/>
-		<svelte:component this={activeTab.component}/>
+		<Tabs bind:activeTab={$appState.activeTab} tabs={$appState.tabs} underscore/>
+		<svelte:component this={$appState.activeTab.component}/>
 	</div>
 </div>
 

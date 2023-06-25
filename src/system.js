@@ -3,6 +3,7 @@ import "./style.scss";
 import { setupSystem, setupLocalization } from "./setup.js";
 import runMigrations from "./migrations.js";
 import * as chat from "./utils/chat.js";
+import { registerChatListeners } from "./utils/chat.js";
 
 Hooks.once("init", () => {
   setupSystem();
@@ -13,6 +14,7 @@ Hooks.once("setup", () => {
 });
 
 Hooks.once("ready", () => {
+  registerChatListeners();
   if (!game.user.isGM) return;
   runMigrations();
   setTimeout(() => {
@@ -24,6 +26,15 @@ Hooks.on("preCreateActor", (doc) => {
   doc.updateSource({
     "system.experience.value": Math.abs(Number(game.settings.get("leobrew", "startingSkillPoints") )) || 40
   });
+});
+
+Hooks.on("createActor", (doc) => {
+  doc.createEmbeddedDocuments("Item", [{
+    name: "Native Language",
+    type: "skill",
+    "system.category": "Language",
+    "system.level": 5
+  }]);
 });
 
 Hooks.on("renderChatMessage", (...args) => {

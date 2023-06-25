@@ -15,15 +15,15 @@ export default class LeobrewActorSheet extends SvelteDocumentSheet {
     });
   }
 
-  constructor(object) {
-    super(object);
+  constructor(object, options = {}) {
+    super(object, options);
     this.reactive.state = createActorSheetState(object);
   }
 
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
 
-    if (game.user.isGM || (this.reactive.document.isOwner && game.user.can('TOKEN_CONFIGURE'))) {
+    if (game.user.isGM || (this.reactive.doc.isOwner && game.user.can('TOKEN_CONFIGURE'))) {
       buttons.unshift({
         label: this.token ? 'Token' : 'TOKEN.TitlePrototype',
         class: 'configure-token',

@@ -14,24 +14,22 @@ export default class SvelteDocumentSheet extends SvelteApplication {
   // Holds the document unsubscription function.
   #storeUnsubscribe;
 
-  constructor(document, options = {}) {
-    super(foundry.utils.mergeObject(
-      options,
-      {
-        id: `document-sheet-${document.id}`,
-        title: document.name,
-        classes: game.settings.get('leobrew', 'darkModeSheets') === true ? ['leobrew-base-style', 'leobrew-dark-mode'] : ['leobrew-base-style']
-      }
-    ));
+  constructor(doc, options = {}) {
+    super({
+      id: `document-sheet-${doc.id}`,
+      title: doc.name,
+      classes: game.settings.get('leobrew', 'darkModeSheets') === true ? ['leobrew-base-style', 'leobrew-dark-mode'] : ['leobrew-base-style'],
+      ...options
+    });
 
     // Define document store property
-    Object.defineProperty(this.reactive, 'document', {
+    Object.defineProperty(this.reactive, 'doc', {
       get: () => this.#documentStore.get(),
-      set: (document) => {
-        this.#documentStore.set(document);
+      set: (doc) => {
+        this.#documentStore.set(doc);
       },
     });
-    this.reactive.document = document;
+    this.reactive.doc = doc;
 
     // Define state store property
     Object.defineProperty(this.reactive, 'state', {
@@ -67,10 +65,13 @@ export default class SvelteDocumentSheet extends SvelteApplication {
   _canDragStart(selector) {
     return true;
   }
+
   _canDragDrop(selector) {
-    return this.reactive.document.isOwner || game.user.isGM;
+    return this.reactive.doc.isOwner || game.user.isGM;
   }
-  _onDragOver(event) { }
+
+  _onDragOver(event) {
+  }
 
   _onDragStart(event) {
     {
@@ -102,12 +103,13 @@ export default class SvelteDocumentSheet extends SvelteApplication {
       event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
     }
   }
+
   async _onDrop(event) {
-    if (this.reactive.document.documentName !== 'Actor') {
+    if (this.reactive.doc.documentName !== 'Actor') {
       return;
     }
     const data = TextEditor.getDragEventData(event);
-    const actor = this.reactive.document;
+    const actor = this.reactive.doc;
 
     /**
      * A hook event that fires when some useful data is dropped onto an ActorSheet.
@@ -253,7 +255,7 @@ export default class SvelteDocumentSheet extends SvelteApplication {
     if (event) {
       event.preventDefault();
     }
-    const actor = this.reactive.document;
+    const actor = this.reactive.doc;
     const token = actor.isToken ? actor.token : actor.prototypeToken;
     new CONFIG.Token.prototypeSheetClass(token).render(true);
   }
@@ -287,7 +289,6 @@ export default class SvelteDocumentSheet extends SvelteApplication {
     if (!this.#storeUnsubscribe) {
       this.#storeUnsubscribe = this.#documentStore.subscribe(this.#handleDocUpdate.bind(this));
     }
-
     super.render(force, options);
     return this;
   }

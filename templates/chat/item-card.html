@@ -1,10 +1,10 @@
-<div class="leobrew chat-card item-card" data-actor-id="{{actor._id}}" data-item-id="{{item._id}}">
+<div class="leobrew chat-card item-card" data-actor-id="{{actorId}}" data-item-id="{{itemId}}">
     <header class="card-header flexrow">
         <img src="{{item.img}}" title="{{item.name}}" width="36" height="36"/>
-        <h3 class="item-name">{{item.name}}</h3>
+        <h2 class="item-name">{{item.name}}</h2>
     </header>
 
     <div class="card-content">
-        {{{ item.data.description }}}
+        {{{ item.system.description.value }}}
     </div>
 </div>

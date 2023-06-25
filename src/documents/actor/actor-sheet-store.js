@@ -1,13 +1,28 @@
 import { writable, get } from 'svelte/store';
+import ActorInventory from "./Tabs/ActorInventory.svelte";
+import ActorTraits from "./Tabs/ActorTraits.svelte";
+import ActorBiography from "./Components/ActorBiography.svelte";
+import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
+import ActorInjuries from "./Components/ActorInjuries.svelte";
 
 export default function createActorSheetState(actor) {
 
+  const tabs = [
+    { value: "inventory", label: "Inventory", component: ActorInventory },
+    { value: "traits", label: "Traits", component: ActorTraits },
+    { value: "injuries", label: "Injuries", component: ActorInjuries },
+    { value: "biography", label: "Biography", component: ActorBiography },
+  ]
+
   const { set, update, subscribe } = writable({
+    activeTab: tabs[2],
+    tabs,
     isExpanded: {
       inventory: new Set(),
       traits: new Set()
     },
-    levelingUp: false,
+    initialized: actor.system.experience.initialized,
+    levelingUp: !actor.system.experience.initialized,
     leveledUpSkills: {},
     leveledUpAbilities: {},
     levelUpExperience: 0,
@@ -52,12 +67,41 @@ export default function createActorSheetState(actor) {
     return (state.leveledUpSkills?.[skillId]?.pointsSpent ?? 0) > 0;
   }
 
+  async function addSkill(skillName){
+    await actor.createEmbeddedDocuments("Item", [{
+      name: skillName,
+      type: "skill",
+      "system.category": "Generic",
+      "system.level": 1
+    }]);
+    const cost = get(this).initialized ? 5 : 1;
+    await actor.update({
+      "system.experience.value": actor.system.experience.value - cost,
+      "system.experience.spent": actor.system.experience.spent + cost
+    });
+  }
+
   async function confirmLevelUp() {
     const data = get(this);
-    await actor.update({ "system.experience.value": actor.system.experience.value - data.levelUpExperience });
+    if(!data.initialized){
+      const decision = await TJSDialog.confirm({
+        title: "Confirm Levels",
+        content: `<p style='text-align: center;'>Are you sure you want to continue? Once you confirm your initial character, you cannot go back.</p>`
+      }, { width: 270, height: "auto" })
+      if(!decision) return;
+    }
+    await actor.update({
+      "system.experience.value": actor.system.experience.value - data.levelUpExperience,
+      "system.experience.spent": actor.system.experience.spent + data.levelUpExperience,
+      "system.experience.initialized": true
+    });
     await actor.updateEmbeddedDocuments("Item", Object.entries(data.leveledUpSkills).map(([_id, skill]) => ({
       _id, "system.level": skill.level
     })))
+    update(state => {
+      state.initialized = true;
+      return state;
+    })
     abortLevelUp();
   }
 
@@ -88,6 +132,7 @@ export default function createActorSheetState(actor) {
     update,
     subscribe,
     deleteItem,
+    addSkill,
     assignSkillPoint,
     canAssignSkillPoint,
     canSubtractSkillPoint,
