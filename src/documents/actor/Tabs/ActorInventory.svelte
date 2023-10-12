@@ -2,6 +2,7 @@
   import { getContext } from "svelte";
   import ActorEquipment from "../Components/ActorEquipment.svelte";
   import SearchableItemList from "../Components/SearchableItemList.svelte";
+  import CurrencyList from "../Components/CurrencyList.svelte";
 
   const appState = getContext("ApplicationStateStore");
   const document = getContext("DocumentStore");
@@ -16,5 +17,6 @@
 </script>
 
 <div class="inventory">
+	<CurrencyList/>
 	<SearchableItemList {itemsStore} component={ActorEquipment} type="equipment"/>
 </div>

@@ -16,7 +16,7 @@
   $: {
     $appState;
     canAssignSkillPoint = appState.canAssignSkillPoint(key, ability.value, true);
-    canSubtractSkillPoint = appState.canSubtractSkillPoint(key, ability.value);
+    canSubtractSkillPoint = appState.canSubtractSkillPoint(key, ability.value, true);
   }
   $: pointsSpent = $appState.leveledUpSkills?.[key]?.pointsSpent ?? 0;
   $: realPointsSpent = $appState.leveledUpSkills?.[key]?.cost ?? 0

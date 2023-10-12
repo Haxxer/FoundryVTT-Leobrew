@@ -61,7 +61,13 @@ export function updateDoc(node, { doc, accessor } = {})
       return;
     }
 
-    document.update({ [accessor]: ev.target[valueKey] });
+    let value = ev.target[valueKey];
+
+    if(node.type === "number"){
+      value = Number(value);
+    }
+
+    document.update({ [accessor]: value });
   }
 
   /**

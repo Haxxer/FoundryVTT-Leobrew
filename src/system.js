@@ -15,11 +15,9 @@ Hooks.once("setup", () => {
 
 Hooks.once("ready", () => {
   registerChatListeners();
+  game.actors.getName("Test").sheet.render(true);
   if (!game.user.isGM) return;
   runMigrations();
-  setTimeout(() => {
-    game.actors.getName("Test").sheet.render(true);
-  }, 250)
 });
 
 Hooks.on("preCreateActor", (doc) => {

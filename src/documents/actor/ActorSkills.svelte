@@ -77,12 +77,12 @@
 <style lang="scss">
 
 	.actor-skills-list-container {
-		width: 200px;
+		width: 225px;
 		height: 100%;
 		padding-right: 4px;
 		display: flex;
 		flex-direction: column;
-		font-size: 0.85rem;
+		font-size: 0.8rem;
 		overflow-y: scroll;
 		overflow-x: hidden;
 
@@ -122,6 +122,7 @@
 			flex: 1 0 auto;
       font-size: 1.25rem;
       line-height: 1.75rem;
+			margin-top: 0.25rem;
 			margin-bottom: 0.25rem;
       border-bottom: 1px solid rgba(0,0,0,0.1);
 			width: 100%;

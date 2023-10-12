@@ -3,6 +3,12 @@ import { promptSituationalBonus } from "../../lib/lib.js";
 
 export default class LeobrewItem extends Item {
 
+
+  getArmorBonus(bodyPart){
+    const bonus = this.system.armorBonuses?.[bodyPart];
+    return this.system.equipped && bonus ? bonus : 0;
+  }
+
   /**
    * @param {Object} options            Options which configure how ability tests are rolled
    * @return {Promise<d10Roll>|Boolean} A Promise which resolves to the created Roll instance

@@ -2,6 +2,7 @@
 
   import { getContext } from "svelte";
   import ActorAbility from "./Components/ActorAbility.svelte";
+  import DocumentImage from "../../svelte-components/DocumentImage.svelte";
 
   const doc = getContext("DocumentStore");
   const appState = getContext("ApplicationStateStore");
@@ -10,7 +11,7 @@
 
 <div class="actor-top-bar modesto">
 
-	<img class="actor-image" src="{$doc.img}" title="{$doc.name}"/>
+	<DocumentImage class="actor-image" {doc}/>
 
 	<div class="actor-resource-bar-container">
 
@@ -19,15 +20,13 @@
 		<div class="actor-resource-bar">
 
 			<div class="actor-resource">
-				<label>{CONFIG.LEOBREW.resources.experience}</label>
-				<div class="actor-experience-container">
+				<label>
 					{#if $appState.levelingUp}
 						<i class="fas fa-times clickable clickable-faint clickable-red" on:click={() => {
                 appState.abortLevelUp();
 							}}></i>
 					{/if}
-					<input disabled min="0" type="number"
-								 value="{$doc.system.experience.value - $appState.levelUpExperience}"/>
+					<span>{CONFIG.LEOBREW.resources.experience}</span>
 					{#if $appState.levelingUp}
 						<i class="fas fa-check clickable clickable-faint clickable-green" on:click={() => {
                 appState.confirmLevelUp();
@@ -35,6 +34,20 @@
 					{:else}
 						<i class="fas fa-edit clickable clickable-faint clickable-red" on:click={() => {
                 $appState.levelingUp = true;
+							}}></i>
+					{/if}
+				</label>
+				<div class="actor-experience-container">
+					{#if $appState.levelingUp}
+						<i class="fas fa-minus clickable clickable-faint clickable-red" on:click={() => {
+                appState.addExperience(-1)
+							}}></i>
+					{/if}
+					<input disabled min="0" type="number"
+								 value="{$doc.system.experience.value - $appState.levelUpExperience}"/>
+					{#if $appState.levelingUp}
+						<i class="fas fa-plus clickable clickable-faint clickable-red" on:click={() => {
+                appState.addExperience(1)
 							}}></i>
 					{/if}
 				</div>
@@ -69,13 +82,6 @@
   .actor-top-bar {
     display: flex;
     flex-direction: row;
-
-    .actor-image {
-      max-width: 110px;
-      min-width: 110px;
-      margin-right: 0.5rem;
-			border-radius: 5px;
-    }
 
     .actor-resource-bar-container {
       flex: 1;
@@ -115,17 +121,6 @@
           label {
             font-size: 1.5rem;
             line-height: 2rem;
-          }
-
-          input {
-            font-size: 1.25rem;
-            line-height: 1.75rem;
-          }
-
-          .actor-experience-container{
-						display: flex;
-						align-items: center;
-						gap: 0.25rem;
 
             i {
               font-size: 1rem;
@@ -136,7 +131,28 @@
                 opacity: 1.0;
               }
             }
-					}
+          }
+
+          input {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+          }
+
+          .actor-experience-container {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+
+            i {
+              font-size: 1rem;
+              opacity: 0.5;
+              vertical-align: middle;
+
+              &:hover {
+                opacity: 1.0;
+              }
+            }
+          }
         }
 
         .actor-resource-values {

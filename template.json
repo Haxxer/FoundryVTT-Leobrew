@@ -68,9 +68,18 @@
         "value": ""
       },
       "currency": {
-        "gp": 0,
-        "sp": 0,
-        "cp": 0
+        "gp": {
+          "value": 0,
+          "bank": 0
+        },
+        "sp": {
+          "value": 0,
+          "bank": 0
+        },
+        "cp": {
+          "value": 0,
+          "bank": 0
+        }
       }
     }
   },

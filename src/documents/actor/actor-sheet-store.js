@@ -1,4 +1,4 @@
-import { writable, get } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import ActorInventory from "./Tabs/ActorInventory.svelte";
 import ActorTraits from "./Tabs/ActorTraits.svelte";
 import ActorBiography from "./Components/ActorBiography.svelte";
@@ -15,7 +15,7 @@ export default function createActorSheetState(actor) {
   ]
 
   const { set, update, subscribe } = writable({
-    activeTab: tabs[2],
+    activeTab: tabs[0],
     tabs,
     isExpanded: {
       inventory: new Set(),
@@ -29,16 +29,25 @@ export default function createActorSheetState(actor) {
     actor
   });
 
-  function assignSkillPoint(skillId, skillLevel, amount = 1, isAbility = false){
+  function assignSkillPoint(skillId, skillLevel, amount = 1, isAbility = false) {
     update(state => {
-      const pointsSpent = (state.leveledUpSkills?.[skillId]?.pointsSpent ?? 0)
-      const previousLevel = skillLevel + pointsSpent;
-      const newLevel = previousLevel + amount;
+      let pointsSpent = (state.leveledUpSkills?.[skillId]?.pointsSpent ?? 0)
+      let previousLevel = skillLevel + pointsSpent;
+      let newLevel = previousLevel + amount;
+      if (!newLevel) {
+        if (amount < 0) {
+          newLevel--;
+          amount--;
+        } else if (amount > 0) {
+          newLevel++;
+          amount++;
+        }
+      }
       const baseCost = isAbility ? 2 : 1;
       const cost = amount > 0
         ? (newLevel >= 5 ? newLevel : baseCost)
         : (previousLevel >= 5 ? -previousLevel : -baseCost);
-      if(!state.leveledUpSkills[skillId]){
+      if (!state.leveledUpSkills[skillId]) {
         state.leveledUpSkills[skillId] = {
           pointsSpent: 0,
           level: 0,
@@ -53,21 +62,27 @@ export default function createActorSheetState(actor) {
     })
   }
 
-  function canAssignSkillPoint(skillId, skillLevel, isAbility = false){
+  function canAssignSkillPoint(skillId, skillLevel, isAbility = false) {
     const state = get(this);
-    const baseCost = isAbility ? 2 : 1;
-    const pointsSpent = (state.leveledUpSkills?.[skillId]?.pointsSpent ?? 0) + baseCost;
+    const pointsSpent = (state.leveledUpSkills?.[skillId]?.pointsSpent ?? 0) + 1;
     const level = skillLevel + pointsSpent;
-    const cost = level >= 5 ? level : 1;
+    if (!state.initialized && level >= 5) return false;
+    const baseCost = isAbility ? 2 : 1;
+    const cost = level >= 5 ? level : baseCost;
     return (state.levelUpExperience + cost) <= actor.system.experience.value;
   }
 
-  function canSubtractSkillPoint(skillId){
+  function canSubtractSkillPoint(skillId, skillLevel, isAbility = false) {
     const state = get(this);
-    return (state.leveledUpSkills?.[skillId]?.pointsSpent ?? 0) > 0;
+    const currentState = (state.leveledUpSkills?.[skillId]?.pointsSpent ?? 0);
+    const level = skillLevel + currentState;
+    if (isAbility) {
+      return level > -3;
+    }
+    return currentState > 0;
   }
 
-  async function addSkill(skillName){
+  async function addSkill(skillName) {
     await actor.createEmbeddedDocuments("Item", [{
       name: skillName,
       type: "skill",
@@ -83,26 +98,40 @@ export default function createActorSheetState(actor) {
 
   async function confirmLevelUp() {
     const data = get(this);
-    if(!data.initialized){
+    if (!data.initialized) {
       const decision = await TJSDialog.confirm({
         title: "Confirm Levels",
         content: `<p style='text-align: center;'>Are you sure you want to continue? Once you confirm your initial character, you cannot go back.</p>`
-      }, { width: 270, height: "auto" })
-      if(!decision) return;
+      }, { width: 270, height: "auto" });
+      if (!decision) return;
     }
+    const updates = Object.entries(data.leveledUpSkills).map(([_id, skill]) => ({
+      _id, "system.level": skill.level
+    }));
+    const actorUpdates = updates.filter(item => !actor.items.get(item._id))
+      .reduce((acc, attribute) => {
+        acc[`system.abilities.${attribute._id}.value`] = attribute["system.level"];
+        return acc;
+      }, {})
+    const itemUpdates = updates.filter(item => !!actor.items.get(item._id))
     await actor.update({
       "system.experience.value": actor.system.experience.value - data.levelUpExperience,
       "system.experience.spent": actor.system.experience.spent + data.levelUpExperience,
-      "system.experience.initialized": true
+      "system.experience.initialized": true,
+      ...actorUpdates
     });
-    await actor.updateEmbeddedDocuments("Item", Object.entries(data.leveledUpSkills).map(([_id, skill]) => ({
-      _id, "system.level": skill.level
-    })))
+    await actor.updateEmbeddedDocuments("Item", itemUpdates);
     update(state => {
       state.initialized = true;
       return state;
     })
     abortLevelUp();
+  }
+
+  async function addExperience(exp) {
+    await actor.update({
+      "system.experience.value": actor.system.experience.value + exp
+    });
   }
 
   function abortLevelUp() {
@@ -133,6 +162,7 @@ export default function createActorSheetState(actor) {
     subscribe,
     deleteItem,
     addSkill,
+    addExperience,
     assignSkillPoint,
     canAssignSkillPoint,
     canSubtractSkillPoint,

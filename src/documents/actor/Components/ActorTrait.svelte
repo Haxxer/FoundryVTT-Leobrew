@@ -18,7 +18,7 @@
 	<div class="item-header">
 		<div class="item-name">
 			<div class="item-image-container">
-				<img class="item-image" src="{item.img}"/>
+				<img src="{item.img}"/>
 				<img class="clickable clickable-red item-rollable-image" src="icons/dice/d10black.svg" on:click={() => {
           item.roll();
 				}}>
