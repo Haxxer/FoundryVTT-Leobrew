@@ -12,3 +12,4 @@ package-lock.json
 
 # Old stuff
 old/*
+.vite-cache/*
