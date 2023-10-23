@@ -91,6 +91,9 @@
     ],
     "equipment": {
       "templates": ["physical", "descriptive", "categorized"],
+      "addsSkill": false,
+      "skillLabel": "",
+      "skillBonus": 0,
       "tiedSkills": {},
       "armorBonuses": {
         "chest": 0,

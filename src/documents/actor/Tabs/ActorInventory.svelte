@@ -5,14 +5,9 @@
   import CurrencyList from "../Components/CurrencyList.svelte";
 
   const appState = getContext("ApplicationStateStore");
-  const document = getContext("DocumentStore");
+  const doc = getContext("DocumentStore");
 
-  const itemsStore = document.embedded.create("Item", {
-    name: "actorItems",
-    filters: [(item) => {
-      return item.type === "equipment";
-    }]
-  });
+	$: itemsStore = $doc.items.filter(item => item.type === "equipment")
 
 </script>
 
@@ -20,3 +15,14 @@
 	<CurrencyList/>
 	<SearchableItemList {itemsStore} component={ActorEquipment} type="equipment"/>
 </div>
+
+<style lang="scss">
+
+	.inventory {
+		display: flex;
+		flex-direction: column;
+		max-height: calc(100% - 30px);
+		overflow: hidden;
+	}
+
+</style>

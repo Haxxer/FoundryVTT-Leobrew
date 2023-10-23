@@ -18450,8 +18450,6 @@ function create_each_block$8(key_1, ctx) {
 }
 __name(create_each_block$8, "create_each_block$8");
 function create_fragment$q(ctx) {
-  let div3;
-  let div2;
   let div0;
   let input;
   let t0;
@@ -18482,8 +18480,6 @@ function create_fragment$q(ctx) {
   }
   return {
     c() {
-      div3 = element("div");
-      div2 = element("div");
       div0 = element("div");
       input = element("input");
       t0 = space();
@@ -18496,23 +18492,19 @@ function create_fragment$q(ctx) {
       for (let i2 = 0; i2 < each_blocks.length; i2 += 1) {
         each_blocks[i2].c();
       }
-      attr(input, "type", "text");
       attr(input, "placeholder", localize(`LEOBREW.${/*capType*/
       ctx[7]}Search`));
+      attr(input, "type", "text");
       attr(i, "class", "fas fa-plus");
-      attr(a, "class", "item-control item-create svelte-vgdldf");
-      attr(a, "data-type", "equipment");
+      attr(a, "class", "item-control item-create svelte-1l7ks1q");
       attr(a, "data-tooltip", localize(`LEOBREW.${/*capType*/
       ctx[7]}Create`));
-      attr(div0, "class", "items-header svelte-vgdldf");
-      attr(div1, "class", "item-list item-inventory");
-      attr(div2, "class", "items-list inventory-list svelte-vgdldf");
-      attr(div3, "class", "inventory");
+      attr(a, "data-type", "equipment");
+      attr(div0, "class", "items-header svelte-1l7ks1q");
+      attr(div1, "class", "item-list item-inventory svelte-1l7ks1q");
     },
     m(target, anchor) {
-      insert(target, div3, anchor);
-      append(div3, div2);
-      append(div2, div0);
+      insert(target, div0, anchor);
       append(div0, input);
       set_input_value(
         input,
@@ -18524,8 +18516,8 @@ function create_fragment$q(ctx) {
       append(a, i);
       append(a, t1);
       append(a, t2);
-      append(div2, t3);
-      append(div2, div1);
+      insert(target, t3, anchor);
+      insert(target, div1, anchor);
       for (let i2 = 0; i2 < each_blocks.length; i2 += 1) {
         if (each_blocks[i2]) {
           each_blocks[i2].m(div1, null);
@@ -18585,7 +18577,11 @@ function create_fragment$q(ctx) {
     },
     d(detaching) {
       if (detaching)
-        detach(div3);
+        detach(div0);
+      if (detaching)
+        detach(t3);
+      if (detaching)
+        detach(div1);
       for (let i2 = 0; i2 < each_blocks.length; i2 += 1) {
         each_blocks[i2].d();
       }
@@ -19297,6 +19293,7 @@ class CurrencyList extends SvelteComponent {
   }
 }
 __name(CurrencyList, "CurrencyList");
+const ActorInventory_svelte_svelte_type_style_lang = "";
 function create_fragment$n(ctx) {
   let div;
   let currencylist;
@@ -19320,7 +19317,7 @@ function create_fragment$n(ctx) {
       create_component(currencylist.$$.fragment);
       t = space();
       create_component(searchableitemlist.$$.fragment);
-      attr(div, "class", "inventory");
+      attr(div, "class", "inventory svelte-lqaryj");
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -27329,8 +27326,90 @@ function registerSettings() {
 }
 __name(registerSettings, "registerSettings");
 async function runMigrations() {
+  for (const [version, migration] of Object.entries(migrations)) {
+    try {
+      await migration(version);
+    } catch (err) {
+      console.error(err);
+      ui.notifications.error(`Something went wrong when migrating to version ${version}. Please check the console for the error!`);
+    }
+  }
 }
 __name(runMigrations, "runMigrations");
+const migrations = {
+  "1.0.0": async (version) => {
+    for (const actor of Array.from(game.actors)) {
+      const actorUpdates = {};
+      const skillItems = [];
+      if (actor.system?.skills) {
+        for (const skill of Object.values(actor.system.skills)) {
+          let category = "";
+          let skillName = skill.label;
+          if (skillName.includes(" - ")) {
+            const split = skillName.split(" - ");
+            category = split[0];
+            skillName = split.slice(1).join(": ");
+          } else if (skillName.includes(": ")) {
+            const split = skillName.split(": ");
+            category = split[0];
+            skillName = split.slice(1).join(": ");
+          }
+          skillItems.push({
+            name: skillName,
+            type: "skill",
+            system: {
+              category,
+              level: skill.value,
+              isMagic: skill.isMagic
+            }
+          });
+        }
+        actorUpdates["system.-=skills"] = null;
+        await actor.createEmbeddedDocuments("Item", skillItems);
+      }
+      const itemsToUpdate = [];
+      const reg = new RegExp("(\\d+) *(\\w+)*", "g");
+      const actorSources = actor.items._source;
+      for (const invalidId of Array.from(actor.items.invalidDocumentIds)) {
+        const invalidSource = actorSources.find((source) => source._id === invalidId);
+        if (invalidSource.type !== "item")
+          continue;
+        const update2 = {
+          _id: invalidId,
+          type: "equipment"
+        };
+        if (invalidSource.price && invalidSource.price.search(reg) > -1) {
+          const match = [...invalidSource.price.matchAll(reg)];
+          update2["price"] = {
+            [match?.[2] ?? "cp"]: Number(match[0])
+          };
+        }
+        itemsToUpdate.push(update2);
+      }
+      await actor.updateEmbeddedDocuments("Item", itemsToUpdate);
+      if (hasProperty(actor, "system.currency.gp") || hasProperty(actor, "system.currency.sp")) {
+        actorUpdates["system.currency"] = {
+          gp: {
+            value: getProperty(actor, "system.currency.gp") ?? 0,
+            bank: 0
+          },
+          sp: {
+            value: getProperty(actor, "system.currency.sp") ?? 0,
+            bank: 0
+          },
+          cp: {
+            value: getProperty(actor, "system.currency.cp") ?? 0,
+            bank: 0
+          }
+        };
+      }
+      await actor.update({
+        "system.experience.initialized": true,
+        ...actorUpdates
+      });
+    }
+  }
+};
 function highlightCriticalSuccessFailure(message, html) {
   if (!message.isRoll || !message.isContentVisible)
     return;
@@ -27511,7 +27590,6 @@ Hooks.once("setup", () => {
 });
 Hooks.once("ready", () => {
   registerChatListeners();
-  game.actors.getName("Test").sheet.render(true);
   if (!game.user.isGM)
     return;
   runMigrations();

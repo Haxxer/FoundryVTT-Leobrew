@@ -1,53 +1,74 @@
 <script>
 
-  import { getContext } from "svelte";
-  import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
-  import { writable } from "svelte/store";
-  import { capitalizeFirstLetter } from "../../../lib/lib.js";
+	import { getContext } from "svelte";
+	import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
+	import { writable } from "svelte/store";
+	import { capitalizeFirstLetter } from "../../../lib/lib.js";
 
-  const appState = getContext("ApplicationStateStore");
-  const document = getContext("DocumentStore");
+	const appState = getContext("ApplicationStateStore");
 
-  export let itemsStore;
-  export let component;
-  export let type;
+	export let itemsStore;
+	export let component;
+	export let type;
 
-  const capType = capitalizeFirstLetter(type);
+	const capType = capitalizeFirstLetter(type);
 
-  let search = writable("");
-  $: items = [...$itemsStore].filter(item => {
-    return (!$search || $search.toLowerCase().split(" ").every(part => item.name.toLowerCase().includes(part)));
-  });
+	let search = writable("");
+	let filters = writable({
+		"system.equipped": null
+	});
+	$: items = itemsStore.filter(item => {
+		return $search.toLowerCase().split(" ").every(part => {
+			return (!part || item.name.toLowerCase().includes(part))
+				&& Object.entries($filters).every(([key, filter]) => {
+					return filter === null || getProperty(item, key) === filter;
+				});
+		});
+	});
 
 </script>
 
-<div class="inventory">
 
-	<div class="items-list inventory-list">
+<div class="items-header">
 
-		<div class="items-header">
+	<input bind:value={$search} placeholder="{localize(`LEOBREW.${capType}Search`)}" type="text"/>
 
-			<input type="text" placeholder="{localize(`LEOBREW.${capType}Search`)}" bind:value={$search}/>
+	{#if type === "equipment"}
 
-			<a class="item-control item-create" data-type="equipment" data-tooltip='{localize(`LEOBREW.${capType}Create`)}'
-				 on:click={async () => {
+		<a class="item-control item-filter" data-type="equipment"
+			 on:click={async () => {
+          filters.update(val => {
+						val["system.equipped"] = val["system.equipped"] === null
+							? true
+							: (val["system.equipped"] === false ? null : false);
+
+          	return val;
+					});
+				}}
+		>
+			<i class="fas"
+				 class:inactive-filter={$filters["system.equipped"] === null}
+				 class:fa-shield-alt={!$filters["system.equipped"]}
+				 class:fa-shield={$filters["system.equipped"]}
+			></i>
+		</a>
+	{/if}
+
+	<a class="item-control item-create" data-tooltip='{localize(`LEOBREW.${capType}Create`)}' data-type="equipment"
+		 on:click={async () => {
           const [item] = await $appState.actor.createEmbeddedDocuments("Item", [{ name: `New ${capType}`, type }]);
           item.sheet.render(true);
 				}}
-			>
-				<i class="fas fa-plus"></i> {localize("LEOBREW.Add")}
-			</a>
+	>
+		<i class="fas fa-plus"></i> {localize("LEOBREW.Add")}
+	</a>
 
-		</div>
+</div>
 
-		<div class="item-list item-inventory">
-			{#each items as item (item.id)}
-				<svelte:component this={component} {item}/>
-			{/each}
-		</div>
-
-	</div>
-
+<div class="item-list item-inventory">
+	{#each items as item (item.id)}
+		<svelte:component this={component} {item}/>
+	{/each}
 </div>
 
 <style lang="scss">
@@ -70,11 +91,20 @@
       font-size: 1rem;
     }
 
-    .item-create {
+    .item-create, .item-filter {
       flex: 1 0 auto;
       text-align: center;
-      margin-left: 1rem;
+      margin-left: 0.9rem;
     }
+  }
+
+	.inactive-filter {
+		opacity: 0.5;
+	}
+
+  .item-inventory {
+    flex: 1;
+    overflow-y: scroll;
   }
 
 </style>

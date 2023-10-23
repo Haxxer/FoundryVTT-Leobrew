@@ -57,10 +57,8 @@ export default class ContextMenu extends FormApplication{
 		data.menuItems = this.menuItems;
     if(this.selectedItem !== false) {
       data.menuItems.forEach(item => {
-        console.log(this.selectedItem)
         if (item.id === this.selectedItem) {
           item.class = "selected";
-          console.log(item);
         }
       })
     }

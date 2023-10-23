@@ -6,6 +6,7 @@ import * as chat from "./utils/chat.js";
 import { registerChatListeners } from "./utils/chat.js";
 
 Hooks.once("init", () => {
+	debugger;
   setupSystem();
 });
 
@@ -15,7 +16,8 @@ Hooks.once("setup", () => {
 
 Hooks.once("ready", () => {
   registerChatListeners();
-  game.actors.getName("Test").sheet.render(true);
+  game.actors.getName("Ajal Fajir").sheet.render(true);
+  game.actors.getName("Ajal Fajir").items.getName("Round Shield").sheet.render(true);
   if (!game.user.isGM) return;
   runMigrations();
 });

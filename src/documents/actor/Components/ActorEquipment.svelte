@@ -18,7 +18,7 @@
 	<div class="item-header">
 		<div class="item-name">
 			<div class="item-image-container">
-				<img src="{item.img}"/>
+				<img class="item-image" src="{item.img}"/>
 				<img class="clickable clickable-red item-rollable-image" src="icons/dice/d10black.svg" on:click={() => {
           item.roll();
 				}}>
@@ -44,7 +44,7 @@
 				 class:item-equipped={item.system.equipped} on:click={() => {
 					item.update({ "system.equipped": !item.system.equipped });
 				}}>
-				<i class="fas fa-shield-alt"></i>
+				<i class="fas" class:fa-shield-alt={!item.system.equipped} class:fa-shield={item.system.equipped}></i>
 			</a>
 			<a class="item-control item-edit" data-tooltip={localize("LEOBREW.EquipmentEdit")} on:click={() => {
         item.sheet.render(true);

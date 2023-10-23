@@ -53,7 +53,7 @@ export async function d10Roll({
 
   }
 
-  if(previousRollData?.subSkill?.isWeaponSkill && !fumbleCritical){
+  if(previousRollData?.isAttack && !fumbleCritical){
     messageData.weaponSkill = true;
     if(rollToRound.total >= 15) {
       messageData.hitLocation = "Instant Kill"

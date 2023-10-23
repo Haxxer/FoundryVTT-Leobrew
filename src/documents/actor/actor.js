@@ -32,44 +32,9 @@ export default class LeobrewActor extends Actor {
       })
   }
 
-  getBonusForSkill(skill, subSkill = false){
-    return this.equippedItems
-      .filter(item => item.system.tiedSkills[skill.id])
-      .reduce((totalBonus, item) => {
-        const tiedSkillConfig = item.system.tiedSkills[skill.id];
-        tiedSkillConfig
-          .filter(tiedSkill => {
-            if(subSkill){
-              return  subSkill === tiedSkill.name || !tiedSkill.isSubSkill
-            }
-            return !tiedSkill.isSubSkill;
-          })
-          .forEach(tiedSkill => {
-          if(tiedSkill.bonus) {
-            totalBonus += tiedSkill.bonus;
-          }
-        });
-        return totalBonus;
-      }, 0);
-  }
-
-  getSubSkills(skill){
-    return this.equippedItems
-      .filter(item => item.system.tiedSkills[skill.id] && item.system.tiedSkills[skill.id].some(tiedSkill => {
-        return tiedSkill.isSubSkill;
-      }))
-      .map(item => {
-        return item.system.tiedSkills[skill.id]
-          .filter(tiedSkill => tiedSkill.isSubSkill);
-      })
-      .deepFlatten()
-      .map(subSkill => foundry.utils.deepClone(subSkill))
-      .map(subSkill => {
-        subSkill.bonus += skill.system.level;
-        return subSkill;
-      })
-      .sort((a, b) => a.name > b.name);
-  }
+	get equipmentSkills() {
+		return this.equippedItems.filter(item => item.system.addsSkill);
+	}
 
   // Prepare Player type specific data
   prepareDerivedData() {

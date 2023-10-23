@@ -2,28 +2,31 @@
 	import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
   import { getContext, onDestroy } from "svelte";
   import ActorSkill from "./Components/ActorSkill.svelte";
+	import ActorEquipmentSkill from "./Components/ActorEquipmentSkill.svelte";
 
   const appState = getContext("ApplicationStateStore");
   const doc = getContext("DocumentStore");
 
-  const allSkills = doc.embedded.create("Item", {
-    name: "skills",
-		filters: [(item) => {
-      return item.type === "skill";
-		}]
-	});
-
-	$: categorizedSkills = Object.entries([...$allSkills]
-      .reduce((acc, skill) => {
-        if (!acc[skill.system.category]) acc[skill.system.category] = []
-        acc[skill.system.category].push(skill)
-        acc[skill.system.category].sort((a, b) => {
-          return b.name > a.name ? -1 : 1;
-        })
+	$: categorizedSkills = Object.entries($doc.items
+      .reduce((acc, item) => {
+				if(item.type === "skill") {
+					if (!acc[item.system.category]) acc[item.system.category] = []
+					acc[item.system.category].push(item)
+					acc[item.system.category].sort((a, b) => {
+						return b.name > a.name ? -1 : 1;
+					})
+				}else if(item.type === "equipment" && item.system.addsSkill && item.system.equipped) {
+					if (!acc["Equipment"]) acc["Equipment"] = []
+					acc["Equipment"].push(item)
+					acc["Equipment"].sort((a, b) => {
+						return b.name > a.name ? -1 : 1;
+					})
+				}
         return acc;
-      }, {})).sort((a, b) => {
-      return b[0] > a[0] ? -1 : 1;
-    });
+      }, {}))
+			.sort((a, b) => {
+				return b[0] > a[0] ? -1 : 1;
+			});
 
   let newSkillName = ""
 
@@ -65,7 +68,11 @@
 			<span class="skill-category-title modesto">{category}</span>
 
 			{#each skills as skill}
-				<ActorSkill {skill}/>
+				{#if skill.type === "skill"}
+					<ActorSkill {skill}/>
+				{:else}
+					<ActorEquipmentSkill {skill}/>
+				{/if}
 			{/each}
 
 		{/each}

@@ -1,153 +1,300 @@
 import { d10Roll } from "../../utils/d10.js";
 import { promptSituationalBonus } from "../../lib/lib.js";
+import { get, writable } from "svelte/store";
 
 export default class LeobrewItem extends Item {
 
+	#stores;
 
-  getArmorBonus(bodyPart){
-    const bonus = this.system.armorBonuses?.[bodyPart];
-    return this.system.equipped && bonus ? bonus : 0;
-  }
+	constructor(...args) {
+		super(...args);
+		this.#stores = {
+			bonus: writable(0),
+			subSkills: writable([])
+		}
+	}
 
-  /**
-   * @param {Object} options            Options which configure how ability tests are rolled
-   * @return {Promise<d10Roll>|Boolean} A Promise which resolves to the created Roll instance
-   */
-  roll(options = {}) {
+	get stores() {
+		return this.#stores;
+	}
 
-    if (!this.parent) {
-      throw new Error("Cannot roll unowned items!")
-    }
+	get bonus() {
+		return get(this.#stores.bonus);
+	}
 
-    switch (this.type) {
-      case "skill":
-        return this.#rollSkill(options);
-      case "trait":
-        return this.#useTrait(options);
-      case "equipment":
-        return this.#useEquipment(options);
-    }
+	get bonusStore(){
+		return this.#stores.bonus;
+	}
 
-    return false;
-  }
+	get subSkills() {
+		return get(this.#stores.subSkills);
+	}
 
-  async #rollSkill(options = {}) {
+	get subSkillsStore(){
+		return this.#stores.subSkills;
+	}
 
-    // Construct parts
-    const parts = ["@value"];
-    const data = {
-      value: this.system.level,
-      bonus: this.parent.getBonusForSkill(this, options?.subSkill?.name)
-    };
+	// Prepare Player type specific data
+	prepareDerivedData() {
+		super.prepareDerivedData();
+		this._prepareDerivedBonuses();
+	}
 
-    if (data.bonus) {
-      parts.push("@bonus")
-    }
+	_prepareDerivedBonuses() {
+		if(!this.parent) return;
+		if(this.type === "skill") {
+			this.#stores.bonus.set(this.getBonus());
+			this.#stores.subSkills.set(this.getSubSkills());
+		}else if(this.type === "equipment"){
+			this.getTiedSkills().forEach(skill => {
+				skill.prepareDerivedData();
+			});
+		}
+	}
 
-    // Add provided extra roll parts now because they will get clobbered by mergeObject below
-    if (options.parts?.length > 0) {
-      parts.push(...options.parts);
-    }
+	getTiedSkills() {
+		return Object.keys(this.system.tiedSkills ?? {})
+			.map(id => this.parent.items.get(id))
+			.filter(Boolean);
+	}
 
-    let name = this.name;
+	getBonus(subSkillName){
+		return this.parent.equippedItems
+			.filter(item => item.system.tiedSkills[this.id])
+			.reduce((totalBonus, item) => {
+				const tiedSkillConfig = item.system.tiedSkills[this.id];
+				tiedSkillConfig
+					.filter(tiedSkill => {
+						if(subSkillName){
+							return  subSkillName === tiedSkill.name || !tiedSkill.isSubSkill
+						}
+						return !tiedSkill.isSubSkill;
+					})
+					.forEach(tiedSkill => {
+						if(tiedSkill.bonus) {
+							totalBonus += tiedSkill.bonus;
+						}
+					});
+				return totalBonus;
+			}, 0);
+	}
 
-    if (options?.event?.ctrlKey) {
-      options.situationalBonus = await promptSituationalBonus(name);
-    }
+	getSubSkills(){
+		return this.parent.equippedItems
+			.filter(item => item.system.tiedSkills[this.id] && item.system.tiedSkills[this.id].some(tiedSkill => {
+				return tiedSkill.isSubSkill;
+			}))
+			.map(item => {
+				return item.system.tiedSkills[this.id]
+					.filter(tiedSkill => tiedSkill.isSubSkill);
+			})
+			.deepFlatten()
+			.map(subSkill => foundry.utils.deepClone(subSkill))
+			.map(subSkill => {
+				subSkill.bonus += this.system.level + this.bonus;
+				return subSkill;
+			})
+			.sort((a, b) => a.name > b.name);
+	}
 
-    if (options?.extraTitle) {
-      name += ` (${options?.extraTitle})`
-    }
+	getArmorBonus(bodyPart) {
+		const bonus = this.system.armorBonuses?.[bodyPart];
+		return this.system.equipped && bonus ? bonus : 0;
+	}
 
-    let title = game.i18n.format("LEOBREW.SkillRollTitle", { category: this.system.category, name })
+	/**
+	 * @param {Object} options            Options which configure how ability tests are rolled
+	 * @return {Promise<d10Roll>|Boolean} A Promise which resolves to the created Roll instance
+	 */
+	roll(options = {}) {
 
-    if (options?.extraFlavor) {
-      title += ` (${options?.extraFlavor})`;
-    }
+		if (!this.parent) {
+			throw new Error("Cannot roll unowned items!")
+		}
 
-    // Roll and return
-    const rollData = foundry.utils.mergeObject(options, {
-      parts,
-      data,
-      title,
-      messageData: {
-        speaker: options.speaker || ChatMessage.getSpeaker({ actor: this.parent }),
-        "flags.leobrew.roll": {
-          type: "skill",
-          source: this.uuid,
-          extraTitle: options?.extraTitle ?? "",
-          subSkill: options?.subSkill ?? null
-        }
-      }
-    });
+		if(this.type === "skill"){
+			return this.#rollSkill(options);
+		}else if(this.type === "trait"){
+			return this.#useTrait(options);
+		}else if(this.type === "equipment"){
+			if(this.type === "equipment" && options.asSkill){
+				return this.#rollEquipment(options);
+			}
+			return this.#useEquipment(options);
+		}
 
-    return d10Roll(rollData);
+		return false;
+	}
 
-  }
+	async #rollSkill(options = {}) {
 
-  async #useTrait(options = {}) {
+		// Construct parts
+		const parts = ["@value"];
+		const data = {
+			value: this.system.level,
+			bonus: this.getBonus(options?.subSkill?.name)
+		};
 
-    const uses = this.system.uses;
-    if (uses.max > 0) {
+		if (data.bonus) {
+			parts.push("@bonus")
+		}
 
-      if (uses.value <= 0) {
-        ui.notifications.error(`You can't use the "${this.name}" trait - it has no uses left!`)
-        return false;
-      }
+		// Add provided extra roll parts now because they will get clobbered by mergeObject below
+		if (options.parts?.length > 0) {
+			parts.push(...options.parts);
+		}
 
-      await this.update({
-        "system.uses.value": uses.value - 1
-      });
+		let name = this.name;
 
-    }
+		if (options?.event?.ctrlKey) {
+			options.situationalBonus = await promptSituationalBonus(name);
+		}
 
-    return this.#showDescription(options);
+		if (options?.extraTitle) {
+			name += ` (${options?.extraTitle})`
+		}
 
-  }
+		let title = game.i18n.format("LEOBREW.SkillRollTitle", { category: this.system.category, name })
 
-  async #useEquipment(options = {}) {
+		if (options?.extraFlavor) {
+			title += ` (${options?.extraFlavor})`;
+		}
 
-    if (this.system.usesQuantity) {
+		// Roll and return
+		const rollData = foundry.utils.mergeObject(options, {
+			parts,
+			data,
+			title,
+			messageData: {
+				speaker: options.speaker || ChatMessage.getSpeaker({ actor: this.parent }),
+				"flags.leobrew.roll": {
+					type: "skill",
+					source: this.uuid,
+					extraTitle: options?.extraTitle ?? "",
+					isAttack: options?.isAttack ?? null
+				}
+			}
+		});
 
-      if (this.system.quantity <= 0) {
-        ui.notifications.error(`You can't use the "${this.name}" item - it has no quantity left!`)
-        return false;
-      }
+		return d10Roll(rollData);
 
-      await this.update({
-        "system.quantity": this.system.quantity - 1
-      });
+	}
 
-    }
+	async #useTrait(options = {}) {
 
-    return this.#showDescription(options);
+		const uses = this.system.uses;
+		if (uses.max > 0) {
 
-  }
+			if (uses.value <= 0) {
+				ui.notifications.error(`You can't use the "${this.name}" trait - it has no uses left!`)
+				return false;
+			}
 
-  async #showDescription({ rollMode, createMessage = true } = {}) {
+			await this.update({
+				"system.uses.value": uses.value - 1
+			});
 
-    // Render the chat card template
-    const templateData = {
-      actor: this.parent,
-      item: this
-    };
+		}
 
-    const html = await renderTemplate("systems/leobrew/templates/chat/item-card.html", templateData);
+		return this.#showDescription(options);
 
-    // Create the ChatMessage data object
-    const chatData = {
-      user: game.userId,
-      type: CONST.CHAT_MESSAGE_TYPES.OTHER,
-      content: html,
-      speaker: ChatMessage.getSpeaker({ actor: this.parent })
-    };
+	}
 
-    // Apply the roll mode to adjust message visibility
-    ChatMessage.applyRollMode(chatData, rollMode || game.settings.get("core", "rollMode"));
+	async #rollEquipment(options = {}) {
 
-    // Create the Chat Message or return its data
-    return createMessage ? ChatMessage.create(chatData) : chatData;
+		// Construct parts
+		const parts = ["@value"];
+		const data = {
+			value: this.system.skillBonus
+		};
 
-  }
+		if (data.bonus) {
+			parts.push("@bonus")
+		}
+
+		// Add provided extra roll parts now because they will get clobbered by mergeObject below
+		if (options.parts?.length > 0) {
+			parts.push(...options.parts);
+		}
+
+		let name = this.name;
+
+		if (options?.event?.ctrlKey) {
+			options.situationalBonus = await promptSituationalBonus(name);
+		}
+
+		if (this.system.skillLabel) {
+			name += ` (${this.system.skillLabel})`
+		}
+
+		let title = game.i18n.format("LEOBREW.SkillRollTitle", { category: "Equipment", name })
+
+		if (options?.extraFlavor) {
+			title += ` (${options?.extraFlavor})`;
+		}
+
+		// Roll and return
+		const rollData = foundry.utils.mergeObject(options, {
+			parts,
+			data,
+			title,
+			messageData: {
+				speaker: options.speaker || ChatMessage.getSpeaker({ actor: this.parent }),
+				"flags.leobrew.roll": {
+					type: "skill",
+					source: this.uuid,
+					extraTitle: options?.extraTitle ?? ""
+				}
+			}
+		});
+
+		return d10Roll(rollData);
+
+	}
+
+	async #useEquipment(options = {}) {
+
+		if (this.system.usesQuantity) {
+
+			if (this.system.quantity <= 0) {
+				ui.notifications.error(`You can't use the "${this.name}" item - it has no quantity left!`)
+				return false;
+			}
+
+			await this.update({
+				"system.quantity": this.system.quantity - 1
+			});
+
+		}
+
+		return this.#showDescription(options);
+
+	}
+
+	async #showDescription({ rollMode, createMessage = true } = {}) {
+
+		// Render the chat card template
+		const templateData = {
+			actor: this.parent,
+			item: this
+		};
+
+		const html = await renderTemplate("systems/leobrew/templates/chat/item-card.html", templateData);
+
+		// Create the ChatMessage data object
+		const chatData = {
+			user: game.userId,
+			type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+			content: html,
+			speaker: ChatMessage.getSpeaker({ actor: this.parent })
+		};
+
+		// Apply the roll mode to adjust message visibility
+		ChatMessage.applyRollMode(chatData, rollMode || game.settings.get("core", "rollMode"));
+
+		// Create the Chat Message or return its data
+		return createMessage ? ChatMessage.create(chatData) : chatData;
+
+	}
 
 }
