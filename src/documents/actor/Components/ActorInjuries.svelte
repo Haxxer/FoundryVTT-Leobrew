@@ -2,9 +2,8 @@
 
   import { getContext } from "svelte";
   import ContextMenu from "../../../utils/context-menu.js";
-  import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
+  import { localize } from "#runtime/svelte/helper";
 
-  const appState = getContext("ApplicationStateStore");
   const doc = getContext("DocumentStore");
 
   $: armorBonuses = $doc.armorBonuses;

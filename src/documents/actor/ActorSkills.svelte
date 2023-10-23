@@ -1,6 +1,6 @@
 <script>
-	import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
-  import { getContext, onDestroy } from "svelte";
+	import { localize } from "#runtime/svelte/helper";
+  import { getContext } from "svelte";
   import ActorSkill from "./Components/ActorSkill.svelte";
 	import ActorEquipmentSkill from "./Components/ActorEquipmentSkill.svelte";
 

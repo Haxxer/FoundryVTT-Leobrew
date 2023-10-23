@@ -1,7 +1,7 @@
 <script>
-  import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
+  import { localize } from "#runtime/svelte/helper";
+  import { TJSDialog } from "#runtime/svelte/application";
   import { getContext } from "svelte";
-  import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
   import { slide } from 'svelte/transition'
   import { sineInOut } from 'svelte/easing'
 

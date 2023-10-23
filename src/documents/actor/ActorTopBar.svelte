@@ -20,7 +20,7 @@
 		<div class="actor-resource-bar">
 
 			<div class="actor-resource">
-				<label>
+				<span>
 					{#if $appState.levelingUp}
 						<i class="fas fa-times clickable clickable-faint clickable-red" on:click={() => {
                 appState.abortLevelUp();
@@ -36,7 +36,7 @@
                 $appState.levelingUp = true;
 							}}></i>
 					{/if}
-				</label>
+				</span>
 				<div class="actor-experience-container">
 					{#if $appState.levelingUp}
 						<i class="fas fa-minus clickable clickable-faint clickable-red" on:click={() => {
@@ -56,7 +56,7 @@
 			{#each Object.entries($doc.system.resources) as [key, resource], index (resource)}
 				{#if resource.enabled}
 					<div class="actor-resource">
-						<label>{CONFIG.LEOBREW.resources[key]}</label>
+						<span>{CONFIG.LEOBREW.resources[key]}</span>
 						<div class="actor-resource-values">
 							<input type="number" bind:value="{resource.value}" min="0">
 							<span>/</span>
@@ -118,7 +118,7 @@
             line-height: 1.5rem;
           }
 
-          label {
+          span {
             font-size: 1.5rem;
             line-height: 2rem;
 

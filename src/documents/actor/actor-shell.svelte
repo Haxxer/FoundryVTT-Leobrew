@@ -1,13 +1,9 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
-  import { localize } from '@typhonjs-fvtt/runtime/svelte/helper';
+  import { ApplicationShell } from "#runtime/svelte/component/core";
   import { setContext } from "svelte";
-  import { getContext } from "svelte";
-  import Tabs from "../../svelte-components/Tabs.svelte";
   import ActorTopBar from "./ActorTopBar.svelte";
-  import ActorSkills from "./ActorSkills.svelte";
   import ActorMainBody from "./ActorMainBody.svelte";
 
 
@@ -16,7 +12,6 @@
   export let applicationStateStore;
   setContext("DocumentStore", documentStore);
   setContext("ApplicationStateStore", applicationStateStore);
-  const appState = getContext("ApplicationStateStore");
 
 </script>
 

@@ -1,9 +1,8 @@
 <script>
 
   import { getContext } from "svelte";
-  import { TJSProseMirror } from "@typhonjs-fvtt/svelte-standard/component";
+  import { TJSProseMirror } from "#standard/component";
 
-  const appState = getContext("ApplicationStateStore");
   const doc = getContext("DocumentStore");
 
   let content = $doc.system.description.value;

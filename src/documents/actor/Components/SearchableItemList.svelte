@@ -1,9 +1,10 @@
 <script>
 
+	import { localize } from "#runtime/svelte/helper";
+	import { capitalizeFirstLetter } from "~/lib/lib.js";
+
 	import { getContext } from "svelte";
-	import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
 	import { writable } from "svelte/store";
-	import { capitalizeFirstLetter } from "../../../lib/lib.js";
 
 	const appState = getContext("ApplicationStateStore");
 

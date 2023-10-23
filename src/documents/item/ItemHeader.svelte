@@ -1,12 +1,11 @@
 <script>
 
-  import { localize } from "@typhonjs-fvtt/runtime/svelte/helper";
+  import { localize } from "#runtime/svelte/helper";
   import { getContext } from "svelte";
   import { updateDoc } from "../base/UpdateDoc.js";
-  import { capitalizeFirstLetter } from "../../lib/lib.js";
+  import { capitalizeFirstLetter } from "~/lib/lib.js";
   import DocumentImage from "../../svelte-components/DocumentImage.svelte";
 
-  const appState = getContext("ApplicationStateStore");
   const doc = getContext("DocumentStore");
 
   const capType = capitalizeFirstLetter($doc.type);

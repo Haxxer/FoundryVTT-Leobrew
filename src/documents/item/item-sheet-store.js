@@ -1,4 +1,4 @@
-import { writable, get } from 'svelte/store';
+import { writable } from 'svelte/store';
 export default function createItemSheetState(item) {
 
   const { set, update, subscribe } = writable({

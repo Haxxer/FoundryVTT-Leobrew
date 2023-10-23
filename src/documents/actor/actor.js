@@ -1,6 +1,6 @@
 import DocumentSheetHelper from "../../lib/helper.js";
-import { d10Roll } from "../../utils/d10.js";
-import { promptSituationalBonus } from "../../lib/lib.js";
+import { d10Roll } from "~/utils/d10.js";
+import { promptSituationalBonus } from "~/lib/lib.js";
 
 export default class LeobrewActor extends Actor {
 

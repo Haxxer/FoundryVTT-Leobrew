@@ -2,8 +2,6 @@
   import { getContext } from "svelte";
   import ActorSkills from "./ActorSkills.svelte";
   import Tabs from "../../svelte-components/Tabs.svelte";
-  import ActorTraits from "./Tabs/ActorTraits.svelte";
-  import ActorInventory from "./Tabs/ActorInventory.svelte";
 
   const appState = getContext("ApplicationStateStore");
 

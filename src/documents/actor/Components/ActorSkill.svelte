@@ -1,10 +1,9 @@
 <script>
 	import { getContext } from "svelte";
-	import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
-	import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
+	import { TJSDialog } from "#runtime/svelte/application";
+	import { TJSDocument } from '#runtime/svelte/store/fvtt/document';
 
 	const appState = getContext("ApplicationStateStore");
-	const doc = getContext("DocumentStore");
 
 	export let skill;
 
@@ -12,8 +11,10 @@
 
 	let canAssignSkillPoint = false;
 	let canSubtractSkillPoint = false;
-	let subSkills = skill.subSkillsStore;
-	let skillBonus = skill.bonusStore;
+
+	let subSkills = $skillDoc.stores.subSkills;
+	let skillBonus = $skillDoc.stores.bonus;
+	$: console.log(subSkills)
 	$: {
 		$appState;
 		$skillDoc;
@@ -45,12 +46,12 @@
 		></i>
 	{/if}
 	<input
-		data-tooltip={$skillBonus ? `Base ${skill.system.level} (${$skillBonus} bonus)` : ""}
+		data-tooltip={skillBonus ? `Base ${skill.system.level} (${skillBonus} bonus)` : ""}
 		disabled
 		max="10"
 		min="1"
 		type="number"
-		value={$appState.levelingUp ? skill.system.level + pointsSpent : skill.system.level + $skillBonus}
+		value={$appState.levelingUp ? skill.system.level + pointsSpent : skill.system.level + skillBonus}
 	/>
 	{#if $appState.levelingUp}
 		<i
@@ -86,9 +87,9 @@
 		}}></i>
 </div>
 
-{#if $subSkills.length}
+{#if subSkills.length}
 
-	{#each $subSkills as subSkill}
+	{#each subSkills as subSkill}
 
 		<div class="actor-skill actor-subskill">
 
@@ -97,7 +98,7 @@
 				max="10"
 				min="1"
 				type="number"
-				value={subSkill.bonus + $skillBonus + pointsSpent}
+				value={subSkill.bonus + skillBonus + pointsSpent}
 			/>
 			<div class="skill-label">
 				<label class="skill-name clickable clickable-red" on:click={(event) => { skill.roll({

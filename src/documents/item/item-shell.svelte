@@ -1,9 +1,8 @@
 <svelte:options accessors={true} />
 
 <script>
-  import { ApplicationShell } from "@typhonjs-fvtt/runtime/svelte/component/core";
+  import { ApplicationShell } from "#runtime/svelte/component/core";
   import { setContext } from "svelte";
-  import { getContext } from "svelte";
   import ItemHeader from "./ItemHeader.svelte";
   import Equipment from "./Equipment/equipment-shell.svelte";
   import Skill from "./Skill/skill-shell.svelte";
@@ -14,7 +13,6 @@
   export let applicationStateStore;
   setContext("DocumentStore", documentStore);
   setContext("ApplicationStateStore", applicationStateStore);
-  const appState = getContext("ApplicationStateStore");
 
   let component;
   $: {

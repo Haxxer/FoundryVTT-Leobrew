@@ -1,17 +1,23 @@
-import { d10Roll } from "../../utils/d10.js";
-import { promptSituationalBonus } from "../../lib/lib.js";
-import { get, writable } from "svelte/store";
+import { d10Roll } from "~/utils/d10.js";
+import { promptSituationalBonus } from "~/lib/lib.js";
+import { propertyStore } from "#runtime/svelte/store/writable-derived";
 
 export default class LeobrewItem extends Item {
 
+	#derived = {
+		bonus: 0,
+		subSkills: []
+	};
+
+	/** @type {ActorStores} */
 	#stores;
 
 	constructor(...args) {
 		super(...args);
 		this.#stores = {
-			bonus: writable(0),
-			subSkills: writable([])
-		}
+			bonus: propertyStore(this, "bonus"),
+			subSkills: propertyStore(this, "subSkills"),
+		};
 	}
 
 	get stores() {
@@ -19,19 +25,19 @@ export default class LeobrewItem extends Item {
 	}
 
 	get bonus() {
-		return get(this.#stores.bonus);
+		return this.#derived.bonus;
 	}
 
-	get bonusStore(){
-		return this.#stores.bonus;
+	set bonus(newValue) {
+		this.#stores.bonus.set(newValue);
 	}
 
 	get subSkills() {
-		return get(this.#stores.subSkills);
+		return this.#derived.subSkills;
 	}
 
-	get subSkillsStore(){
-		return this.#stores.subSkills;
+	set subSkills(newValue) {
+		this.#stores.subSkills.set(newValue);
 	}
 
 	// Prepare Player type specific data
@@ -43,8 +49,8 @@ export default class LeobrewItem extends Item {
 	_prepareDerivedBonuses() {
 		if(!this.parent) return;
 		if(this.type === "skill") {
-			this.#stores.bonus.set(this.getBonus());
-			this.#stores.subSkills.set(this.getSubSkills());
+			this.bonus = this.getBonus();
+			this.subSkills = this.getSubSkills();
 		}else if(this.type === "equipment"){
 			this.getTiedSkills().forEach(skill => {
 				skill.prepareDerivedData();
@@ -298,3 +304,9 @@ export default class LeobrewItem extends Item {
 	}
 
 }
+
+/**
+ * @typedef ActorStores
+ *
+ * @property {import('svelte/store').Writable<number>} Value 1
+ */

@@ -1,12 +1,11 @@
 <script>
 
   import { getContext } from "svelte";
-  import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
+  import { TJSDocument } from '#runtime/svelte/store/fvtt/document';
   import { updateDoc } from "../../base/UpdateDoc.js";
   import SkillBonus from "./SkillBonus.svelte";
   import DropZone from "../../../svelte-components/DropZone.svelte";
 
-  const appState = getContext("ApplicationStateStore");
   const doc = getContext("DocumentStore");
   $: validTiedSkills = Object.entries($doc.system.tiedSkills)
     .filter(([skillId]) => $doc.parent.items.get(skillId))

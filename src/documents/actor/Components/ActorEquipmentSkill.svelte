@@ -1,14 +1,6 @@
 <script>
-  import { getContext } from "svelte";
-  import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
-  import { TJSDocument } from "@typhonjs-fvtt/runtime/svelte/store";
-
-  const appState = getContext("ApplicationStateStore");
-  const doc = getContext("DocumentStore");
 
   export let skill;
-
-  const skillDoc = new TJSDocument(skill);
 
 </script>
 

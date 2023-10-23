@@ -7,7 +7,6 @@
   import ArmorBonuses from "./ArmorBonuses.svelte";
   import SkillBonuses from "./SkillBonuses.svelte";
 
-  const appState = getContext("ApplicationStateStore");
   const doc = getContext("DocumentStore");
 
   const tabs = [

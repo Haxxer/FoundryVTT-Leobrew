@@ -4,7 +4,6 @@
   import SearchableItemList from "../Components/SearchableItemList.svelte";
   import CurrencyList from "../Components/CurrencyList.svelte";
 
-  const appState = getContext("ApplicationStateStore");
   const doc = getContext("DocumentStore");
 
 	$: itemsStore = $doc.items.filter(item => item.type === "equipment")

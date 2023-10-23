@@ -1,6 +1,6 @@
-import { TJSDocument } from '@typhonjs-fvtt/runtime/svelte/store';
+import { TJSDocument } from '#runtime/svelte/store/fvtt/document';
 
-import { safeAccess } from '@typhonjs-fvtt/runtime/svelte/util';
+import { safeAccess } from "#runtime/util/object";
 
 /**
  * Provides a basic action to update a Foundry document on change events.

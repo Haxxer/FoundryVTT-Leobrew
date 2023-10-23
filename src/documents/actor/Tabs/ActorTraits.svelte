@@ -3,7 +3,6 @@
   import ActorTrait from "../Components/ActorTrait.svelte";
   import SearchableItemList from "../Components/SearchableItemList.svelte";
 
-  const appState = getContext("ApplicationStateStore");
   const doc = getContext("DocumentStore");
 
   $: itemsStore = $doc.items.filter((item) => item.type === "trait");

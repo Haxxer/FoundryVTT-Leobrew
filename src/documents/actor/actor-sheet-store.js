@@ -1,8 +1,8 @@
 import { get, writable } from 'svelte/store';
+import { TJSDialog } from "#runtime/svelte/application";
 import ActorInventory from "./Tabs/ActorInventory.svelte";
 import ActorTraits from "./Tabs/ActorTraits.svelte";
 import ActorBiography from "./Components/ActorBiography.svelte";
-import { TJSDialog } from "@typhonjs-fvtt/runtime/svelte/application";
 import ActorInjuries from "./Components/ActorInjuries.svelte";
 
 export default function createActorSheetState(actor) {
