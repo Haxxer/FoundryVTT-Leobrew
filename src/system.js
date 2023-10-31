@@ -31,10 +31,19 @@ Hooks.on("createActor", (doc) => {
   doc.createEmbeddedDocuments("Item", [{
     name: "Native Language",
     type: "skill",
-    "system.category": "Language",
-    "system.level": 5
+    system: {
+			"category": "Language",
+	    "level": 5
+    }
   }]);
 });
+
+Hooks.on("deleteItem", (doc) => {
+	if(doc.type !== "skill" || !doc.parent || !doc.parent.system.experience.initalized) return;
+	doc.parent.update({
+		"system.experience.value": doc.parent.system.experience.value + doc.system.level
+	});
+})
 
 Hooks.on("renderChatMessage", (...args) => {
   chat.displayChatActionButtons(...args);

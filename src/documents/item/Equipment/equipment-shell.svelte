@@ -7,7 +7,10 @@
   import ArmorBonuses from "./ArmorBonuses.svelte";
   import SkillBonuses from "./SkillBonuses.svelte";
 
+  const { application } = getContext('#external');
   const doc = getContext("DocumentStore");
+
+	console.log(application.options)
 
   const tabs = [
     { value: "description", label: "Description", component: Description },

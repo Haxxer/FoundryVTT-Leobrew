@@ -11,10 +11,10 @@ export default class DocumentSheetHelper {
     // Identify the template Actor types
     const collection = game.collections.get(this.documentName);
     const templates = collection.filter(a => a.getFlag("leobrew", "isTemplate"));
-    const defaultType = this.metadata.types[0];
-    const types = {
-      [defaultType]: game.i18n.localize("LEOBREW.NoTemplate")
-    }
+    const types = {}
+		for(const type of this.metadata.types){
+			types[type] = type;
+		}
     for (let a of templates) {
       types[a.id] = a.name;
     }
@@ -25,7 +25,7 @@ export default class DocumentSheetHelper {
       folder: data.folder,
       folders: folders,
       hasFolders: folders.length > 1,
-      type: defaultType,
+      type: this.metadata.types[0],
       types: types,
       hasTypes: true
     });

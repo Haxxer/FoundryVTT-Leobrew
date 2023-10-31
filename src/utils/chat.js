@@ -212,6 +212,7 @@ export function registerChatListeners(){
     const options = {
       extraTitle: flags?.extraTitle ?? "",
       subSkill: flags?.subSkill ?? null,
+      asSkill: flags?.asSkill ?? null,
       extraFlavor: flavor,
       messageData: {
         "flags.leobrew.roll": {

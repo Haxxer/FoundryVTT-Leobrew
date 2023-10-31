@@ -72,17 +72,6 @@ export async function d10Roll({
 
   messageData.roundedRoll = roundDownRoll(rollToRound.total);
 
-  if (rollToRound.total === 2 && messageData.natural) {
-    messageData.roundedRoll = [
-      "Nope",
-      "2?!",
-      "No can do",
-      "Nix",
-      "Nada",
-      "wtf?"
-    ][Math.floor(Math.random() * 6)];
-  }
-
   messageData.content = await renderTemplate("systems/leobrew/templates/chat/roll-card.html", messageData);
 
   await ChatMessage.create(messageData);

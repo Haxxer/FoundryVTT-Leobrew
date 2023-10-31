@@ -18,13 +18,15 @@
     const droppedDocument = fromUuidSync(data.uuid);
 		if(droppedDocument.type !== "skill") return;
     const currentTiedSkills = $doc.system.tiedSkills;
-    if(currentTiedSkills[droppedDocument.id]) return;
-    currentTiedSkills[droppedDocument.id] = {
+    if(!currentTiedSkills[droppedDocument.id]?.length){
+      currentTiedSkills[droppedDocument.id] = [];
+    }
+    currentTiedSkills[droppedDocument.id].push({
       name: "New Skill",
       bonus: 0,
       isSubSkill: false,
       isWeaponSkill: false
-    };
+    });
     await $doc.update({ "system.tiedSkills": currentTiedSkills });
     await droppedDocument.update({ "system.tiedEquipment": $doc.id })
 	}

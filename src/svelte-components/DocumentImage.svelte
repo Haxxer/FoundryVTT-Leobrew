@@ -24,6 +24,6 @@
 
 </script>
 
-<div on:click={handleClick}>
-	<img class="{$$props.class} clickable" src={src}/>
+<div on:click={handleClick} class="{$$props.class}">
+	<img class="clickable" {src}/>
 </div>

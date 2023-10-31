@@ -1,6 +1,12 @@
 <script>
 
+	import { TJSDocument } from '#runtime/svelte/store/fvtt/document';
+
   export let skill;
+
+  const skillDoc = new TJSDocument(skill);
+
+	$: bonus = $skillDoc.system.skillBonus || 0;
 
 </script>
 
@@ -11,13 +17,16 @@
 		max="10"
 		min="1"
 		type="number"
-		value={skill.system.skillBonus}
+		value={bonus}
 	/>
 	<div>
-		<span class="skill-name clickable clickable-red" on:click={(event) => { skill.roll({ event, asSkill: true }) }}>
-			{skill.name} {skill.system.skillLabel ? `(${skill.system.skillLabel})` : ""}
+		<span class="skill-name clickable clickable-red" on:click={(event) => { $skillDoc.roll({ event, asSkill: true }) }}>
+			{$skillDoc.name} {$skillDoc.system.skillLabel ? `(${$skillDoc.system.skillLabel})` : ""}
 		</span>
 	</div>
+	<i class="fas fa-edit skill-edit-button clickable clickable-red" on:click={() => {
+		skill.sheet.render(true, { tab: "skills" });
+	}}></i>
 </div>
 
 <style lang="scss">
@@ -28,29 +37,39 @@
     justify-content: center;
     border-radius: 4px;
     text-align: center;
-		margin-bottom: 0.25rem;
+    margin-bottom: 0.25rem;
+
+    &.magic-skill .skill-label label {
+      color: var(--colorMagic);
+    }
 
     div {
+      display: flex;
       flex: 1;
       text-align: left;
+      align-items: center;
+
+      & > * {
+        margin-right: 0.5rem;
+      }
     }
 
     i {
       margin-right: 0.25rem;
     }
 
-		.skill-edit-button{
-			display: none;
-			opacity: 0.5;
+    .skill-edit-button {
+      display: none;
+      opacity: 0.5;
 
-			&:hover {
+      &:hover {
         opacity: 1;
-			}
-		}
+      }
+    }
 
-		&:hover .skill-edit-button {
+    &:hover .skill-edit-button {
       display: block;
-		}
+    }
 
     input {
       flex: 0 1 20px;

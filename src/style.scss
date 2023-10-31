@@ -246,18 +246,40 @@ img.clickable {
 }
 
 .actor-sheet .actor-image {
+  min-width: 40px;
+  max-width: 110px;
   max-height: 110px;
   min-height: 110px;
   margin-right: 0.5rem;
   border-radius: 5px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    border: 0;
+  }
 }
 
 .item-sheet .item-image {
+  max-width: 50px;
   min-width: 50px;
+
   max-height: 50px;
+  min-height: 50px;
+
   margin-right: 5px;
-  border: 1px solid #000;
   border-radius: 5px;
+
+  display: grid;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    border: 0;
+  }
 }
 
 .context-menu{

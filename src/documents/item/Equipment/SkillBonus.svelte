@@ -40,14 +40,14 @@
 	<i class="fas fa-plus clickable clickable-green" on:click={addTiedSkill}></i>
 </h3>
 <div class="tied-skills">
+	<span>Subskill</span>
 	<span class="name">Name</span>
 	<span>Bonus</span>
-	<span>Subskill</span>
 	<span></span>
 	{#each tiedSkills as tiedSkill, index}
+		<input type="checkbox" bind:checked={tiedSkill.isSubSkill} on:change={updateTiedSkills}/>
 		<input type="text" class="name" bind:value={tiedSkill.name} on:change={updateTiedSkills}/>
 		<input type="number" bind:value={tiedSkill.bonus} on:change={updateTiedSkills}/>
-		<input type="checkbox" bind:checked={tiedSkill.isSubSkill} on:change={updateTiedSkills}/>
 		<i class="fas fa-times clickable clickable-red" on:click={() => { removeTiedSkill(index) }}></i>
 	{/each}
 </div>
@@ -56,7 +56,7 @@
 
 	.tied-skills {
 		display: grid;
-		grid-template-columns: auto 50px 50px 15px;
+		grid-template-columns: 50px auto 50px 15px;
 		gap: 3px;
     text-align: center;
 

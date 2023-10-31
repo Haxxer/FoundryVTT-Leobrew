@@ -3,6 +3,10 @@ import LeobrewActorSheet from "./documents/actor/actor-sheet.js";
 import LeobrewActor from "./documents/actor/actor.js";
 import LeobrewItem from "./documents/item/item.js";
 import LeobrewItemSheet from "./documents/item/item-sheet.js";
+import ActorDataModel from "~/documents/actor/actor-data-model.js";
+import EquipmentDataModel from "~/documents/item/Equipment/equipment-data-model.js";
+import SkillDataModel from "~/documents/item/Skill/skill-data-model.js";
+import TraitDataModel from "~/documents/item/Trait/trait-data-model.js";
 
 export function setupSystem(){
   registerConstants();
@@ -29,14 +33,19 @@ function registerSheets(){
   };
 
   CONFIG.Actor.documentClass = LeobrewActor;
+	CONFIG.Actor.systemDataModels.character = ActorDataModel;
+
   CONFIG.Item.documentClass = LeobrewItem;
+	CONFIG.Item.systemDataModels.equipment = EquipmentDataModel;
+	CONFIG.Item.systemDataModels.skill = SkillDataModel;
+	CONFIG.Item.systemDataModels.trait = TraitDataModel;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("leobrew", LeobrewActorSheet, { makeDefault: true })
+  Actors.registerSheet("leobrew", LeobrewActorSheet, { makeDefault: true, types: ["character"] })
 
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("leobrew", LeobrewItemSheet, { makeDefault: true });
+  Items.registerSheet("leobrew", LeobrewItemSheet, { makeDefault: true, types: ['equipment', 'trait', 'skill'] });
 
 }
 

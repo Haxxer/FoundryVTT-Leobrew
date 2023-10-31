@@ -2,8 +2,8 @@ import { get, writable } from 'svelte/store';
 import { TJSDialog } from "#runtime/svelte/application";
 import ActorInventory from "./Tabs/ActorInventory.svelte";
 import ActorTraits from "./Tabs/ActorTraits.svelte";
-import ActorBiography from "./Components/ActorBiography.svelte";
-import ActorInjuries from "./Components/ActorInjuries.svelte";
+import ActorBiography from "./Tabs/ActorBiography.svelte";
+import ActorInjuries from "./Tabs/ActorInjuries.svelte";
 
 export default function createActorSheetState(actor) {
 
