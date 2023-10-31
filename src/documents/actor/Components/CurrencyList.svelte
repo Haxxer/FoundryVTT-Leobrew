@@ -18,7 +18,7 @@
 			},
       width: 400,
       height: "auto",
-    }).then(() => { console.log('wat') })
+    })
   }
 
 </script>

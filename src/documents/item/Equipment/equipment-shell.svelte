@@ -10,8 +10,6 @@
   const { application } = getContext('#external');
   const doc = getContext("DocumentStore");
 
-	console.log(application.options)
-
   const tabs = [
     { value: "description", label: "Description", component: Description },
     { value: "armorBonuses", label: "Armor Bonuses", component: ArmorBonuses },
