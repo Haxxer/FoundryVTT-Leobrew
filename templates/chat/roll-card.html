@@ -1,35 +1,65 @@
 <div class="dice-roll">
 
-    <div class="dice-result dice-flex">
-        <div class="dice-formula">{{ roll.formula }}</div>
-        <h4 class="dice-total">{{ roll.total }}</h4>
-    </div>
+	<div class="dice-result dice-flex">
+		<div class="dice-formula">{{ roll.formula }}</div>
+		<div class="dice-tooltip">
+			<section class="tooltip-part">
+				<div class="dice">
+					{{#each roll.dice}}
+						<ol class="dice-rolls">
+							<li class="roll die d10">{{ total }}</li>
+						</ol>
+					{{/each}}
+				</div>
+			</section>
+		</div>
+		<h4 class="dice-total">{{ roll.total }}</h4>
+	</div>
 
-    {{#if natural}}
-    <div class="dice-result dice-flex">
-        <div class="dice-formula">Rounded to:</div>
-        <h4 class="dice-total">{{ roundedRoll }}</h4>
-    </div>
-    {{/if}}
+	{{#if natural}}
+	<div class="dice-result dice-flex">
+		<div class="dice-formula">Rounded to:</div>
+		<h4 class="dice-total">{{ roundedRoll }}</h4>
+	</div>
+	{{/if}}
 
-    {{#if confirmedNatural}}
-    <div class="dice-result dice-flex">
-        <div class="dice-formula">Natural Confirmed.</div>
-        <h4 class="dice-total">{{ roundedRoll }}</h4>
-    </div>
-    {{/if}}
+	{{#if confirmedNatural}}
+	<div class="dice-result dice-flex">
+		<div class="dice-formula">Natural Confirmed.</div>
+		<h4 class="dice-total">{{ roundedRoll }}</h4>
+	</div>
+	{{/if}}
 
-    {{#if confirmedCritical}}
-    <div class="dice-result dice-flex">
-        <div class="dice-formula">Critical Confirmed!</div>
-        <h4 class="dice-total">{{ roundedRoll }}</h4>
-    </div>
-    {{/if}}
+	{{#if confirmedCritical}}
+	<div class="dice-result dice-flex">
+		<div class="dice-formula">Critical Confirmed!</div>
+		<h4 class="dice-total">{{ roundedRoll }}</h4>
+	</div>
+	{{/if}}
 
-    {{#if confirmedFumble}}
-    <div class="dice-result fumble-confirmed">
-        <div class="dice-formula">Fumble Confirmed...</div>
-    </div>
-    {{/if}}
+	{{#if confirmedFumble}}
+	<div class="dice-result fumble-confirmed">
+		<div class="dice-formula">Fumble Confirmed...</div>
+	</div>
+	{{/if}}
 
 </div>
+
+{{#if weaponSkill}}
+	<div class="critical-confirm">
+		{{{ hitLocation }}}
+		{{#if totalCriticalConfirms}}
+			{{#if confirmedCritical}}
+				| Total confirms: {{ totalCriticalConfirms }}
+			{{/if}}
+		{{/if}}
+	</div>
+{{else}}
+	{{#if totalCriticalConfirms}}
+		{{#if confirmedCritical}}
+			<div class="critical-confirm">
+				Total confirms: {{ totalCriticalConfirms }}
+			</div>
+		{{/if}}
+	{{/if}}
+{{/if}}

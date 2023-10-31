@@ -1,94 +1,20 @@
 {
-    "Actor": {
-        "types": [
-            "character"
-        ],
-        "character": {
-            "biography": "",
-            "abilities": {
-                "str": {
-                    "value": 1
-                },
-                "dex": {
-                    "value": 1
-                },
-                "con": {
-                    "value": 1
-                },
-                "will": {
-                    "value": 1
-                },
-                "int": {
-                    "value": 1
-                },
-                "app": {
-                    "value": 1
-                }
-            },
-            "resources": {
-                "luck": {
-                    "max": 3,
-                    "value": 0,
-                    "bonus": 0
-                },
-                "mana": {
-                    "max": 4,
-                    "value": 4,
-                    "bonus": 0
-                },
-                "sanity": {
-                    "max": 0,
-                    "value": 0,
-                    "bonus": 0
-                }
-            },
-            "experience": {
-                "value": 0
-            },
-            "injuries": {
-                "chest": {
-                    "value": ""
-                },
-                "legs": {
-                    "value": ""
-                },
-                "guts": {
-                    "value": ""
-                },
-                "arms": {
-                    "value": ""
-                },
-                "head": {
-                    "value": ""
-                }
-            },
-            "skills": {},
-            "description": {
-                "value": ""
-            },
-            "currency": {
-                "gp": 0,
-                "sp": 0,
-                "cp": 0
-            }
-        }
-    },
-    "Item": {
-        "types": [
-            "item",
-            "trait"
-        ],
-        "item": {
-            "description": "",
-            "quantity": 1,
-            "weight": "",
-            "price": "1 sp",
-            "equipped": false,
-            "skillBonuses": [],
-            "armorBonuses": {}
-        },
-        "trait": {
-            "description": ""
-        }
-    }
+  "Actor": {
+    "types": [
+      "character"
+    ],
+    "htmlFields": ["biography.value"],
+    "character": {}
+  },
+  "Item": {
+    "types": [
+      "equipment",
+      "trait",
+      "skill"
+    ],
+    "htmlFields": ["description.value"],
+    "equipment": {},
+    "trait": {},
+    "skill": {}
+  }
 }

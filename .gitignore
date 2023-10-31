@@ -5,3 +5,11 @@
 # Node Modules
 node_modules/*
 package-lock.json
+
+# Root level
+./system.js
+./system.js.map
+
+# Old stuff
+old/*
+.vite-cache/*

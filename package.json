@@ -1,23 +1,37 @@
 {
-  "name": "worldbuilding",
-  "version": "1.0.0",
-  "description": "CSS compiler for the Worldbuilding system",
-  "scripts": {
-    "css": "gulp css",
-    "watch": "gulp",
-    "gulp": "gulp"
-  },
-  "browserslist": [
-    "last 3 versions"
-  ],
-  "author": "",
+  "name": "leobrew",
+  "description": "",
   "license": "MIT",
   "private": true,
+  "type": "module",
+  "author": "Fantasy Computerworks (https://github.com/fantasycalendar)",
+  "contributors": [
+    "Wasp <adam@fantasy-calendar.com> (https://github.com/haxxer)"
+  ],
+  "imports": {
+    "#runtime/*": "@typhonjs-fvtt/runtime/*",
+    "#standard/*": "@typhonjs-fvtt/svelte-standard/*"
+  },
   "dependencies": {
-    "gulp": "^4.0.2",
-    "gulp-less": "^4.0.1"
+    "@typhonjs-fvtt/runtime": "^0.1.2",
+    "@typhonjs-fvtt/svelte-standard": "^0.1.0",
+    "svelte": "^4.1.2"
   },
   "devDependencies": {
-    "@league-of-foundry-developers/foundry-vtt-types": "^9.249.4"
+    "@league-of-foundry-developers/foundry-vtt-types": "^9.238.1",
+    "@typhonjs-config/eslint-config": "^0.6.0",
+    "@typhonjs-fvtt/eslint-config-foundry.js": "^0.8.0",
+    "eslint": "^8.46.0",
+    "svelte-preprocess": "^5.0.4",
+    "vite": "^4.4.8"
+  },
+  "browserslist": [
+    ">5%",
+    "not IE 11"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "eslint": "eslint ."
   }
 }
