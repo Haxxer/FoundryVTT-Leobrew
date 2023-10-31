@@ -1,0 +1,34 @@
+{
+    "id": "leobrew",
+    "title": "Leobrew",
+    "description": "",
+    "version": "0.4.0",
+    "minimumCoreVersion": "10",
+    "compatibility": {
+        "minimum": "10",
+        "verified": "10"
+    },
+    "author": "Wasp",
+    "esmodules": [
+        "system.js"
+    ],
+    "styles": [
+        "style.css"
+    ],
+    "packs": [],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "languages/en.json"
+        }
+    ],
+    "socket": true,
+    "gridDistance": 5,
+    "gridUnits": "ft",
+    "primaryTokenAttribute": "health",
+    "url": "https://github.com/Haxxer/FoundryVTT-Leobrew",
+    "manifest": "https://raw.githubusercontent.com/Haxxer/FoundryVTT-Leobrew/next/system.json",
+    "download": "https://github.com/Haxxer/FoundryVTT-Leobrew/releases/download/0.4.0/system.zip",
+    "license": "LICENSE"
+}
