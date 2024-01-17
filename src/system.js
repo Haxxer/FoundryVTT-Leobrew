@@ -1,7 +1,7 @@
 import "./style.scss";
 
 import { setupSystem, setupLocalization } from "./setup.js";
-import runMigrations from "./migrations.js";
+import { runMigrations } from "./migrations.js";
 import * as chat from "./utils/chat.js";
 import { registerChatListeners } from "./utils/chat.js";
 
@@ -13,18 +13,23 @@ Hooks.once("setup", () => {
   setupLocalization();
 });
 
-Hooks.once("ready", () => {
+Hooks.once("ready",  async() => {
   registerChatListeners();
-  game.actors.getName("Ajal Fajir").sheet.render(true);
   //game.actors.getName("Ajal Fajir").items.getName("Round Shield").sheet.render(true);
   if (!game.user.isGM) return;
-  runMigrations();
+  await runMigrations();
+	//game.actors.getName("Ajal Fajir").sheet.render(true);
 });
 
 Hooks.on("preCreateActor", (doc) => {
   doc.updateSource({
     "system.experience.value": Math.abs(Number(game.settings.get("leobrew", "startingSkillPoints") )) || 40
   });
+});
+
+Hooks.on('updateItem', (item) => {
+	if(!item.parent) return;
+	item.parent.prepareDerivedBonuses();
 });
 
 Hooks.on("createActor", (doc) => {

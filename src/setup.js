@@ -33,12 +33,12 @@ function registerSheets(){
   };
 
   CONFIG.Actor.documentClass = LeobrewActor;
-	CONFIG.Actor.systemDataModels.character = ActorDataModel;
+	CONFIG.Actor.dataModels.character = ActorDataModel;
 
   CONFIG.Item.documentClass = LeobrewItem;
-	CONFIG.Item.systemDataModels.equipment = EquipmentDataModel;
-	CONFIG.Item.systemDataModels.skill = SkillDataModel;
-	CONFIG.Item.systemDataModels.trait = TraitDataModel;
+	CONFIG.Item.dataModels.equipment = EquipmentDataModel;
+	CONFIG.Item.dataModels.skill = SkillDataModel;
+	CONFIG.Item.dataModels.trait = TraitDataModel;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
