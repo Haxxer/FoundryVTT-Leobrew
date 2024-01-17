@@ -24,30 +24,30 @@
 </script>
 
 
-<div class="actor-currency-container">
+<div class="actor-currencies-container">
 
-	<div class="actor-currency-list">
+	<div class="actor-currencies-list">
 		<div>GP</div>
 		<div>SP</div>
 		<div>CP</div>
 	</div>
 	<div></div>
-	<div class="actor-currency-list">
+	<div class="actor-currencies-list">
 		<div>GP</div>
 		<div>SP</div>
 		<div>CP</div>
 	</div>
 
-	<div class="actor-currency-list">
-		<input type="number" use:updateDoc={{ doc, accessor: "system.currency.gp.value" }}/>
-		<input type="number" use:updateDoc={{ doc, accessor: "system.currency.sp.value" }}/>
-		<input type="number" use:updateDoc={{ doc, accessor: "system.currency.cp.value" }}/>
+	<div class="actor-currencies-list">
+		<input type="number" use:updateDoc={{ doc, accessor: "system.currencies.gp.value" }}/>
+		<input type="number" use:updateDoc={{ doc, accessor: "system.currencies.sp.value" }}/>
+		<input type="number" use:updateDoc={{ doc, accessor: "system.currencies.cp.value" }}/>
 	</div>
 	<div><i class="fas fa-right-left clickable clickable-red" on:click={() => showCurrencyTransferDialog()}></i></div>
-	<div class="actor-currency-list">
-		<input type="number" use:updateDoc={{ doc, accessor: "system.currency.gp.bank" }}/>
-		<input type="number" use:updateDoc={{ doc, accessor: "system.currency.sp.bank" }}/>
-		<input type="number" use:updateDoc={{ doc, accessor: "system.currency.cp.bank" }}/>
+	<div class="actor-currencies-list">
+		<input type="number" use:updateDoc={{ doc, accessor: "system.currencies.gp.bank" }}/>
+		<input type="number" use:updateDoc={{ doc, accessor: "system.currencies.sp.bank" }}/>
+		<input type="number" use:updateDoc={{ doc, accessor: "system.currencies.cp.bank" }}/>
 	</div>
 
 	<div>On Person</div>
@@ -58,7 +58,7 @@
 
 <style lang="scss">
 
-  .actor-currency-container {
+  .actor-currencies-container {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     margin-bottom: 5px;
@@ -69,7 +69,7 @@
     row-gap: 5px;
   }
 
-  .actor-currency-list {
+  .actor-currencies-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;

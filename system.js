@@ -15585,7 +15585,7 @@ function create_if_block$b(ctx) {
     }
   };
 }
-function create_if_block_1$7(ctx) {
+function create_if_block_1$8(ctx) {
   let html_tag;
   let raw_value = (
     /*button*/
@@ -15633,7 +15633,7 @@ function create_each_block$9(key_1, ctx) {
   let dispose;
   let if_block = (
     /*button*/
-    ctx[26].icon && create_if_block_1$7(ctx)
+    ctx[26].icon && create_if_block_1$8(ctx)
   );
   function click_handler() {
     return (
@@ -15701,7 +15701,7 @@ function create_each_block$9(key_1, ctx) {
         if (if_block) {
           if_block.p(ctx, dirty);
         } else {
-          if_block = create_if_block_1$7(ctx);
+          if_block = create_if_block_1$8(ctx);
           if_block.c();
           if_block.m(span, t0);
         }
@@ -17786,7 +17786,7 @@ function create_if_block$9(ctx) {
       /*item*/
       ctx2[0].system.description.value
     )
-      return create_if_block_1$6;
+      return create_if_block_1$7;
     return create_else_block$4;
   }
   let current_block_type = select_block_type(ctx);
@@ -17863,7 +17863,7 @@ function create_else_block$4(ctx) {
     }
   };
 }
-function create_if_block_1$6(ctx) {
+function create_if_block_1$7(ctx) {
   let html_tag;
   let raw_value = (
     /*item*/
@@ -21085,8 +21085,6 @@ function instance$q($$self) {
       svelte: { class: CurrencyTransfer, props: { doc } },
       width: 400,
       height: "auto"
-    }).then(() => {
-      console.log("wat");
     });
   }
   const click_handler = () => showCurrencyTransferDialog();
@@ -21189,7 +21187,7 @@ function create_if_block$7(ctx) {
       /*item*/
       ctx2[0].system.description.value
     )
-      return create_if_block_1$5;
+      return create_if_block_1$6;
     return create_else_block$3;
   }
   let current_block_type = select_block_type(ctx);
@@ -21266,7 +21264,7 @@ function create_else_block$3(ctx) {
     }
   };
 }
-function create_if_block_1$5(ctx) {
+function create_if_block_1$6(ctx) {
   let html_tag;
   let raw_value = (
     /*item*/
@@ -21841,7 +21839,7 @@ class TJSPasteUUID {
   }
 }
 const TJSProseMirror_svelte_svelte_type_style_lang = "";
-function create_if_block_1$4(ctx) {
+function create_if_block_1$5(ctx) {
   let a;
   let mounted;
   let dispose;
@@ -21929,7 +21927,7 @@ function create_fragment$m(ctx) {
   let dispose;
   let if_block0 = (
     /*editorButton*/
-    ctx[5] && create_if_block_1$4(ctx)
+    ctx[5] && create_if_block_1$5(ctx)
   );
   function select_block_type(ctx2, dirty) {
     if (
@@ -22015,7 +22013,7 @@ function create_fragment$m(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_1$4(ctx2);
+          if_block0 = create_if_block_1$5(ctx2);
           if_block0.c();
           if_block0.m(div, t);
         }
@@ -23781,7 +23779,7 @@ class SvelteDocumentSheet extends SvelteApplication {
   }
 }
 const ActorAbility_svelte_svelte_type_style_lang = "";
-function create_if_block_1$3(ctx) {
+function create_if_block_1$4(ctx) {
   let i;
   let mounted;
   let dispose;
@@ -23943,7 +23941,7 @@ function create_fragment$i(ctx) {
   let dispose;
   let if_block0 = (
     /*$appState*/
-    ctx[2].levelingUp && create_if_block_1$3(ctx)
+    ctx[2].levelingUp && create_if_block_1$4(ctx)
   );
   let if_block1 = (
     /*$appState*/
@@ -24027,7 +24025,7 @@ function create_fragment$i(ctx) {
         if (if_block0) {
           if_block0.p(ctx2, dirty);
         } else {
-          if_block0 = create_if_block_1$3(ctx2);
+          if_block0 = create_if_block_1$4(ctx2);
           if_block0.c();
           if_block0.m(div0, t2);
         }
@@ -24166,19 +24164,20 @@ class ActorAbility extends SvelteComponent {
 function create_fragment$h(ctx) {
   let div;
   let img;
-  let img_class_value;
   let img_src_value;
+  let div_class_value;
   let mounted;
   let dispose;
   return {
     c() {
       div = element("div");
       img = element("img");
-      attr(img, "class", img_class_value = /*$$props*/
-      ctx[3].class + " clickable");
+      attr(img, "class", "clickable");
       if (!src_url_equal(img.src, img_src_value = /*src*/
       ctx[1]))
         attr(img, "src", img_src_value);
+      attr(div, "class", div_class_value = /*$$props*/
+      ctx[3].class);
     },
     m(target, anchor) {
       insert(target, div, anchor);
@@ -24194,15 +24193,15 @@ function create_fragment$h(ctx) {
       }
     },
     p(ctx2, [dirty]) {
-      if (dirty & /*$$props*/
-      8 && img_class_value !== (img_class_value = /*$$props*/
-      ctx2[3].class + " clickable")) {
-        attr(img, "class", img_class_value);
-      }
       if (dirty & /*src*/
       2 && !src_url_equal(img.src, img_src_value = /*src*/
       ctx2[1])) {
         attr(img, "src", img_src_value);
+      }
+      if (dirty & /*$$props*/
+      8 && div_class_value !== (div_class_value = /*$$props*/
+      ctx2[3].class)) {
+        attr(div, "class", div_class_value);
       }
     },
     i: noop,
@@ -24395,7 +24394,7 @@ function create_if_block_2$2(ctx) {
     }
   };
 }
-function create_if_block_1$2(ctx) {
+function create_if_block_1$3(ctx) {
   let i;
   let mounted;
   let dispose;
@@ -24692,7 +24691,7 @@ function create_fragment$g(ctx) {
   );
   let if_block3 = (
     /*$appState*/
-    ctx[1].levelingUp && create_if_block_1$2(ctx)
+    ctx[1].levelingUp && create_if_block_1$3(ctx)
   );
   let each_value_1 = ensure_array_like(Object.entries(
     /*$doc*/
@@ -24890,7 +24889,7 @@ function create_fragment$g(ctx) {
         if (if_block3) {
           if_block3.p(ctx2, dirty);
         } else {
-          if_block3 = create_if_block_1$2(ctx2);
+          if_block3 = create_if_block_1$3(ctx2);
           if_block3.c();
           if_block3.m(div0, null);
         }
@@ -25034,7 +25033,7 @@ function create_if_block_2$1(ctx) {
   return {
     c() {
       i = element("i");
-      attr(i, "class", "fas fa-minus svelte-lbvtt-1j2giq1");
+      attr(i, "class", "fas fa-minus svelte-lbvtt-1532lrn");
       toggle_class(
         i,
         "clickable",
@@ -25096,14 +25095,14 @@ function create_if_block_2$1(ctx) {
     }
   };
 }
-function create_if_block_1$1(ctx) {
+function create_if_block_1$2(ctx) {
   let i;
   let mounted;
   let dispose;
   return {
     c() {
       i = element("i");
-      attr(i, "class", "fas fa-plus svelte-lbvtt-1j2giq1");
+      attr(i, "class", "fas fa-plus svelte-lbvtt-1532lrn");
       toggle_class(
         i,
         "clickable",
@@ -25278,11 +25277,11 @@ function create_each_block$5(ctx) {
       ctx[22].bonus + /*$skillBonus*/
       ctx[6] + /*pointsSpent*/
       ctx[5];
-      attr(input, "class", "svelte-lbvtt-1j2giq1");
-      attr(label, "class", "skill-name clickable clickable-red svelte-lbvtt-1j2giq1");
-      attr(i, "class", "fas fa-sword skill-edit-button clickable clickable-red svelte-lbvtt-1j2giq1");
-      attr(div0, "class", "skill-label svelte-lbvtt-1j2giq1");
-      attr(div1, "class", "actor-skill actor-subskill svelte-lbvtt-1j2giq1");
+      attr(input, "class", "svelte-lbvtt-1532lrn");
+      attr(label, "class", "skill-name clickable clickable-red svelte-lbvtt-1532lrn");
+      attr(i, "class", "fas fa-sword skill-edit-button clickable clickable-red svelte-lbvtt-1532lrn");
+      attr(div0, "class", "skill-label svelte-lbvtt-1532lrn");
+      attr(div1, "class", "actor-skill actor-subskill svelte-lbvtt-1532lrn");
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -25362,7 +25361,7 @@ function create_fragment$f(ctx) {
   );
   let if_block1 = (
     /*$appState*/
-    ctx[1].levelingUp && create_if_block_1$1(ctx)
+    ctx[1].levelingUp && create_if_block_1$2(ctx)
   );
   let if_block2 = (
     /*$subSkills*/
@@ -25411,14 +25410,20 @@ function create_fragment$f(ctx) {
         ctx[0].system.level + /*$skillBonus*/
         ctx[6]
       );
-      attr(input, "class", "svelte-lbvtt-1j2giq1");
-      attr(label, "class", "skill-name clickable clickable-red svelte-lbvtt-1j2giq1");
-      attr(i0, "class", "fas fa-sword skill-edit-button clickable clickable-red svelte-lbvtt-1j2giq1");
-      attr(div0, "class", "skill-label svelte-lbvtt-1j2giq1");
-      attr(i1, "class", "fas fa-edit skill-edit-button clickable clickable-red svelte-lbvtt-1j2giq1");
-      attr(i2, "class", "fas fa-trash skill-edit-button clickable clickable-red svelte-lbvtt-1j2giq1");
-      attr(div1, "class", "actor-skill svelte-lbvtt-1j2giq1");
+      attr(input, "class", "svelte-lbvtt-1532lrn");
+      attr(label, "class", "skill-name clickable clickable-red svelte-lbvtt-1532lrn");
+      attr(i0, "class", "fas fa-sword skill-edit-button clickable clickable-red svelte-lbvtt-1532lrn");
+      attr(div0, "class", "skill-label svelte-lbvtt-1532lrn");
+      attr(i1, "class", "fas fa-edit skill-edit-button clickable clickable-red svelte-lbvtt-1532lrn");
+      attr(i2, "class", "fas fa-trash skill-edit-button clickable clickable-red svelte-lbvtt-1532lrn");
+      attr(div1, "class", "actor-skill svelte-lbvtt-1532lrn");
       attr(div1, "draggable", "true");
+      toggle_class(
+        div1,
+        "magic-skill",
+        /*skill*/
+        ctx[0].system.isMagic
+      );
     },
     m(target, anchor) {
       insert(target, div1, anchor);
@@ -25523,7 +25528,7 @@ function create_fragment$f(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block_1$1(ctx2);
+          if_block1 = create_if_block_1$2(ctx2);
           if_block1.c();
           if_block1.m(div1, t2);
         }
@@ -25540,6 +25545,15 @@ function create_fragment$f(ctx) {
       ctx2[5] ? ` (+${/*realPointsSpent*/
       ctx2[4]})` : ""))
         set_data(t4, t4_value);
+      if (dirty & /*skill*/
+      1) {
+        toggle_class(
+          div1,
+          "magic-skill",
+          /*skill*/
+          ctx2[0].system.isMagic
+        );
+      }
       if (
         /*$subSkills*/
         ctx2[7].length
@@ -25589,9 +25603,9 @@ function instance$f($$self, $$props, $$invalidate) {
   component_subscribe($$self, skillDoc, (value) => $$invalidate(13, $skillDoc = value));
   let canAssignSkillPoint = false;
   let canSubtractSkillPoint = false;
-  let subSkills = skill.subSkillsStore;
+  let subSkills = $skillDoc.stores.subSkills;
   component_subscribe($$self, subSkills, (value) => $$invalidate(7, $subSkills = value));
-  let skillBonus = skill.bonusStore;
+  let skillBonus = $skillDoc.stores.bonus;
   component_subscribe($$self, skillBonus, (value) => $$invalidate(6, $skillBonus = value));
   function dragStart(event) {
     event.dataTransfer.setData("text/plain", JSON.stringify({ type: "Item", uuid: skill.uuid }));
@@ -25611,7 +25625,7 @@ function instance$f($$self, $$props, $$invalidate) {
     skill.roll({ event, isAttack: true });
   };
   const click_handler_4 = () => {
-    skill.sheet.render(true, { width: 200, height: 200, left: 0, top: 0 });
+    skill.sheet.render(true);
   };
   const click_handler_5 = () => {
     TJSDialog.confirm(
@@ -25696,22 +25710,23 @@ const ActorEquipmentSkill_svelte_svelte_type_style_lang = "";
 function create_fragment$e(ctx) {
   let div1;
   let input;
-  let input_value_value;
   let t0;
   let div0;
   let span;
   let t1_value = (
-    /*skill*/
-    ctx[0].name + ""
+    /*$skillDoc*/
+    ctx[1].name + ""
   );
   let t1;
   let t2;
   let t3_value = (
-    /*skill*/
-    ctx[0].system.skillLabel ? `(${/*skill*/
-    ctx[0].system.skillLabel})` : ""
+    /*$skillDoc*/
+    ctx[1].system.skillLabel ? `(${/*$skillDoc*/
+    ctx[1].system.skillLabel})` : ""
   );
   let t3;
+  let t4;
+  let i;
   let mounted;
   let dispose;
   return {
@@ -25724,16 +25739,19 @@ function create_fragment$e(ctx) {
       t1 = text(t1_value);
       t2 = space();
       t3 = text(t3_value);
+      t4 = space();
+      i = element("i");
       input.disabled = true;
       attr(input, "max", "10");
       attr(input, "min", "1");
       attr(input, "type", "number");
-      input.value = input_value_value = /*skill*/
-      ctx[0].system.skillBonus;
-      attr(input, "class", "svelte-lbvtt-q0luqg");
-      attr(span, "class", "skill-name clickable clickable-red");
-      attr(div0, "class", "svelte-lbvtt-q0luqg");
-      attr(div1, "class", "actor-skill svelte-lbvtt-q0luqg");
+      input.value = /*bonus*/
+      ctx[2];
+      attr(input, "class", "svelte-lbvtt-1532lrn");
+      attr(span, "class", "skill-name clickable clickable-red svelte-lbvtt-1532lrn");
+      attr(div0, "class", "svelte-lbvtt-1532lrn");
+      attr(i, "class", "fas fa-edit skill-edit-button clickable clickable-red svelte-lbvtt-1532lrn");
+      attr(div1, "class", "actor-skill svelte-lbvtt-1532lrn");
       attr(div1, "draggable", "true");
     },
     m(target, anchor) {
@@ -25745,30 +25763,41 @@ function create_fragment$e(ctx) {
       append(span, t1);
       append(span, t2);
       append(span, t3);
+      append(div1, t4);
+      append(div1, i);
       if (!mounted) {
-        dispose = listen(
-          span,
-          "click",
-          /*click_handler*/
-          ctx[1]
-        );
+        dispose = [
+          listen(
+            span,
+            "click",
+            /*click_handler*/
+            ctx[4]
+          ),
+          listen(
+            i,
+            "click",
+            /*click_handler_1*/
+            ctx[5]
+          )
+        ];
         mounted = true;
       }
     },
     p(ctx2, [dirty]) {
-      if (dirty & /*skill*/
-      1 && input_value_value !== (input_value_value = /*skill*/
-      ctx2[0].system.skillBonus) && input.value !== input_value_value) {
-        input.value = input_value_value;
+      if (dirty & /*bonus*/
+      4 && input.value !== /*bonus*/
+      ctx2[2]) {
+        input.value = /*bonus*/
+        ctx2[2];
       }
-      if (dirty & /*skill*/
-      1 && t1_value !== (t1_value = /*skill*/
-      ctx2[0].name + ""))
+      if (dirty & /*$skillDoc*/
+      2 && t1_value !== (t1_value = /*$skillDoc*/
+      ctx2[1].name + ""))
         set_data(t1, t1_value);
-      if (dirty & /*skill*/
-      1 && t3_value !== (t3_value = /*skill*/
-      ctx2[0].system.skillLabel ? `(${/*skill*/
-      ctx2[0].system.skillLabel})` : ""))
+      if (dirty & /*$skillDoc*/
+      2 && t3_value !== (t3_value = /*$skillDoc*/
+      ctx2[1].system.skillLabel ? `(${/*$skillDoc*/
+      ctx2[1].system.skillLabel})` : ""))
         set_data(t3, t3_value);
     },
     i: noop,
@@ -25778,20 +25807,33 @@ function create_fragment$e(ctx) {
         detach(div1);
       }
       mounted = false;
-      dispose();
+      run_all(dispose);
     }
   };
 }
 function instance$e($$self, $$props, $$invalidate) {
+  let bonus;
+  let $skillDoc;
   let { skill } = $$props;
+  const skillDoc = new TJSDocument(skill);
+  component_subscribe($$self, skillDoc, (value) => $$invalidate(1, $skillDoc = value));
   const click_handler = (event) => {
-    skill.roll({ event, asSkill: true });
+    $skillDoc.roll({ event, asSkill: true });
+  };
+  const click_handler_1 = () => {
+    skill.sheet.render(true, { tab: "skills" });
   };
   $$self.$$set = ($$props2) => {
     if ("skill" in $$props2)
       $$invalidate(0, skill = $$props2.skill);
   };
-  return [skill, click_handler];
+  $$self.$$.update = () => {
+    if ($$self.$$.dirty & /*$skillDoc*/
+    2) {
+      $$invalidate(2, bonus = $skillDoc.system.skillBonus || 0);
+    }
+  };
+  return [skill, $skillDoc, bonus, skillDoc, click_handler, click_handler_1];
 }
 class ActorEquipmentSkill extends SvelteComponent {
   constructor(options) {
@@ -25802,21 +25844,108 @@ class ActorEquipmentSkill extends SvelteComponent {
 const ActorSkills_svelte_svelte_type_style_lang = "";
 function get_each_context$4(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[10] = list[i][0];
-  child_ctx[11] = list[i][1];
+  child_ctx[11] = list[i][0];
+  child_ctx[12] = list[i][1];
   return child_ctx;
 }
 function get_each_context_1(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[14] = list[i];
+  child_ctx[15] = list[i];
   return child_ctx;
+}
+function create_if_block_1$1(ctx) {
+  let div1;
+  let span;
+  let t1;
+  let div0;
+  let input;
+  let t2;
+  let button;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div1 = element("div");
+      span = element("span");
+      span.textContent = `${localize("LEOBREW.SkillAddTitle")}`;
+      t1 = space();
+      div0 = element("div");
+      input = element("input");
+      t2 = space();
+      button = element("button");
+      button.innerHTML = `<i class="fas fa-plus"></i>`;
+      attr(span, "class", "skill-category-title modesto svelte-lbvtt-114zu1e");
+      attr(input, "type", "text");
+      attr(input, "class", "actor-skill-name-input svelte-lbvtt-114zu1e");
+      attr(input, "placeholder", "Skill name");
+      attr(button, "type", "button");
+      attr(button, "class", "skill-add svelte-lbvtt-114zu1e");
+      attr(div0, "class", "actor-skills-list-add-container svelte-lbvtt-114zu1e");
+      attr(div1, "class", "actor-skills-list-add");
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, span);
+      append(div1, t1);
+      append(div1, div0);
+      append(div0, input);
+      set_input_value(
+        input,
+        /*newSkillName*/
+        ctx[1]
+      );
+      append(div0, t2);
+      append(div0, button);
+      if (!mounted) {
+        dispose = [
+          listen(
+            input,
+            "input",
+            /*input_input_handler*/
+            ctx[7]
+          ),
+          listen(
+            input,
+            "keydown",
+            /*keydown_handler*/
+            ctx[8]
+          ),
+          listen(
+            button,
+            "click",
+            /*click_handler*/
+            ctx[9]
+          )
+        ];
+        mounted = true;
+      }
+    },
+    p(ctx2, dirty) {
+      if (dirty & /*newSkillName*/
+      2 && input.value !== /*newSkillName*/
+      ctx2[1]) {
+        set_input_value(
+          input,
+          /*newSkillName*/
+          ctx2[1]
+        );
+      }
+    },
+    d(detaching) {
+      if (detaching) {
+        detach(div1);
+      }
+      mounted = false;
+      run_all(dispose);
+    }
+  };
 }
 function create_else_block(ctx) {
   let actorequipmentskill;
   let current;
   actorequipmentskill = new ActorEquipmentSkill({ props: { skill: (
     /*skill*/
-    ctx[14]
+    ctx[15]
   ) } });
   return {
     c() {
@@ -25831,7 +25960,7 @@ function create_else_block(ctx) {
       if (dirty & /*categorizedSkills*/
       4)
         actorequipmentskill_changes.skill = /*skill*/
-        ctx2[14];
+        ctx2[15];
       actorequipmentskill.$set(actorequipmentskill_changes);
     },
     i(local) {
@@ -25854,7 +25983,7 @@ function create_if_block$2(ctx) {
   let current;
   actorskill = new ActorSkill({ props: { skill: (
     /*skill*/
-    ctx[14]
+    ctx[15]
   ) } });
   return {
     c() {
@@ -25869,7 +25998,7 @@ function create_if_block$2(ctx) {
       if (dirty & /*categorizedSkills*/
       4)
         actorskill_changes.skill = /*skill*/
-        ctx2[14];
+        ctx2[15];
       actorskill.$set(actorskill_changes);
     },
     i(local) {
@@ -25897,7 +26026,7 @@ function create_each_block_1(ctx) {
   function select_block_type(ctx2, dirty) {
     if (
       /*skill*/
-      ctx2[14].type === "skill"
+      ctx2[15].type === "skill"
     )
       return 0;
     return 1;
@@ -25958,7 +26087,7 @@ function create_each_block$4(ctx) {
   let span;
   let t0_value = (
     /*category*/
-    ctx[10] + ""
+    ctx[11] + ""
   );
   let t0;
   let t1;
@@ -25966,7 +26095,7 @@ function create_each_block$4(ctx) {
   let current;
   let each_value_1 = ensure_array_like(
     /*skills*/
-    ctx[11]
+    ctx[12]
   );
   let each_blocks = [];
   for (let i = 0; i < each_value_1.length; i += 1) {
@@ -26001,13 +26130,13 @@ function create_each_block$4(ctx) {
     p(ctx2, dirty) {
       if ((!current || dirty & /*categorizedSkills*/
       4) && t0_value !== (t0_value = /*category*/
-      ctx2[10] + ""))
+      ctx2[11] + ""))
         set_data(t0, t0_value);
       if (dirty & /*categorizedSkills*/
       4) {
         each_value_1 = ensure_array_like(
           /*skills*/
-          ctx2[11]
+          ctx2[12]
         );
         let i;
         for (i = 0; i < each_value_1.length; i += 1) {
@@ -26055,24 +26184,21 @@ function create_each_block$4(ctx) {
   };
 }
 function create_fragment$d(ctx) {
-  let div4;
-  let div1;
-  let span0;
-  let t1;
-  let div0;
-  let input;
-  let t2;
-  let button;
-  let t3;
-  let div3;
-  let span1;
-  let t5;
   let div2;
+  let t0;
+  let div1;
+  let span;
+  let t2;
+  let div0;
   let label;
-  let t7;
+  let t4;
   let current;
   let mounted;
   let dispose;
+  let if_block = (
+    /*$appState*/
+    ctx[3].levelingUp && create_if_block_1$1(ctx)
+  );
   let each_value = ensure_array_like(
     /*categorizedSkills*/
     ctx[2]
@@ -26086,108 +26212,69 @@ function create_fragment$d(ctx) {
   });
   return {
     c() {
-      div4 = element("div");
-      div1 = element("div");
-      span0 = element("span");
-      span0.textContent = `${localize("LEOBREW.SkillAddTitle")}`;
-      t1 = space();
-      div0 = element("div");
-      input = element("input");
-      t2 = space();
-      button = element("button");
-      button.innerHTML = `<i class="fas fa-plus"></i>`;
-      t3 = space();
-      div3 = element("div");
-      span1 = element("span");
-      span1.textContent = "Generic";
-      t5 = space();
       div2 = element("div");
+      if (if_block)
+        if_block.c();
+      t0 = space();
+      div1 = element("div");
+      span = element("span");
+      span.textContent = "Generic";
+      t2 = space();
+      div0 = element("div");
       label = element("label");
       label.textContent = "Naked D10 Roll";
-      t7 = space();
+      t4 = space();
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(span0, "class", "skill-category-title modesto svelte-lbvtt-114zu1e");
-      attr(input, "type", "text");
-      attr(input, "class", "actor-skill-name-input svelte-lbvtt-114zu1e");
-      attr(input, "placeholder", "Skill name");
-      attr(button, "type", "button");
-      attr(button, "class", "skill-add svelte-lbvtt-114zu1e");
-      attr(div0, "class", "actor-skills-list-add-container svelte-lbvtt-114zu1e");
-      attr(div1, "class", "actor-skills-list-add");
-      attr(span1, "class", "skill-category-title modesto svelte-lbvtt-114zu1e");
+      attr(span, "class", "skill-category-title modesto svelte-lbvtt-114zu1e");
       attr(label, "class", "skill-name clickable clickable-red");
-      attr(div2, "class", "actor-skill");
-      attr(div3, "class", "actor-skills-list svelte-lbvtt-114zu1e");
-      attr(div4, "class", "actor-skills-list-container svelte-lbvtt-114zu1e");
+      attr(div0, "class", "actor-skill");
+      attr(div1, "class", "actor-skills-list svelte-lbvtt-114zu1e");
+      attr(div2, "class", "actor-skills-list-container svelte-lbvtt-114zu1e");
     },
     m(target, anchor) {
-      insert(target, div4, anchor);
-      append(div4, div1);
-      append(div1, span0);
-      append(div1, t1);
+      insert(target, div2, anchor);
+      if (if_block)
+        if_block.m(div2, null);
+      append(div2, t0);
+      append(div2, div1);
+      append(div1, span);
+      append(div1, t2);
       append(div1, div0);
-      append(div0, input);
-      set_input_value(
-        input,
-        /*newSkillName*/
-        ctx[1]
-      );
-      append(div0, t2);
-      append(div0, button);
-      append(div4, t3);
-      append(div4, div3);
-      append(div3, span1);
-      append(div3, t5);
-      append(div3, div2);
-      append(div2, label);
-      append(div3, t7);
+      append(div0, label);
+      append(div1, t4);
       for (let i = 0; i < each_blocks.length; i += 1) {
         if (each_blocks[i]) {
-          each_blocks[i].m(div3, null);
+          each_blocks[i].m(div1, null);
         }
       }
       current = true;
       if (!mounted) {
-        dispose = [
-          listen(
-            input,
-            "input",
-            /*input_input_handler*/
-            ctx[5]
-          ),
-          listen(
-            input,
-            "keydown",
-            /*keydown_handler*/
-            ctx[6]
-          ),
-          listen(
-            button,
-            "click",
-            /*click_handler*/
-            ctx[7]
-          ),
-          listen(
-            label,
-            "click",
-            /*click_handler_1*/
-            ctx[8]
-          )
-        ];
+        dispose = listen(
+          label,
+          "click",
+          /*click_handler_1*/
+          ctx[10]
+        );
         mounted = true;
       }
     },
     p(ctx2, [dirty]) {
-      if (dirty & /*newSkillName*/
-      2 && input.value !== /*newSkillName*/
-      ctx2[1]) {
-        set_input_value(
-          input,
-          /*newSkillName*/
-          ctx2[1]
-        );
+      if (
+        /*$appState*/
+        ctx2[3].levelingUp
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block_1$1(ctx2);
+          if_block.c();
+          if_block.m(div2, t0);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
       }
       if (dirty & /*categorizedSkills*/
       4) {
@@ -26205,7 +26292,7 @@ function create_fragment$d(ctx) {
             each_blocks[i] = create_each_block$4(child_ctx);
             each_blocks[i].c();
             transition_in(each_blocks[i], 1);
-            each_blocks[i].m(div3, null);
+            each_blocks[i].m(div1, null);
           }
         }
         group_outros();
@@ -26232,18 +26319,22 @@ function create_fragment$d(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(div4);
+        detach(div2);
       }
+      if (if_block)
+        if_block.d();
       destroy_each(each_blocks, detaching);
       mounted = false;
-      run_all(dispose);
+      dispose();
     }
   };
 }
 function instance$d($$self, $$props, $$invalidate) {
   let categorizedSkills;
   let $doc;
+  let $appState;
   const appState = getContext("ApplicationStateStore");
+  component_subscribe($$self, appState, (value) => $$invalidate(3, $appState = value));
   const doc = getContext("DocumentStore");
   component_subscribe($$self, doc, (value) => $$invalidate(0, $doc = value));
   let newSkillName = "";
@@ -26296,6 +26387,8 @@ function instance$d($$self, $$props, $$invalidate) {
     $doc,
     newSkillName,
     categorizedSkills,
+    $appState,
+    appState,
     doc,
     createNewSkill,
     input_input_handler,
@@ -26997,10 +27090,10 @@ class DocumentSheetHelper {
     const title = game.i18n.format("DOCUMENT.Create", { type: label });
     const collection = game.collections.get(this.documentName);
     const templates = collection.filter((a) => a.getFlag("leobrew", "isTemplate"));
-    const defaultType = this.metadata.types[0];
-    const types = {
-      [defaultType]: game.i18n.localize("LEOBREW.NoTemplate")
-    };
+    const types = {};
+    for (const type of this.metadata.types) {
+      types[type] = type;
+    }
     for (let a of templates) {
       types[a.id] = a.name;
     }
@@ -27009,7 +27102,7 @@ class DocumentSheetHelper {
       folder: data.folder,
       folders,
       hasFolders: folders.length > 1,
-      type: defaultType,
+      type: this.metadata.types[0],
       types,
       hasTypes: true
     });
@@ -27097,16 +27190,6 @@ async function d10Roll({
     }
   }
   messageData.roundedRoll = roundDownRoll(rollToRound.total);
-  if (rollToRound.total === 2 && messageData.natural) {
-    messageData.roundedRoll = [
-      "Nope",
-      "2?!",
-      "No can do",
-      "Nix",
-      "Nada",
-      "wtf?"
-    ][Math.floor(Math.random() * 6)];
-  }
   messageData.content = await renderTemplate("systems/leobrew/templates/chat/roll-card.html", messageData);
   await ChatMessage.create(messageData);
   return roll;
@@ -27238,44 +27321,48 @@ class LeobrewActor extends Actor {
   }
 }
 class LeobrewItem extends Item {
-  #derived = {
+  derived = {
     bonus: 0,
     subSkills: []
   };
-  #stores;
+  /** @type {ActorStores} */
+  stores;
   constructor(...args) {
     super(...args);
-    this.#stores = {
-      bonus: propertyStore(this, "bonus"),
-      subSkills: propertyStore(this, "subSkills")
+    this.setupStores();
+  }
+  setupStores() {
+    if (this.stores)
+      return;
+    const derivedWritable = writable(this.derived);
+    this.stores = {
+      bonus: propertyStore(derivedWritable, "bonus"),
+      subSkills: propertyStore(derivedWritable, "subSkills")
     };
   }
-  get stores() {
-    return this.#stores;
-  }
-  get bonusStore() {
-    return this.#stores.bonus;
-  }
   get bonus() {
-    return this.#derived.bonus;
+    this.setupStores();
+    return this.derived.bonus;
+  }
+  set bonus(newValue) {
+    this.setupStores();
+    this.stores.bonus.set(newValue);
   }
   get subSkills() {
-    return this.#derived.subSkills;
+    this.setupStores();
+    return this.derived.subSkills;
   }
-  get subSkillsStore() {
-    return this.#stores.subSkills;
+  set subSkills(newValue) {
+    this.setupStores();
+    this.stores.subSkills.set(newValue);
   }
-  // Prepare Player type specific data
-  prepareDerivedData() {
-    super.prepareDerivedData();
-    this._prepareDerivedBonuses();
-  }
-  _prepareDerivedBonuses() {
+  prepareDerivedBonuses() {
+    this.setupStores();
     if (!this.parent)
       return;
     if (this.type === "skill") {
-      this.#stores.bonus.set(this.getBonus());
-      this.#stores.subSkills.set(this.getSubSkills());
+      this.bonus = this.getBonus();
+      this.subSkills = this.getSubSkills();
     } else if (this.type === "equipment") {
       this.getTiedSkills().forEach((skill) => {
         skill.prepareDerivedData();
@@ -27286,7 +27373,7 @@ class LeobrewItem extends Item {
     return Object.keys(this.system.tiedSkills ?? {}).map((id) => this.parent.items.get(id)).filter(Boolean);
   }
   getBonus(subSkillName) {
-    return this.parent.equippedItems.filter((item) => item.system.tiedSkills[this.id]).reduce((totalBonus, item) => {
+    return this.parent.equipmentSkills.filter((item) => item.system.tiedSkills[this.id]).reduce((totalBonus, item) => {
       const tiedSkillConfig = item.system.tiedSkills[this.id];
       tiedSkillConfig.filter((tiedSkill) => {
         if (subSkillName) {
@@ -27295,19 +27382,19 @@ class LeobrewItem extends Item {
         return !tiedSkill.isSubSkill;
       }).forEach((tiedSkill) => {
         if (tiedSkill.bonus) {
-          totalBonus += tiedSkill.bonus;
+          totalBonus += tiedSkill.bonus || 0;
         }
       });
       return totalBonus;
     }, 0);
   }
   getSubSkills() {
-    return this.parent.equippedItems.filter((item) => item.system.tiedSkills[this.id] && item.system.tiedSkills[this.id].some((tiedSkill) => {
+    return this.parent.equipmentSkills.filter((item) => item.system.tiedSkills[this.id] && item.system.tiedSkills[this.id].some((tiedSkill) => {
       return tiedSkill.isSubSkill;
     })).map((item) => {
       return item.system.tiedSkills[this.id].filter((tiedSkill) => tiedSkill.isSubSkill);
     }).deepFlatten().map((subSkill) => foundry.utils.deepClone(subSkill)).map((subSkill) => {
-      subSkill.bonus += this.system.level + this.bonus;
+      subSkill.bonus += this.system.level + (this.bonus || 0);
       return subSkill;
     }).sort((a, b) => a.name > b.name);
   }
@@ -27418,7 +27505,8 @@ class LeobrewItem extends Item {
         "flags.leobrew.roll": {
           type: "skill",
           source: this.uuid,
-          extraTitle: options?.extraTitle ?? ""
+          extraTitle: options?.extraTitle ?? "",
+          asSkill: true
         }
       }
     });
@@ -27810,7 +27898,7 @@ function create_each_block$1(ctx) {
   let i;
   let mounted;
   let dispose;
-  function input0_input_handler() {
+  function input0_change_handler() {
     ctx[8].call(
       input0,
       /*each_value*/
@@ -27828,7 +27916,7 @@ function create_each_block$1(ctx) {
       ctx[15]
     );
   }
-  function input2_change_handler() {
+  function input2_input_handler() {
     ctx[10].call(
       input2,
       /*each_value*/
@@ -27855,37 +27943,37 @@ function create_each_block$1(ctx) {
       input2 = element("input");
       t2 = space();
       i = element("i");
-      attr(input0, "type", "text");
-      attr(input0, "class", "name svelte-lbvtt-1qa6uku");
-      attr(input1, "type", "number");
-      attr(input1, "class", "svelte-lbvtt-1qa6uku");
-      attr(input2, "type", "checkbox");
-      attr(input2, "class", "svelte-lbvtt-1qa6uku");
-      attr(i, "class", "fas fa-times clickable clickable-red svelte-lbvtt-1qa6uku");
+      attr(input0, "type", "checkbox");
+      attr(input0, "class", "svelte-lbvtt-1oqy63m");
+      attr(input1, "type", "text");
+      attr(input1, "class", "name svelte-lbvtt-1oqy63m");
+      attr(input2, "type", "number");
+      attr(input2, "class", "svelte-lbvtt-1oqy63m");
+      attr(i, "class", "fas fa-times clickable clickable-red svelte-lbvtt-1oqy63m");
     },
     m(target, anchor) {
       insert(target, input0, anchor);
-      set_input_value(
-        input0,
-        /*tiedSkill*/
-        ctx[13].name
-      );
+      input0.checked = /*tiedSkill*/
+      ctx[13].isSubSkill;
       insert(target, t0, anchor);
       insert(target, input1, anchor);
       set_input_value(
         input1,
         /*tiedSkill*/
-        ctx[13].bonus
+        ctx[13].name
       );
       insert(target, t1, anchor);
       insert(target, input2, anchor);
-      input2.checked = /*tiedSkill*/
-      ctx[13].isSubSkill;
+      set_input_value(
+        input2,
+        /*tiedSkill*/
+        ctx[13].bonus
+      );
       insert(target, t2, anchor);
       insert(target, i, anchor);
       if (!mounted) {
         dispose = [
-          listen(input0, "input", input0_input_handler),
+          listen(input0, "change", input0_change_handler),
           listen(
             input0,
             "change",
@@ -27899,7 +27987,7 @@ function create_each_block$1(ctx) {
             /*updateTiedSkills*/
             ctx[4]
           ),
-          listen(input2, "change", input2_change_handler),
+          listen(input2, "input", input2_input_handler),
           listen(
             input2,
             "change",
@@ -27914,27 +28002,27 @@ function create_each_block$1(ctx) {
     p(new_ctx, dirty) {
       ctx = new_ctx;
       if (dirty & /*tiedSkills*/
-      1 && input0.value !== /*tiedSkill*/
+      1) {
+        input0.checked = /*tiedSkill*/
+        ctx[13].isSubSkill;
+      }
+      if (dirty & /*tiedSkills*/
+      1 && input1.value !== /*tiedSkill*/
       ctx[13].name) {
         set_input_value(
-          input0,
+          input1,
           /*tiedSkill*/
           ctx[13].name
         );
       }
       if (dirty & /*tiedSkills*/
-      1 && to_number(input1.value) !== /*tiedSkill*/
+      1 && to_number(input2.value) !== /*tiedSkill*/
       ctx[13].bonus) {
         set_input_value(
-          input1,
+          input2,
           /*tiedSkill*/
           ctx[13].bonus
         );
-      }
-      if (dirty & /*tiedSkills*/
-      1) {
-        input2.checked = /*tiedSkill*/
-        ctx[13].isSubSkill;
       }
     },
     d(detaching) {
@@ -27996,28 +28084,28 @@ function create_fragment$6(ctx) {
       t3 = space();
       div = element("div");
       span1 = element("span");
-      span1.textContent = "Name";
+      span1.textContent = "Subskill";
       t5 = space();
       span2 = element("span");
-      span2.textContent = "Bonus";
+      span2.textContent = "Name";
       t7 = space();
       span3 = element("span");
-      span3.textContent = "Subskill";
+      span3.textContent = "Bonus";
       t9 = space();
       span4 = element("span");
       t10 = space();
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].c();
       }
-      attr(i0, "class", "fas fa-times clickable clickable-red svelte-lbvtt-1qa6uku");
-      attr(span0, "class", "svelte-lbvtt-1qa6uku");
-      attr(i1, "class", "fas fa-plus clickable clickable-green svelte-lbvtt-1qa6uku");
-      attr(h3, "class", "svelte-lbvtt-1qa6uku");
-      attr(span1, "class", "name svelte-lbvtt-1qa6uku");
-      attr(span2, "class", "svelte-lbvtt-1qa6uku");
-      attr(span3, "class", "svelte-lbvtt-1qa6uku");
-      attr(span4, "class", "svelte-lbvtt-1qa6uku");
-      attr(div, "class", "tied-skills svelte-lbvtt-1qa6uku");
+      attr(i0, "class", "fas fa-times clickable clickable-red svelte-lbvtt-1oqy63m");
+      attr(span0, "class", "svelte-lbvtt-1oqy63m");
+      attr(i1, "class", "fas fa-plus clickable clickable-green svelte-lbvtt-1oqy63m");
+      attr(h3, "class", "svelte-lbvtt-1oqy63m");
+      attr(span1, "class", "svelte-lbvtt-1oqy63m");
+      attr(span2, "class", "name svelte-lbvtt-1oqy63m");
+      attr(span3, "class", "svelte-lbvtt-1oqy63m");
+      attr(span4, "class", "svelte-lbvtt-1oqy63m");
+      attr(div, "class", "tied-skills svelte-lbvtt-1oqy63m");
     },
     m(target, anchor) {
       insert(target, h3, anchor);
@@ -28133,16 +28221,16 @@ function instance$6($$self, $$props, $$invalidate) {
     tiedSkills.splice(index, 1);
     updateTiedSkills();
   }
-  function input0_input_handler(each_value, index) {
-    each_value[index].name = this.value;
+  function input0_change_handler(each_value, index) {
+    each_value[index].isSubSkill = this.checked;
     $$invalidate(0, tiedSkills);
   }
   function input1_input_handler(each_value, index) {
-    each_value[index].bonus = to_number(this.value);
+    each_value[index].name = this.value;
     $$invalidate(0, tiedSkills);
   }
-  function input2_change_handler(each_value, index) {
-    each_value[index].isSubSkill = this.checked;
+  function input2_input_handler(each_value, index) {
+    each_value[index].bonus = to_number(this.value);
     $$invalidate(0, tiedSkills);
   }
   const click_handler = (index) => {
@@ -28163,9 +28251,9 @@ function instance$6($$self, $$props, $$invalidate) {
     deleteTiedSkill,
     addTiedSkill,
     removeTiedSkill,
-    input0_input_handler,
+    input0_change_handler,
     input1_input_handler,
-    input2_change_handler,
+    input2_input_handler,
     click_handler
   ];
 }
@@ -28730,14 +28818,15 @@ function instance$4($$self, $$props, $$invalidate) {
     if (droppedDocument.type !== "skill")
       return;
     const currentTiedSkills = $doc.system.tiedSkills;
-    if (currentTiedSkills[droppedDocument.id])
-      return;
-    currentTiedSkills[droppedDocument.id] = {
+    if (!currentTiedSkills[droppedDocument.id]?.length) {
+      currentTiedSkills[droppedDocument.id] = [];
+    }
+    currentTiedSkills[droppedDocument.id].push({
       name: "New Skill",
       bonus: 0,
       isSubSkill: false,
       isWeaponSkill: false
-    };
+    });
     await $doc.update({ "system.tiedSkills": currentTiedSkills });
     await droppedDocument.update({ "system.tiedEquipment": $doc.id });
   }
@@ -29084,6 +29173,7 @@ function create_fragment$3(ctx) {
   };
 }
 function instance$3($$self, $$props, $$invalidate) {
+  getContext("#external");
   const doc = getContext("DocumentStore");
   const tabs = [
     {
@@ -29564,6 +29654,334 @@ class LeobrewItemSheet extends SvelteDocumentSheet {
     this.reactive.state = createItemSheetState(doc);
   }
 }
+class ActorDataModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return {
+      biography: new fields.SchemaField({
+        value: new fields.HTMLField()
+      }),
+      skills: new fields.ObjectField({ nullable: true }),
+      abilities: new fields.SchemaField({
+        str: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 1,
+            integer: true
+          })
+        }),
+        dex: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 1,
+            integer: true
+          })
+        }),
+        con: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 1,
+            integer: true
+          })
+        }),
+        will: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 1,
+            integer: true
+          })
+        }),
+        int: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 1,
+            integer: true
+          })
+        }),
+        app: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 1,
+            integer: true
+          })
+        })
+      }),
+      resources: new fields.SchemaField({
+        luck: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          }),
+          max: new fields.NumberField({
+            required: true,
+            initial: 3,
+            integer: true
+          }),
+          bonus: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          })
+        }),
+        mana: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          }),
+          max: new fields.NumberField({
+            required: true,
+            initial: 4,
+            integer: true
+          }),
+          bonus: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          })
+        }),
+        sanity: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          }),
+          max: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          }),
+          bonus: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          })
+        })
+      }),
+      experience: new fields.SchemaField({
+        value: new fields.NumberField({
+          required: true,
+          initial: 0,
+          integer: true
+        }),
+        spent: new fields.NumberField({
+          required: true,
+          initial: 0,
+          integer: true
+        }),
+        initialized: new fields.BooleanField({
+          required: true,
+          initial: false
+        })
+      }),
+      injuries: new fields.SchemaField({
+        chest: new fields.SchemaField({
+          value: new fields.StringField({
+            required: true,
+            initial: ""
+          })
+        }),
+        legs: new fields.SchemaField({
+          value: new fields.StringField({
+            required: true,
+            initial: ""
+          })
+        }),
+        guts: new fields.SchemaField({
+          value: new fields.StringField({
+            required: true,
+            initial: ""
+          })
+        }),
+        arms: new fields.SchemaField({
+          value: new fields.StringField({
+            required: true,
+            initial: ""
+          })
+        }),
+        head: new fields.SchemaField({
+          value: new fields.StringField({
+            required: true,
+            initial: ""
+          })
+        })
+      }),
+      currency: new fields.SchemaField({
+        gp: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          }),
+          bank: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          })
+        }),
+        sp: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          }),
+          bank: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          })
+        }),
+        cp: new fields.SchemaField({
+          value: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          }),
+          bank: new fields.NumberField({
+            required: true,
+            initial: 0,
+            integer: true
+          })
+        })
+      })
+    };
+  }
+  static migrateData(source) {
+    if (source.description) {
+      source.biography.value = source.description.value;
+      delete source.description;
+    }
+    if (hasProperty(source, "currency.gp") && !hasProperty(source, "currency.gp.value") || hasProperty(source, "currency.sp") && !hasProperty(source, "currency.sp.value") || hasProperty(source, "currency.cp") && !hasProperty(source, "currency.cp.value")) {
+      const gp = typeof getProperty(source, "currency.gp") === "number" ? getProperty(source, "currency.gp") ?? 0 : getProperty(source, "currency.gp.value") ?? 0;
+      const sp = typeof getProperty(source, "currency.sp") === "number" ? getProperty(source, "currency.sp") ?? 0 : getProperty(source, "currency.sp.value") ?? 0;
+      const cp = typeof getProperty(source, "currency.cp") === "number" ? getProperty(source, "currency.cp") ?? 0 : getProperty(source, "currency.cp.value") ?? 0;
+      source["currency"] = {
+        gp: {
+          value: gp,
+          bank: 0
+        },
+        sp: {
+          value: sp,
+          bank: 0
+        },
+        cp: {
+          value: cp,
+          bank: 0
+        }
+      };
+    }
+    return super.migrateData(source);
+  }
+}
+class EquipmentDataModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return {
+      description: new fields.SchemaField({
+        value: new fields.HTMLField()
+      }),
+      equipped: new fields.BooleanField({
+        required: true,
+        initial: true
+      }),
+      usesQuantity: new fields.BooleanField({
+        required: true,
+        initial: false
+      }),
+      quantity: new fields.NumberField({
+        required: true,
+        initial: 1,
+        integer: true
+      }),
+      addsSkill: new fields.BooleanField({
+        required: true,
+        initial: false
+      }),
+      skillLabel: new fields.StringField({
+        required: true,
+        initial: "Generic"
+      }),
+      skillBonus: new fields.NumberField({
+        required: true,
+        initial: 0,
+        integer: true
+      }),
+      tiedSkills: new fields.ObjectField(),
+      weight: new fields.StringField({
+        required: true,
+        initial: ""
+      }),
+      price: new fields.SchemaField({
+        gp: new fields.NumberField({
+          required: true,
+          initial: 0,
+          integer: true
+        }),
+        sp: new fields.NumberField({
+          required: true,
+          initial: 0,
+          integer: true
+        }),
+        cp: new fields.NumberField({
+          required: true,
+          initial: 0,
+          integer: true
+        })
+      })
+    };
+  }
+}
+class SkillDataModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return {
+      level: new fields.NumberField({
+        required: true,
+        initial: 1,
+        integer: true
+      }),
+      startingLevel: new fields.NumberField({
+        required: true,
+        initial: 1,
+        integer: true
+      }),
+      isMagic: new fields.BooleanField({
+        required: true,
+        initial: false
+      }),
+      category: new fields.StringField({
+        required: true,
+        initial: "Generic"
+      })
+    };
+  }
+}
+class TraitDataModel extends foundry.abstract.DataModel {
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    return {
+      description: new fields.SchemaField({
+        value: new fields.HTMLField()
+      }),
+      uses: new fields.SchemaField({
+        value: new fields.NumberField({
+          required: true,
+          initial: 1,
+          integer: true
+        }),
+        max: new fields.NumberField({
+          required: true,
+          initial: 1,
+          integer: true
+        }),
+        per: new fields.StringField({
+          initial: "Day"
+        })
+      })
+    };
+  }
+}
 function setupSystem() {
   registerConstants();
   registerSheets();
@@ -29582,11 +30000,15 @@ function registerSheets() {
     LeobrewItem
   };
   CONFIG.Actor.documentClass = LeobrewActor;
+  CONFIG.Actor.dataModels.character = ActorDataModel;
   CONFIG.Item.documentClass = LeobrewItem;
+  CONFIG.Item.dataModels.equipment = EquipmentDataModel;
+  CONFIG.Item.dataModels.skill = SkillDataModel;
+  CONFIG.Item.dataModels.trait = TraitDataModel;
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("leobrew", LeobrewActorSheet, { makeDefault: true });
+  Actors.registerSheet("leobrew", LeobrewActorSheet, { makeDefault: true, types: ["character"] });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("leobrew", LeobrewItemSheet, { makeDefault: true });
+  Items.registerSheet("leobrew", LeobrewItemSheet, { makeDefault: true, types: ["equipment", "trait", "skill"] });
 }
 function setupLocalization() {
   const toLocalize = ["currencies", "abilities", "abilityAbbreviations", "resources", "bodyParts"];
@@ -29653,6 +30075,7 @@ async function runMigrations() {
   for (const [version, migration] of Object.entries(migrations)) {
     try {
       await migration(version);
+      await game.settings.set("leobrew", "migration-version", version);
     } catch (err) {
       console.error(err);
       ui.notifications.error(`Something went wrong when migrating to version ${version}. Please check the console for the error!`);
@@ -29661,11 +30084,57 @@ async function runMigrations() {
 }
 const migrations = {
   "1.0.0": async (version) => {
+    const globalItemsToUpdate = [];
+    const invalidItems = Array.from(game.items.invalidDocumentIds);
+    if (invalidItems.length) {
+      const reg = new RegExp("(\\d+) *(\\w+)*", "g");
+      const globalItemSources = game.items._source;
+      for (const invalidId of invalidItems) {
+        const invalidSource = globalItemSources.find((source) => source._id === invalidId);
+        if (invalidSource.type !== "item")
+          continue;
+        const update2 = {
+          _id: invalidId,
+          type: "equipment"
+        };
+        if (invalidSource.price && invalidSource.price.search(reg) > -1) {
+          const match = [...invalidSource.price.matchAll(reg)];
+          update2["price"] = {
+            [match?.[2] ?? "cp"]: Number(match[0])
+          };
+        }
+        globalItemsToUpdate.push(update2);
+      }
+      await Item.updateDocuments(globalItemsToUpdate);
+    }
     for (const actor of Array.from(game.actors)) {
-      const actorUpdates = {};
+      const actorInvalidItems = Array.from(actor.items.invalidDocumentIds);
+      if (actorInvalidItems.length) {
+        const itemsToUpdate = [];
+        const reg = new RegExp("(\\d+) *(\\w+)*", "g");
+        const actorSources = actor.items._source;
+        for (const invalidId of actorInvalidItems) {
+          const invalidSource = actorSources.find((source) => source._id === invalidId);
+          if (invalidSource.type !== "item")
+            continue;
+          const update2 = {
+            _id: invalidId,
+            type: "equipment"
+          };
+          if (invalidSource.price && invalidSource.price.search(reg) > -1) {
+            const match = [...invalidSource.price.matchAll(reg)];
+            update2["price"] = {
+              [match?.[2] ?? "cp"]: Number(match[0])
+            };
+          }
+          itemsToUpdate.push(update2);
+        }
+        await actor.updateEmbeddedDocuments("Item", itemsToUpdate);
+      }
       const skillItems = [];
       if (actor.system?.skills) {
-        for (const skill of Object.values(actor.system.skills)) {
+        const actorUpdates = {};
+        for (const [key, skill] of Object.entries(actor.system.skills)) {
           let category = "";
           let skillName = skill.label;
           if (skillName.includes(" - ")) {
@@ -29686,50 +30155,12 @@ const migrations = {
               isMagic: skill.isMagic
             }
           });
+          actorUpdates[`system.skills.-=${key}`] = null;
         }
-        actorUpdates["system.-=skills"] = null;
+        actorUpdates[`system.-=skills`] = null;
+        await actor.update(actorUpdates);
         await actor.createEmbeddedDocuments("Item", skillItems);
       }
-      const itemsToUpdate = [];
-      const reg = new RegExp("(\\d+) *(\\w+)*", "g");
-      const actorSources = actor.items._source;
-      for (const invalidId of Array.from(actor.items.invalidDocumentIds)) {
-        const invalidSource = actorSources.find((source) => source._id === invalidId);
-        if (invalidSource.type !== "item")
-          continue;
-        const update2 = {
-          _id: invalidId,
-          type: "equipment"
-        };
-        if (invalidSource.price && invalidSource.price.search(reg) > -1) {
-          const match = [...invalidSource.price.matchAll(reg)];
-          update2["price"] = {
-            [match?.[2] ?? "cp"]: Number(match[0])
-          };
-        }
-        itemsToUpdate.push(update2);
-      }
-      await actor.updateEmbeddedDocuments("Item", itemsToUpdate);
-      if (hasProperty(actor, "system.currency.gp") && !hasProperty(actor, "system.currency.gp.value") || hasProperty(actor, "system.currency.sp") && !hasProperty(actor, "system.currency.sp.value") || hasProperty(actor, "system.currency.cp") && !hasProperty(actor, "system.currency.cp.value")) {
-        actorUpdates["system.currency"] = {
-          gp: {
-            value: getProperty(actor, "system.currency.gp") ?? 0,
-            bank: 0
-          },
-          sp: {
-            value: getProperty(actor, "system.currency.sp") ?? 0,
-            bank: 0
-          },
-          cp: {
-            value: getProperty(actor, "system.currency.cp") ?? 0,
-            bank: 0
-          }
-        };
-      }
-      await actor.update({
-        "system.experience.initialized": true,
-        ...actorUpdates
-      });
     }
   }
 };
@@ -29881,6 +30312,7 @@ function registerChatListeners() {
     const options = {
       extraTitle: flags?.extraTitle ?? "",
       subSkill: flags?.subSkill ?? null,
+      asSkill: flags?.asSkill ?? null,
       extraFlavor: flavor,
       messageData: {
         "flags.leobrew.roll": {
@@ -29902,32 +30334,43 @@ function registerChatListeners() {
   });
 }
 Hooks.once("init", () => {
-  debugger;
   setupSystem();
 });
 Hooks.once("setup", () => {
   setupLocalization();
 });
-Hooks.once("ready", () => {
+Hooks.once("ready", async () => {
   registerChatListeners();
-  game.actors.getName("Ajal Fajir").sheet.render(true);
-  game.actors.getName("Ajal Fajir").items.getName("Round Shield").sheet.render(true);
   if (!game.user.isGM)
     return;
-  runMigrations();
+  await runMigrations();
 });
 Hooks.on("preCreateActor", (doc) => {
   doc.updateSource({
     "system.experience.value": Math.abs(Number(game.settings.get("leobrew", "startingSkillPoints"))) || 40
   });
 });
+Hooks.on("updateItem", (item) => {
+  if (!item.parent)
+    return;
+  item.parent.prepareDerivedBonuses();
+});
 Hooks.on("createActor", (doc) => {
   doc.createEmbeddedDocuments("Item", [{
     name: "Native Language",
     type: "skill",
-    "system.category": "Language",
-    "system.level": 5
+    system: {
+      "category": "Language",
+      "level": 5
+    }
   }]);
+});
+Hooks.on("deleteItem", (doc) => {
+  if (doc.type !== "skill" || !doc.parent || !doc.parent.system.experience.initalized)
+    return;
+  doc.parent.update({
+    "system.experience.value": doc.parent.system.experience.value + doc.system.level
+  });
 });
 Hooks.on("renderChatMessage", (...args) => {
   displayChatActionButtons(...args);

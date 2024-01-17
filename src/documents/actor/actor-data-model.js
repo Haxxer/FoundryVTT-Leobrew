@@ -151,7 +151,7 @@ export default class ActorDataModel extends foundry.abstract.DataModel {
 					}),
 				}),
 			}),
-			currency: new fields.SchemaField({
+			currencies: new fields.SchemaField({
 				gp: new fields.SchemaField({
 					value: new fields.NumberField({
 						required: true,
@@ -189,36 +189,54 @@ export default class ActorDataModel extends foundry.abstract.DataModel {
 					}),
 				}),
 			}),
+			currency: new fields.ObjectField({
+				nullable: true,
+				gp: new fields.NumberField({
+					nullable: true,
+					initial: 0,
+					integer: true,
+				}),
+				sp: new fields.NumberField({
+					nullable: true,
+					initial: 0,
+					integer: true
+				}),
+				cp: new fields.NumberField({
+					nullable: true,
+					initial: 0,
+					integer: true
+				}),
+			}),
 		};
 	}
 
 	static migrateData(source) {
 
 		if(source.description){
-			source.biography.value = source.description.value;
+			source.biography = { value: source.description.value };
 			delete source.description;
 		}
 
 		if(
-			(hasProperty(source, "currency.gp") && !hasProperty(source, "currency.gp.value"))
+			(foundry.utils.hasProperty(source, "currency.gp") && !foundry.utils.hasProperty(source, "currency.gp.value"))
 			||
-			(hasProperty(source, "currency.sp") && !hasProperty(source, "currency.sp.value"))
+			(foundry.utils.hasProperty(source, "currency.sp") && !foundry.utils.hasProperty(source, "currency.sp.value"))
 			||
-			(hasProperty(source, "currency.cp") && !hasProperty(source, "currency.cp.value"))
+			(foundry.utils.hasProperty(source, "currency.cp") && !foundry.utils.hasProperty(source, "currency.cp.value"))
 		){
-			const gp = typeof getProperty(source, "currency.gp") === "number"
-				? getProperty(source, "currency.gp") ?? 0
-				: getProperty(source, "currency.gp.value") ?? 0;
+			const gp = typeof foundry.utils.getProperty(source, "currency.gp") === "number"
+				? foundry.utils.getProperty(source, "currency.gp") ?? 0
+				: foundry.utils.getProperty(source, "currency.gp.value") ?? 0;
 
-			const sp = typeof getProperty(source, "currency.sp") === "number"
-				? getProperty(source, "currency.sp") ?? 0
-				: getProperty(source, "currency.sp.value") ?? 0;
+			const sp = typeof foundry.utils.getProperty(source, "currency.sp") === "number"
+				? foundry.utils.getProperty(source, "currency.sp") ?? 0
+				: foundry.utils.getProperty(source, "currency.sp.value") ?? 0;
 
-			const cp = typeof getProperty(source, "currency.cp") === "number"
-				? getProperty(source, "currency.cp") ?? 0
-				: getProperty(source, "currency.cp.value") ?? 0;
+			const cp = typeof foundry.utils.getProperty(source, "currency.cp") === "number"
+				? foundry.utils.getProperty(source, "currency.cp") ?? 0
+				: foundry.utils.getProperty(source, "currency.cp.value") ?? 0;
 
-			source["currency"] = {
+			source["currencies"] = {
 				gp: {
 					value: gp,
 					bank: 0
@@ -232,6 +250,7 @@ export default class ActorDataModel extends foundry.abstract.DataModel {
 					bank: 0
 				}
 			}
+			delete source['currency'];
 		}
 
 		return super.migrateData(source);

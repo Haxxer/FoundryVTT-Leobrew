@@ -22,7 +22,7 @@
 		return $search.toLowerCase().split(" ").every(part => {
 			return (!part || item.name.toLowerCase().includes(part))
 				&& Object.entries($filters).every(([key, filter]) => {
-					return filter === null || getProperty(item, key) === filter;
+					return filter === null || foundry.utils.getProperty(item, key) === filter;
 				});
 		});
 	});

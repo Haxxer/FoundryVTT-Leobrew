@@ -10,15 +10,15 @@
   let currencies = { gp: 0, sp: 0, cp: 0 };
 	let bankCurrencies = {};
 	$: bankCurrencies = {
-		gp: $doc.system.currency.gp.bank,
-		sp: $doc.system.currency.sp.bank,
-		cp: $doc.system.currency.cp.bank
+		gp: $doc.system.currencies.gp.bank,
+		sp: $doc.system.currencies.sp.bank,
+		cp: $doc.system.currencies.cp.bank
 	}
 	let actorCurrencies = {};
   $: actorCurrencies = {
-	  gp: $doc.system.currency.gp.value,
-	  sp: $doc.system.currency.sp.value,
-	  cp: $doc.system.currency.cp.value
+	  gp: $doc.system.currencies.gp.value,
+	  sp: $doc.system.currencies.sp.value,
+	  cp: $doc.system.currencies.cp.value
   }
 
 
@@ -36,15 +36,15 @@
 		}
 
     $doc.update({
-      "system.currency.gp": {
+      "system.currencies.gp": {
         "value": actorCurrencies.gp + currencies.gp,
         "bank": bankCurrencies.gp - currencies.gp,
       },
-      "system.currency.sp": {
+      "system.currencies.sp": {
         "value": actorCurrencies.sp + currencies.sp,
         "bank": bankCurrencies.sp - currencies.sp,
       },
-      "system.currency.cp": {
+      "system.currencies.cp": {
         "value": actorCurrencies.cp + currencies.cp,
         "bank": bankCurrencies.cp - currencies.cp,
       },
@@ -71,15 +71,15 @@
 		}
 
     $doc.update({
-      "system.currency.gp": {
+      "system.currencies.gp": {
         "value": actorCurrencies.gp - currencies.gp,
         "bank": bankCurrencies.gp + currencies.gp,
       },
-      "system.currency.sp": {
+      "system.currencies.sp": {
         "value": actorCurrencies.sp - currencies.sp,
         "bank": bankCurrencies.sp + currencies.sp,
       },
-      "system.currency.cp": {
+      "system.currencies.cp": {
         "value": actorCurrencies.cp - currencies.cp,
         "bank": bankCurrencies.cp + currencies.cp,
       },
@@ -106,9 +106,9 @@
 		}
 
     $doc.update({
-      "system.currency.gp.value": actorCurrencies.gp + currencies.gp,
-      "system.currency.sp.value": actorCurrencies.sp + currencies.sp,
-      "system.currency.cp.value": actorCurrencies.cp + currencies.cp,
+      "system.currencies.gp.value": actorCurrencies.gp + currencies.gp,
+      "system.currencies.sp.value": actorCurrencies.sp + currencies.sp,
+      "system.currencies.cp.value": actorCurrencies.cp + currencies.cp,
     });
 
 	  currencies = {
@@ -123,14 +123,14 @@
 <ApplicationShell bind:elementRoot>
 	<div>
 
-		<div class="actor-currency-container">
+		<div class="actor-currencies-container">
 
-			<div class="actor-currency-list">
+			<div class="actor-currencies-list">
 				<div>GP</div>
 				<div>SP</div>
 				<div>CP</div>
 			</div>
-			<div class="actor-currency-list">
+			<div class="actor-currencies-list">
 				<input type="number" bind:value={currencies.gp}/>
 				<input type="number" bind:value={currencies.sp}/>
 				<input type="number" bind:value={currencies.cp}/>
@@ -155,7 +155,7 @@
 		display: flex;
 	}
 
-  .actor-currency-container {
+  .actor-currencies-container {
     display: grid;
     grid-template-columns: 1fr;
     margin-bottom: 5px;
@@ -166,7 +166,7 @@
     row-gap: 5px;
   }
 
-  .actor-currency-list {
+  .actor-currencies-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
