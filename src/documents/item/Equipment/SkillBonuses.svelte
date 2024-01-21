@@ -1,16 +1,17 @@
 <script>
 
   import { getContext } from "svelte";
-  import { TJSDocument } from '#runtime/svelte/store/fvtt/document';
   import { updateDoc } from "../../base/UpdateDoc.js";
   import SkillBonus from "./SkillBonus.svelte";
   import DropZone from "../../../svelte-components/DropZone.svelte";
 
   const doc = getContext("DocumentStore");
+  const appState = getContext("ApplicationStateStore");
+
   $: validTiedSkills = Object.entries($doc.system.tiedSkills)
     .filter(([skillId]) => $doc.parent.items.get(skillId))
   $: skills = Object.fromEntries(validTiedSkills.map(([skillId]) => [
-    skillId, new TJSDocument($doc.parent.items.get(skillId))
+    skillId, appState.embeddedDocuments.get(skillId)
   ]))
 
 	async function test(data){
@@ -54,7 +55,7 @@
 {/each}
 
 {#if !validTiedSkills.length}
-	<DropZone callback="{test}">
+	<DropZone style="display: flex; flex: 1; align-items: center; justify-content: center;" callback="{test}">
 		<div style="text-align: center; font-style: italic; padding: 10px;">
 			Drag and drop skills to add a bonus to that skill
 		</div>

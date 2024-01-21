@@ -22,6 +22,10 @@ export default class EquipmentDataModel extends foundry.abstract.DataModel {
 				required: true,
 				initial: false
 			}),
+			category: new fields.StringField({
+				required: true,
+				initial: "",
+			}),
 			skillLabel: new fields.StringField({
 				required: true,
 				initial: "Generic",

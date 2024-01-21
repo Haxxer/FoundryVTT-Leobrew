@@ -17,7 +17,7 @@ export default class LeobrewItemSheet extends SvelteDocumentSheet {
 
   async _onDrop(event) {
     const doc = this.reactive.doc;
-    if (!doc.isOwner || !doc.type !== "equipment") {
+    if (!doc.isOwner || doc.type !== "skill") {
       return false;
     }
     const data = TextEditor.getDragEventData(event);

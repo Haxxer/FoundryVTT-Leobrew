@@ -40,6 +40,7 @@ export default class LeobrewActor extends Actor {
   prepareDerivedData() {
     super.prepareDerivedData();
     this._prepareDerivedResources();
+		this.items.forEach(item => item.prepareDerivedBonuses());
   }
 
   _prepareDerivedResources(){
@@ -100,7 +101,8 @@ export default class LeobrewActor extends Actor {
         "flags.leobrew.roll": {
           type: "generic",
           actorUuid: this.uuid,
-          extraFlavor: options?.extraFlavor ?? ""
+          extraFlavor: options?.extraFlavor ?? "",
+	        isAttack: options?.isAttack
         }
       }
     });

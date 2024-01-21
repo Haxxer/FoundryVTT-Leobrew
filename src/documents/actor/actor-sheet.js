@@ -6,7 +6,7 @@ export default class LeobrewActorSheet extends SvelteDocumentSheet {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      width: 600,
+      width: 700,
       height: 640,
       svelte: {
         class: ActorShell,

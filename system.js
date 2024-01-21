@@ -12553,7 +12553,7 @@ function create_else_block$7(ctx) {
     }
   };
 }
-function create_if_block$f(ctx) {
+function create_if_block$g(ctx) {
   let div0;
   let applyStyles_action;
   let div0_intro;
@@ -12709,7 +12709,7 @@ function create_fragment$B(ctx) {
   let current;
   let mounted;
   let dispose;
-  const if_block_creators = [create_if_block$f, create_else_block$7];
+  const if_block_creators = [create_if_block$g, create_else_block$7];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -13115,7 +13115,7 @@ function localize(stringId, data) {
   return result !== void 0 ? result : "";
 }
 const TJSHeaderButton_svelte_svelte_type_style_lang = "";
-function create_if_block$e(ctx) {
+function create_if_block$f(ctx) {
   let span;
   let t;
   return {
@@ -13172,7 +13172,7 @@ function create_fragment$A(ctx) {
   let dispose;
   let if_block = (
     /*label*/
-    ctx[3] && create_if_block$e(ctx)
+    ctx[3] && create_if_block$f(ctx)
   );
   return {
     c() {
@@ -13255,7 +13255,7 @@ function create_fragment$A(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block$e(ctx2);
+          if_block = create_if_block$f(ctx2);
           if_block.c();
           if_block.m(a, null);
         }
@@ -13415,7 +13415,7 @@ function get_each_context_1$3(ctx, list, i) {
   child_ctx[31] = list[i];
   return child_ctx;
 }
-function create_if_block$d(ctx) {
+function create_if_block$e(ctx) {
   let img;
   let img_src_value;
   return {
@@ -13647,7 +13647,7 @@ function create_key_block(ctx) {
   let mounted;
   let dispose;
   let if_block = typeof /*$storeHeaderIcon*/
-  ctx[6] === "string" && create_if_block$d(ctx);
+  ctx[6] === "string" && create_if_block$e(ctx);
   let each_value_1 = ensure_array_like(
     /*buttonsLeft*/
     ctx[1]
@@ -13752,7 +13752,7 @@ function create_key_block(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block$d(ctx2);
+          if_block = create_if_block$e(ctx2);
           if_block.c();
           if_block.m(header, t0);
         }
@@ -14617,7 +14617,7 @@ function create_else_block$6(ctx) {
     }
   };
 }
-function create_if_block$c(ctx) {
+function create_if_block$d(ctx) {
   let div;
   let tjsapplicationheader;
   let t0;
@@ -14896,7 +14896,7 @@ function create_fragment$w(ctx) {
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$c, create_else_block$6];
+  const if_block_creators = [create_if_block$d, create_else_block$6];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -15530,7 +15530,7 @@ function create_if_block_2$3(ctx) {
     }
   };
 }
-function create_if_block$b(ctx) {
+function create_if_block$c(ctx) {
   let div;
   let each_blocks = [];
   let each_1_lookup = /* @__PURE__ */ new Map();
@@ -15772,7 +15772,7 @@ function create_fragment$v(ctx) {
   }
   let if_block1 = (
     /*buttons*/
-    ctx[1].length && create_if_block$b(ctx)
+    ctx[1].length && create_if_block$c(ctx)
   );
   return {
     c() {
@@ -15833,7 +15833,7 @@ function create_fragment$v(ctx) {
         if (if_block1) {
           if_block1.p(ctx2, dirty);
         } else {
-          if_block1 = create_if_block$b(ctx2);
+          if_block1 = create_if_block$c(ctx2);
           if_block1.c();
           if_block1.m(main, null);
         }
@@ -16285,7 +16285,7 @@ function create_else_block$5(ctx) {
     }
   };
 }
-function create_if_block$a(ctx) {
+function create_if_block$b(ctx) {
   let tjsglasspane;
   let current;
   const tjsglasspane_spread_levels = [
@@ -16577,7 +16577,7 @@ function create_fragment$u(ctx) {
   let if_block;
   let if_block_anchor;
   let current;
-  const if_block_creators = [create_if_block$a, create_else_block$5];
+  const if_block_creators = [create_if_block$b, create_else_block$5];
   const if_blocks = [];
   function select_block_type(ctx2, dirty) {
     if (
@@ -17777,7 +17777,7 @@ class TJSDialog extends SvelteApplication {
   }
 }
 const ActorEquipment_svelte_svelte_type_style_lang = "";
-function create_if_block$9(ctx) {
+function create_if_block$a(ctx) {
   let div;
   let div_transition;
   let current;
@@ -17925,7 +17925,7 @@ function create_fragment$t(ctx) {
   let dispose;
   let if_block = (
     /*expanded*/
-    ctx[1] && create_if_block$9(ctx)
+    ctx[1] && create_if_block$a(ctx)
   );
   return {
     c() {
@@ -18099,7 +18099,7 @@ function create_fragment$t(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$9(ctx2);
+          if_block = create_if_block$a(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(div4, null);
@@ -18228,7 +18228,7 @@ function get_each_context$8(ctx, list, i) {
   child_ctx[14] = list[i];
   return child_ctx;
 }
-function create_if_block$8(ctx) {
+function create_if_block$9(ctx) {
   let a;
   let i;
   let mounted;
@@ -18408,7 +18408,7 @@ function create_fragment$s(ctx) {
   let dispose;
   let if_block = (
     /*type*/
-    ctx[1] === "equipment" && create_if_block$8(ctx)
+    ctx[1] === "equipment" && create_if_block$9(ctx)
   );
   let each_value = ensure_array_like(
     /*items*/
@@ -18510,7 +18510,7 @@ function create_fragment$s(ctx) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
-          if_block = create_if_block$8(ctx2);
+          if_block = create_if_block$9(ctx2);
           if_block.c();
           if_block.m(div0, t1);
         }
@@ -18600,11 +18600,11 @@ function instance$s($$self, $$props, $$invalidate) {
     if ($$self.$$.dirty & /*itemsStore, $search, $filters*/
     1036) {
       $$invalidate(4, items = itemsStore.filter((item) => {
-        return $search.toLowerCase().split(" ").every((part) => {
-          return (!part || item.name.toLowerCase().includes(part)) && Object.entries($filters).every(([key, filter]) => {
-            return filter === null || getProperty(item, key) === filter;
-          });
-        });
+        return $search.toLowerCase().split(" ").every((part) => (!part || item.name.toLowerCase().includes(part)) && Object.entries($filters).every(([key, filter]) => {
+          return filter === null || foundry.utils.getProperty(item, key) === filter;
+        }));
+      }).sort((a, b) => {
+        return b.sort !== a.sort ? b.sort - a.sort : a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
       }));
     }
   };
@@ -20557,19 +20557,19 @@ function create_default_slot$3(ctx) {
       t12 = space();
       button2 = element("button");
       button2.innerHTML = `<i class="fas fa-bank"></i> Deposit`;
-      attr(div3, "class", "actor-currency-list svelte-lbvtt-1ip6lyl");
+      attr(div3, "class", "actor-currencies-list svelte-lbvtt-yfs5rh");
       attr(input0, "type", "number");
-      attr(input0, "class", "svelte-lbvtt-1ip6lyl");
+      attr(input0, "class", "svelte-lbvtt-yfs5rh");
       attr(input1, "type", "number");
-      attr(input1, "class", "svelte-lbvtt-1ip6lyl");
+      attr(input1, "class", "svelte-lbvtt-yfs5rh");
       attr(input2, "type", "number");
-      attr(input2, "class", "svelte-lbvtt-1ip6lyl");
-      attr(div4, "class", "actor-currency-list svelte-lbvtt-1ip6lyl");
-      attr(div5, "class", "actor-currency-container svelte-lbvtt-1ip6lyl");
+      attr(input2, "class", "svelte-lbvtt-yfs5rh");
+      attr(div4, "class", "actor-currencies-list svelte-lbvtt-yfs5rh");
+      attr(div5, "class", "actor-currencies-container svelte-lbvtt-yfs5rh");
       attr(button0, "type", "button");
       attr(button1, "type", "button");
       attr(button2, "type", "button");
-      attr(footer, "class", "svelte-lbvtt-1ip6lyl");
+      attr(footer, "class", "svelte-lbvtt-yfs5rh");
     },
     m(target, anchor) {
       insert(target, div6, anchor);
@@ -20758,15 +20758,15 @@ function instance$r($$self, $$props, $$invalidate) {
       return;
     }
     $doc.update({
-      "system.currency.gp": {
+      "system.currencies.gp": {
         "value": actorCurrencies.gp + currencies.gp,
         "bank": bankCurrencies.gp - currencies.gp
       },
-      "system.currency.sp": {
+      "system.currencies.sp": {
         "value": actorCurrencies.sp + currencies.sp,
         "bank": bankCurrencies.sp - currencies.sp
       },
-      "system.currency.cp": {
+      "system.currencies.cp": {
         "value": actorCurrencies.cp + currencies.cp,
         "bank": bankCurrencies.cp - currencies.cp
       }
@@ -20780,15 +20780,15 @@ function instance$r($$self, $$props, $$invalidate) {
       return;
     }
     $doc.update({
-      "system.currency.gp": {
+      "system.currencies.gp": {
         "value": actorCurrencies.gp - currencies.gp,
         "bank": bankCurrencies.gp + currencies.gp
       },
-      "system.currency.sp": {
+      "system.currencies.sp": {
         "value": actorCurrencies.sp - currencies.sp,
         "bank": bankCurrencies.sp + currencies.sp
       },
-      "system.currency.cp": {
+      "system.currencies.cp": {
         "value": actorCurrencies.cp - currencies.cp,
         "bank": bankCurrencies.cp + currencies.cp
       }
@@ -20802,9 +20802,9 @@ function instance$r($$self, $$props, $$invalidate) {
       return;
     }
     $doc.update({
-      "system.currency.gp.value": actorCurrencies.gp + currencies.gp,
-      "system.currency.sp.value": actorCurrencies.sp + currencies.sp,
-      "system.currency.cp.value": actorCurrencies.cp + currencies.cp
+      "system.currencies.gp.value": actorCurrencies.gp + currencies.gp,
+      "system.currencies.sp.value": actorCurrencies.sp + currencies.sp,
+      "system.currencies.cp.value": actorCurrencies.cp + currencies.cp
     });
     $$invalidate(2, currencies = { gp: 0, sp: 0, cp: 0 });
   }
@@ -20843,17 +20843,17 @@ function instance$r($$self, $$props, $$invalidate) {
     if ($$self.$$.dirty & /*$doc*/
     64) {
       bankCurrencies = {
-        gp: $doc.system.currency.gp.bank,
-        sp: $doc.system.currency.sp.bank,
-        cp: $doc.system.currency.cp.bank
+        gp: $doc.system.currencies.gp.bank,
+        sp: $doc.system.currencies.sp.bank,
+        cp: $doc.system.currencies.cp.bank
       };
     }
     if ($$self.$$.dirty & /*$doc*/
     64) {
       actorCurrencies = {
-        gp: $doc.system.currency.gp.value,
-        sp: $doc.system.currency.sp.value,
-        cp: $doc.system.currency.cp.value
+        gp: $doc.system.currencies.gp.value,
+        sp: $doc.system.currencies.sp.value,
+        cp: $doc.system.currencies.cp.value
       };
     }
   };
@@ -20962,24 +20962,24 @@ function create_fragment$q(ctx) {
       t22 = space();
       div14 = element("div");
       div14.textContent = "In Bank";
-      attr(div3, "class", "actor-currency-list svelte-lbvtt-kr9u40");
-      attr(div8, "class", "actor-currency-list svelte-lbvtt-kr9u40");
+      attr(div3, "class", "actor-currencies-list svelte-lbvtt-wz86a4");
+      attr(div8, "class", "actor-currencies-list svelte-lbvtt-wz86a4");
       attr(input0, "type", "number");
-      attr(input0, "class", "svelte-lbvtt-kr9u40");
+      attr(input0, "class", "svelte-lbvtt-wz86a4");
       attr(input1, "type", "number");
-      attr(input1, "class", "svelte-lbvtt-kr9u40");
+      attr(input1, "class", "svelte-lbvtt-wz86a4");
       attr(input2, "type", "number");
-      attr(input2, "class", "svelte-lbvtt-kr9u40");
-      attr(div9, "class", "actor-currency-list svelte-lbvtt-kr9u40");
+      attr(input2, "class", "svelte-lbvtt-wz86a4");
+      attr(div9, "class", "actor-currencies-list svelte-lbvtt-wz86a4");
       attr(i, "class", "fas fa-right-left clickable clickable-red");
       attr(input3, "type", "number");
-      attr(input3, "class", "svelte-lbvtt-kr9u40");
+      attr(input3, "class", "svelte-lbvtt-wz86a4");
       attr(input4, "type", "number");
-      attr(input4, "class", "svelte-lbvtt-kr9u40");
+      attr(input4, "class", "svelte-lbvtt-wz86a4");
       attr(input5, "type", "number");
-      attr(input5, "class", "svelte-lbvtt-kr9u40");
-      attr(div11, "class", "actor-currency-list svelte-lbvtt-kr9u40");
-      attr(div15, "class", "actor-currency-container svelte-lbvtt-kr9u40");
+      attr(input5, "class", "svelte-lbvtt-wz86a4");
+      attr(div11, "class", "actor-currencies-list svelte-lbvtt-wz86a4");
+      attr(div15, "class", "actor-currencies-container svelte-lbvtt-wz86a4");
     },
     m(target, anchor) {
       insert(target, div15, anchor);
@@ -21018,21 +21018,21 @@ function create_fragment$q(ctx) {
               /*doc*/
               ctx[0]
             ),
-            accessor: "system.currency.gp.value"
+            accessor: "system.currencies.gp.value"
           })),
           action_destroyer(updateDoc.call(null, input1, {
             doc: (
               /*doc*/
               ctx[0]
             ),
-            accessor: "system.currency.sp.value"
+            accessor: "system.currencies.sp.value"
           })),
           action_destroyer(updateDoc.call(null, input2, {
             doc: (
               /*doc*/
               ctx[0]
             ),
-            accessor: "system.currency.cp.value"
+            accessor: "system.currencies.cp.value"
           })),
           listen(
             i,
@@ -21045,21 +21045,21 @@ function create_fragment$q(ctx) {
               /*doc*/
               ctx[0]
             ),
-            accessor: "system.currency.gp.bank"
+            accessor: "system.currencies.gp.bank"
           })),
           action_destroyer(updateDoc.call(null, input4, {
             doc: (
               /*doc*/
               ctx[0]
             ),
-            accessor: "system.currency.sp.bank"
+            accessor: "system.currencies.sp.bank"
           })),
           action_destroyer(updateDoc.call(null, input5, {
             doc: (
               /*doc*/
               ctx[0]
             ),
-            accessor: "system.currency.cp.bank"
+            accessor: "system.currencies.cp.bank"
           }))
         ];
         mounted = true;
@@ -21178,7 +21178,7 @@ class ActorInventory extends SvelteComponent {
   }
 }
 const ActorTrait_svelte_svelte_type_style_lang = "";
-function create_if_block$7(ctx) {
+function create_if_block$8(ctx) {
   let div;
   let div_transition;
   let current;
@@ -21322,7 +21322,7 @@ function create_fragment$o(ctx) {
   let dispose;
   let if_block = (
     /*expanded*/
-    ctx[1] && create_if_block$7(ctx)
+    ctx[1] && create_if_block$8(ctx)
   );
   return {
     c() {
@@ -21434,7 +21434,7 @@ function create_fragment$o(ctx) {
             transition_in(if_block, 1);
           }
         } else {
-          if_block = create_if_block$7(ctx2);
+          if_block = create_if_block$8(ctx2);
           if_block.c();
           transition_in(if_block, 1);
           if_block.m(div4, null);
@@ -21525,15 +21525,76 @@ class ActorTrait extends SvelteComponent {
     init(this, options, instance$o, create_fragment$o, safe_not_equal, { item: 0 });
   }
 }
-function create_fragment$n(ctx) {
+const ActorTraits_svelte_svelte_type_style_lang = "";
+function create_if_block$7(ctx) {
   let div;
+  let t1;
+  let input;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div = element("div");
+      div.textContent = "Sanity";
+      t1 = space();
+      input = element("input");
+      attr(div, "class", "svelte-lbvtt-120cle");
+      attr(input, "type", "number");
+      attr(input, "class", "svelte-lbvtt-120cle");
+    },
+    m(target, anchor) {
+      insert(target, div, anchor);
+      insert(target, t1, anchor);
+      insert(target, input, anchor);
+      if (!mounted) {
+        dispose = action_destroyer(updateDoc.call(null, input, {
+          doc: (
+            /*doc*/
+            ctx[2]
+          ),
+          accessor: "system.resources.sanity.bonus"
+        }));
+        mounted = true;
+      }
+    },
+    p: noop,
+    d(detaching) {
+      if (detaching) {
+        detach(div);
+        detach(t1);
+        detach(input);
+      }
+      mounted = false;
+      dispose();
+    }
+  };
+}
+function create_fragment$n(ctx) {
+  let div4;
+  let div3;
+  let div2;
+  let div0;
+  let t1;
+  let input0;
+  let t2;
+  let div1;
+  let t4;
+  let input1;
+  let t5;
+  let t6;
   let searchableitemlist;
   let current;
+  let mounted;
+  let dispose;
+  let if_block = (
+    /*$doc*/
+    ctx[0].system.resources.sanity.enabled && create_if_block$7(ctx)
+  );
   searchableitemlist = new SearchableItemList({
     props: {
       itemsStore: (
         /*itemsStore*/
-        ctx[0]
+        ctx[1]
       ),
       component: ActorTrait,
       type: "trait"
@@ -21541,21 +21602,91 @@ function create_fragment$n(ctx) {
   });
   return {
     c() {
-      div = element("div");
+      div4 = element("div");
+      div3 = element("div");
+      div2 = element("div");
+      div0 = element("div");
+      div0.textContent = "Mana";
+      t1 = space();
+      input0 = element("input");
+      t2 = space();
+      div1 = element("div");
+      div1.textContent = "Luck";
+      t4 = space();
+      input1 = element("input");
+      t5 = space();
+      if (if_block)
+        if_block.c();
+      t6 = space();
       create_component(searchableitemlist.$$.fragment);
-      attr(div, "class", "inventory");
+      attr(div0, "class", "svelte-lbvtt-120cle");
+      attr(input0, "type", "number");
+      attr(input0, "class", "svelte-lbvtt-120cle");
+      attr(div1, "class", "svelte-lbvtt-120cle");
+      attr(input1, "type", "number");
+      attr(input1, "class", "svelte-lbvtt-120cle");
+      attr(div2, "class", "actor-modifiers-list svelte-lbvtt-120cle");
+      attr(div3, "class", "actor-modifiers-container svelte-lbvtt-120cle");
+      attr(div4, "class", "inventory");
     },
     m(target, anchor) {
-      insert(target, div, anchor);
-      mount_component(searchableitemlist, div, null);
+      insert(target, div4, anchor);
+      append(div4, div3);
+      append(div3, div2);
+      append(div2, div0);
+      append(div2, t1);
+      append(div2, input0);
+      append(div2, t2);
+      append(div2, div1);
+      append(div2, t4);
+      append(div2, input1);
+      append(div2, t5);
+      if (if_block)
+        if_block.m(div2, null);
+      append(div4, t6);
+      mount_component(searchableitemlist, div4, null);
       current = true;
+      if (!mounted) {
+        dispose = [
+          action_destroyer(updateDoc.call(null, input0, {
+            doc: (
+              /*doc*/
+              ctx[2]
+            ),
+            accessor: "system.resources.mana.bonus"
+          })),
+          action_destroyer(updateDoc.call(null, input1, {
+            doc: (
+              /*doc*/
+              ctx[2]
+            ),
+            accessor: "system.resources.luck.bonus"
+          }))
+        ];
+        mounted = true;
+      }
     },
     p(ctx2, [dirty]) {
+      if (
+        /*$doc*/
+        ctx2[0].system.resources.sanity.enabled
+      ) {
+        if (if_block) {
+          if_block.p(ctx2, dirty);
+        } else {
+          if_block = create_if_block$7(ctx2);
+          if_block.c();
+          if_block.m(div2, null);
+        }
+      } else if (if_block) {
+        if_block.d(1);
+        if_block = null;
+      }
       const searchableitemlist_changes = {};
       if (dirty & /*itemsStore*/
-      1)
+      2)
         searchableitemlist_changes.itemsStore = /*itemsStore*/
-        ctx2[0];
+        ctx2[1];
       searchableitemlist.$set(searchableitemlist_changes);
     },
     i(local) {
@@ -21570,9 +21701,13 @@ function create_fragment$n(ctx) {
     },
     d(detaching) {
       if (detaching) {
-        detach(div);
+        detach(div4);
       }
+      if (if_block)
+        if_block.d();
       destroy_component(searchableitemlist);
+      mounted = false;
+      run_all(dispose);
     }
   };
 }
@@ -21580,14 +21715,14 @@ function instance$n($$self, $$props, $$invalidate) {
   let itemsStore;
   let $doc;
   const doc = getContext("DocumentStore");
-  component_subscribe($$self, doc, (value) => $$invalidate(2, $doc = value));
+  component_subscribe($$self, doc, (value) => $$invalidate(0, $doc = value));
   $$self.$$.update = () => {
     if ($$self.$$.dirty & /*$doc*/
-    4) {
-      $$invalidate(0, itemsStore = $doc.items.filter((item) => item.type === "trait"));
+    1) {
+      $$invalidate(1, itemsStore = $doc.items.filter((item) => item.type === "trait"));
     }
   };
-  return [itemsStore, doc, $doc];
+  return [$doc, itemsStore, doc];
 }
 class ActorTraits extends SvelteComponent {
   constructor(options) {
@@ -23281,7 +23416,7 @@ function instance$k($$self, $$props, $$invalidate) {
       $$invalidate(2, injuries = Object.entries($doc.system.injuries).map(([part, injury]) => {
         return {
           name: part,
-          path: `Images/images/${part}${injury.value !== "" ? "_" + injury.value : ""}.webp`
+          path: `systems/leobrew/images/${part}${injury.value !== "" ? "_" + injury.value : ""}.webp`
         };
       }));
     }
@@ -26365,7 +26500,7 @@ function instance$d($$self, $$props, $$invalidate) {
               acc[item.system.category] = [];
             acc[item.system.category].push(item);
             acc[item.system.category].sort((a, b) => {
-              return b.name > a.name ? -1 : 1;
+              return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
             });
           } else if (item.type === "equipment" && item.system.addsSkill && item.system.equipped) {
             if (!acc["Equipment"])
@@ -27225,6 +27360,7 @@ class LeobrewActor extends Actor {
   prepareDerivedData() {
     super.prepareDerivedData();
     this._prepareDerivedResources();
+    this.items.forEach((item) => item.prepareDerivedBonuses());
   }
   _prepareDerivedResources() {
     for (let [r, res] of Object.entries(this.system.resources)) {
@@ -29661,6 +29797,12 @@ class ActorDataModel extends foundry.abstract.DataModel {
       biography: new fields.SchemaField({
         value: new fields.HTMLField()
       }),
+      description: new fields.ObjectField({
+        nullable: true,
+        value: new fields.HTMLField({
+          nullable: true
+        })
+      }),
       skills: new fields.ObjectField({ nullable: true }),
       abilities: new fields.SchemaField({
         str: new fields.SchemaField({
@@ -29807,7 +29949,7 @@ class ActorDataModel extends foundry.abstract.DataModel {
           })
         })
       }),
-      currency: new fields.SchemaField({
+      currencies: new fields.SchemaField({
         gp: new fields.SchemaField({
           value: new fields.NumberField({
             required: true,
@@ -29844,34 +29986,26 @@ class ActorDataModel extends foundry.abstract.DataModel {
             integer: true
           })
         })
+      }),
+      currency: new fields.ObjectField({
+        nullable: true,
+        gp: new fields.NumberField({
+          nullable: true,
+          initial: 0,
+          integer: true
+        }),
+        sp: new fields.NumberField({
+          nullable: true,
+          initial: 0,
+          integer: true
+        }),
+        cp: new fields.NumberField({
+          nullable: true,
+          initial: 0,
+          integer: true
+        })
       })
     };
-  }
-  static migrateData(source) {
-    if (source.description) {
-      source.biography.value = source.description.value;
-      delete source.description;
-    }
-    if (hasProperty(source, "currency.gp") && !hasProperty(source, "currency.gp.value") || hasProperty(source, "currency.sp") && !hasProperty(source, "currency.sp.value") || hasProperty(source, "currency.cp") && !hasProperty(source, "currency.cp.value")) {
-      const gp = typeof getProperty(source, "currency.gp") === "number" ? getProperty(source, "currency.gp") ?? 0 : getProperty(source, "currency.gp.value") ?? 0;
-      const sp = typeof getProperty(source, "currency.sp") === "number" ? getProperty(source, "currency.sp") ?? 0 : getProperty(source, "currency.sp.value") ?? 0;
-      const cp = typeof getProperty(source, "currency.cp") === "number" ? getProperty(source, "currency.cp") ?? 0 : getProperty(source, "currency.cp.value") ?? 0;
-      source["currency"] = {
-        gp: {
-          value: gp,
-          bank: 0
-        },
-        sp: {
-          value: sp,
-          bank: 0
-        },
-        cp: {
-          value: cp,
-          bank: 0
-        }
-      };
-    }
-    return super.migrateData(source);
   }
 }
 class EquipmentDataModel extends foundry.abstract.DataModel {
@@ -30073,48 +30207,21 @@ function registerSettings() {
 }
 async function runMigrations() {
   for (const [version, migration] of Object.entries(migrations)) {
-    try {
-      await migration(version);
-      await game.settings.set("leobrew", "migration-version", version);
-    } catch (err) {
-      console.error(err);
-      ui.notifications.error(`Something went wrong when migrating to version ${version}. Please check the console for the error!`);
-    }
+    await migration(version);
+    await game.settings.set("leobrew", "migration-version", version);
   }
 }
 const migrations = {
   "1.0.0": async (version) => {
-    const globalItemsToUpdate = [];
-    const invalidItems = Array.from(game.items.invalidDocumentIds);
-    if (invalidItems.length) {
-      const reg = new RegExp("(\\d+) *(\\w+)*", "g");
-      const globalItemSources = game.items._source;
-      for (const invalidId of invalidItems) {
-        const invalidSource = globalItemSources.find((source) => source._id === invalidId);
-        if (invalidSource.type !== "item")
-          continue;
-        const update2 = {
-          _id: invalidId,
-          type: "equipment"
-        };
-        if (invalidSource.price && invalidSource.price.search(reg) > -1) {
-          const match = [...invalidSource.price.matchAll(reg)];
-          update2["price"] = {
-            [match?.[2] ?? "cp"]: Number(match[0])
-          };
-        }
-        globalItemsToUpdate.push(update2);
-      }
-      await Item.updateDocuments(globalItemsToUpdate);
-    }
-    for (const actor of Array.from(game.actors)) {
-      const actorInvalidItems = Array.from(actor.items.invalidDocumentIds);
-      if (actorInvalidItems.length) {
-        const itemsToUpdate = [];
+    let hitError = false;
+    try {
+      const globalItemsToUpdate = [];
+      const invalidItems = Array.from(game.items.invalidDocumentIds);
+      if (invalidItems.length) {
         const reg = new RegExp("(\\d+) *(\\w+)*", "g");
-        const actorSources = actor.items._source;
-        for (const invalidId of actorInvalidItems) {
-          const invalidSource = actorSources.find((source) => source._id === invalidId);
+        const globalItemSources = game.items._source;
+        for (const invalidId of invalidItems) {
+          const invalidSource = globalItemSources.find((source) => source._id === invalidId);
           if (invalidSource.type !== "item")
             continue;
           const update2 = {
@@ -30127,41 +30234,116 @@ const migrations = {
               [match?.[2] ?? "cp"]: Number(match[0])
             };
           }
-          itemsToUpdate.push(update2);
+          globalItemsToUpdate.push(update2);
         }
-        await actor.updateEmbeddedDocuments("Item", itemsToUpdate);
+        await Item.updateDocuments(globalItemsToUpdate);
       }
-      const skillItems = [];
-      if (actor.system?.skills) {
-        const actorUpdates = {};
-        for (const [key, skill] of Object.entries(actor.system.skills)) {
-          let category = "";
-          let skillName = skill.label;
-          if (skillName.includes(" - ")) {
-            const split = skillName.split(" - ");
-            category = split[0];
-            skillName = split.slice(1).join(": ");
-          } else if (skillName.includes(": ")) {
-            const split = skillName.split(": ");
-            category = split[0];
-            skillName = split.slice(1).join(": ");
-          }
-          skillItems.push({
-            name: skillName,
-            type: "skill",
-            system: {
-              category,
-              level: skill.value,
-              isMagic: skill.isMagic
-            }
-          });
-          actorUpdates[`system.skills.-=${key}`] = null;
+    } catch (err) {
+      console.error(err);
+      hitError = true;
+    }
+    for (const actor of Array.from(game.actors)) {
+      try {
+        let actorUpdates = {};
+        if (actor.system.description) {
+          actorUpdates["system.biography"] = { value: actor.system.description.value };
+          actorUpdates["system.-=description"] = null;
+          actorUpdates["system.description.-=value"] = null;
         }
-        actorUpdates[`system.-=skills`] = null;
+        if (foundry.utils.hasProperty(actor.system, "currency.gp") || foundry.utils.hasProperty(actor.system, "currency.sp") || foundry.utils.hasProperty(actor.system, "currency.cp")) {
+          const gp = typeof foundry.utils.getProperty(actor.system, "currency.gp") === "number" ? foundry.utils.getProperty(actor.system, "currency.gp") ?? 0 : foundry.utils.getProperty(actor.system, "currency.gp.value") ?? 0;
+          const sp = typeof foundry.utils.getProperty(actor.system, "currency.sp") === "number" ? foundry.utils.getProperty(actor.system, "currency.sp") ?? 0 : foundry.utils.getProperty(actor.system, "currency.sp.value") ?? 0;
+          const cp = typeof foundry.utils.getProperty(actor.system, "currency.cp") === "number" ? foundry.utils.getProperty(actor.system, "currency.cp") ?? 0 : foundry.utils.getProperty(actor.system, "currency.cp.value") ?? 0;
+          actorUpdates["system.currencies"] = {
+            gp: {
+              value: gp,
+              bank: 0
+            },
+            sp: {
+              value: sp,
+              bank: 0
+            },
+            cp: {
+              value: cp,
+              bank: 0
+            }
+          };
+          actorUpdates["system.currency.-=gp"] = null;
+          actorUpdates["system.currency.-=sp"] = null;
+          actorUpdates["system.currency.-=cp"] = null;
+          actorUpdates["system.currency"] = null;
+        }
         await actor.update(actorUpdates);
-        await actor.createEmbeddedDocuments("Item", skillItems);
+      } catch (err) {
+        console.error(err);
+        hitError = true;
+      }
+      try {
+        const actorInvalidItems = Array.from(actor.items.invalidDocumentIds);
+        if (actorInvalidItems.length) {
+          const itemsToUpdate = [];
+          const reg = new RegExp("(\\d+) *(\\w+)*", "g");
+          const actorSources = actor.items._source;
+          for (const invalidId of actorInvalidItems) {
+            const invalidSource = actorSources.find((source) => source._id === invalidId);
+            if (invalidSource.type !== "item")
+              continue;
+            const update2 = {
+              _id: invalidId,
+              type: "equipment"
+            };
+            if (invalidSource.price && invalidSource.price.search(reg) > -1) {
+              const match = [...invalidSource.price.matchAll(reg)];
+              update2["price"] = {
+                [match?.[2] ?? "cp"]: Number(match[0])
+              };
+            }
+            itemsToUpdate.push(update2);
+          }
+          await actor.updateEmbeddedDocuments("Item", itemsToUpdate);
+        }
+      } catch (err) {
+        console.error(err);
+        hitError = true;
+      }
+      try {
+        const skillItems = [];
+        if (actor.system?.skills) {
+          const actorUpdates = {};
+          for (const [key, skill] of Object.entries(actor.system.skills)) {
+            let category = "";
+            let skillName = skill.label;
+            if (skillName.includes(" - ")) {
+              const split = skillName.split(" - ");
+              category = split[0];
+              skillName = split.slice(1).join(": ");
+            } else if (skillName.includes(": ")) {
+              const split = skillName.split(": ");
+              category = split[0];
+              skillName = split.slice(1).join(": ");
+            }
+            skillItems.push({
+              name: skillName,
+              type: "skill",
+              system: {
+                category,
+                level: skill.value,
+                isMagic: skill.isMagic
+              }
+            });
+            actorUpdates[`system.skills.-=${key}`] = null;
+          }
+          actorUpdates[`system.-=skills`] = null;
+          await actor.update(actorUpdates);
+          await actor.createEmbeddedDocuments("Item", skillItems);
+        }
+      } catch (err) {
+        console.error(err);
+        hitError = true;
       }
     }
+    if (hitError)
+      ui.notifications.error(`Something went wrong when migrating to version ${version}. Please check the console for the error!`);
   }
 };
 function highlightCriticalSuccessFailure(message, html) {
@@ -30353,7 +30535,7 @@ Hooks.on("preCreateActor", (doc) => {
 Hooks.on("updateItem", (item) => {
   if (!item.parent)
     return;
-  item.parent.prepareDerivedBonuses();
+  item.parent.prepareDerivedData();
 });
 Hooks.on("createActor", (doc) => {
   doc.createEmbeddedDocuments("Item", [{

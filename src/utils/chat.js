@@ -210,9 +210,11 @@ export function registerChatListeners(){
 
     // Roll and return
     const options = {
+	    ...flags,
       extraTitle: flags?.extraTitle ?? "",
       subSkill: flags?.subSkill ?? null,
       asSkill: flags?.asSkill ?? null,
+	    isAttack: flags?.isAttack ?? null,
       extraFlavor: flavor,
       messageData: {
         "flags.leobrew.roll": {
@@ -222,7 +224,7 @@ export function registerChatListeners(){
           originalMessageId: flags.originalMessageId,
           totalCriticalConfirms: flags.totalCriticalConfirms
         }
-      }
+      },
     };
 
     await message.delete();

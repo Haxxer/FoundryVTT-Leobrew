@@ -19,7 +19,6 @@
     canSubtractSkillPoint = appState.canSubtractSkillPoint(key, ability.value, true);
   }
   $: pointsSpent = $appState.leveledUpSkills?.[key]?.pointsSpent ?? 0;
-  $: realPointsSpent = $appState.leveledUpSkills?.[key]?.cost ?? 0
 
 </script>
 

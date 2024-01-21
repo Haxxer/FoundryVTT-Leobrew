@@ -1,6 +1,7 @@
 <script>
 
   import { getContext } from "svelte";
+	import { get } from "svelte/store";
   import { updateDoc } from "../../base/UpdateDoc.js";
   import Tabs from "../../../svelte-components/Tabs.svelte";
   import Description from "../Components/Description.svelte";
@@ -9,6 +10,16 @@
 
   const { application } = getContext('#external');
   const doc = getContext("DocumentStore");
+
+	const parent = get(doc)?.parent ?? false;
+	let categories = [];
+	if(parent){
+		categories = [...new Set(parent.items
+			.filter(item => item.type === "equipment" && item.system?.category)
+			.map(item => item.system.category.trim())
+			.sort()
+		)];
+	}
 
   const tabs = [
     { value: "description", label: "Description", component: Description },
@@ -38,9 +49,14 @@
 			<input type="checkbox" use:updateDoc={{ doc, accessor: "system.usesQuantity" }}/>
 		</div>
 
-		<div class="form-control">
-			<label>Category</label>
-			<input type="text" use:updateDoc={{ doc, accessor: "system.category" }}/>
+		<div class="form-control" style="display: flex; flex-direction: column; align-items: flex-start;">
+			<label style="margin-bottom: 0.25rem;">Category</label>
+			<input type="text" list="item-category" use:updateDoc={{ doc, accessor: "system.category" }}/>
+			<datalist id="item-category">
+				{#each categories as category}
+					<option>{category}</option>
+				{/each}
+			</datalist>
 		</div>
 
 		<div class="form-control">
@@ -71,6 +87,8 @@
 <style lang="scss">
 
 	.item-tab-container{
+		display: flex;
+		flex-direction: column;
 		flex: 1;
 		height: 100%;
 		overflow: hidden;

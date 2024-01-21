@@ -14,7 +14,9 @@ export async function d10Roll({
   const roll = new Roll(formula, data);
   await roll.evaluate({ async: true });
   const dice = roll.dice[0];
-  const fumbleCritical = (dice.total === 1 || dice.total === 10);
+  const fumble = dice.total === 1;
+  const critical = dice.total === 10;
+	const fumbleCritical = fumble || critical;
 
   messageData = foundry.utils.mergeObject({
     user: game.user.id,
@@ -24,6 +26,7 @@ export async function d10Roll({
     confirmedCritical: false,
     confirmedFumble: false,
     confirmedNatural: false,
+	  renderHitLocation: false,
     weaponSkill: false,
     hitLocation: false,
     natural: !fumbleCritical,
@@ -53,9 +56,10 @@ export async function d10Roll({
 
   }
 
+	messageData.weaponSkill = previousRollData?.isAttack;
   if(previousRollData?.isAttack && !fumbleCritical){
-    messageData.weaponSkill = true;
-    if(rollToRound.total >= 15) {
+	  messageData.renderHitLocation = true;
+	  if(rollToRound.total >= 15) {
       messageData.hitLocation = "Instant Kill"
     }else if(rollToRound.total === 11) {
       messageData.hitLocation = "Roll d10 to see if hit is to chest or leg<br>Below 5 leg - 5 reroll - Above 5 chest";

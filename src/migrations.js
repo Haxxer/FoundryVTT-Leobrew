@@ -42,6 +42,59 @@ const migrations = {
 		for (const actor of Array.from(game.actors)) {
 
 			try {
+				let actorUpdates = {};
+				if (actor.system.description) {
+					actorUpdates["system.biography"] = { value: actor.system.description.value };
+					actorUpdates["system.-=description"] = null;
+					actorUpdates["system.description.-=value"] = null;
+				}
+
+				if (
+					foundry.utils.hasProperty(actor.system, "currency.gp")
+					||
+					foundry.utils.hasProperty(actor.system, "currency.sp")
+					||
+					foundry.utils.hasProperty(actor.system, "currency.cp")
+				) {
+					const gp = typeof foundry.utils.getProperty(actor.system, "currency.gp") === "number"
+						? foundry.utils.getProperty(actor.system, "currency.gp") ?? 0
+						: foundry.utils.getProperty(actor.system, "currency.gp.value") ?? 0;
+
+					const sp = typeof foundry.utils.getProperty(actor.system, "currency.sp") === "number"
+						? foundry.utils.getProperty(actor.system, "currency.sp") ?? 0
+						: foundry.utils.getProperty(actor.system, "currency.sp.value") ?? 0;
+
+					const cp = typeof foundry.utils.getProperty(actor.system, "currency.cp") === "number"
+						? foundry.utils.getProperty(actor.system, "currency.cp") ?? 0
+						: foundry.utils.getProperty(actor.system, "currency.cp.value") ?? 0;
+
+					actorUpdates["system.currencies"] = {
+						gp: {
+							value: gp,
+							bank: 0
+						},
+						sp: {
+							value: sp,
+							bank: 0
+						},
+						cp: {
+							value: cp,
+							bank: 0
+						}
+					}
+					actorUpdates["system.currency.-=gp"] = null;
+					actorUpdates["system.currency.-=sp"] = null;
+					actorUpdates["system.currency.-=cp"] = null;
+					actorUpdates["system.currency"] = null;
+				}
+				await actor.update(actorUpdates);
+
+			} catch (err) {
+				console.error(err);
+				hitError = true;
+			}
+
+			try {
 				const actorInvalidItems = Array.from(actor.items.invalidDocumentIds);
 				if (actorInvalidItems.length) {
 					const itemsToUpdate = [];
@@ -112,6 +165,6 @@ const migrations = {
 			}
 		}
 
-		if(hitError) ui.notifications.error(`Something went wrong when migrating to version ${version}. Please check the console for the error!`)
+		if (hitError) ui.notifications.error(`Something went wrong when migrating to version ${version}. Please check the console for the error!`)
 	}
 }

@@ -3,29 +3,36 @@
 	import { getContext } from "svelte";
 	import ActorSkill from "./Components/ActorSkill.svelte";
 	import ActorEquipmentSkill from "./Components/ActorEquipmentSkill.svelte";
+	import { writable } from "svelte/store";
 
 	const appState = getContext("ApplicationStateStore");
 	const doc = getContext("DocumentStore");
 
+	let searchStore = writable("");
+
+	$: search = $appState.levelingUp ? "" : $searchStore;
+
 	$: categorizedSkills = Object.entries($doc.items
+			.filter(item => search.toLowerCase().split(" ").every(part => (!part || item.name.toLowerCase().includes(part))))
 			.reduce((acc, item) => {
 				if (item.type === "skill") {
-					if (!acc[item.system.category]) acc[item.system.category] = []
-					acc[item.system.category].push(item)
-					acc[item.system.category].sort((a, b) => {
-						return b.name > a.name ? -1 : 1;
+					const category = (item.system.category || "Generic").trim();
+					if (!acc[category]) acc[category] = []
+					acc[category].push(item)
+					acc[category].sort((a, b) => {
+						return b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1;
 					})
 				} else if (item.type === "equipment" && item.system.addsSkill && item.system.equipped) {
 					if (!acc["Equipment"]) acc["Equipment"] = []
 					acc["Equipment"].push(item)
 					acc["Equipment"].sort((a, b) => {
-						return b.name > a.name ? -1 : 1;
+						return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
 					})
 				}
 				return acc;
 			}, {}))
 		.sort((a, b) => {
-			return b[0] > a[0] ? -1 : 1;
+			return a[0].toLowerCase() > b[0].toLowerCase() ? 1 : -1;
 		});
 
 	let newSkillName = ""
@@ -39,8 +46,8 @@
 
 <div class="actor-skills-list-container">
 
-	{#if $appState.levelingUp}
-		<div class="actor-skills-list-add">
+	<div class="actor-skills-list-add">
+		{#if $appState.levelingUp}
 			<span class="skill-category-title modesto">{localize("LEOBREW.SkillAddTitle")}</span>
 			<div class="actor-skills-list-add-container">
 				<input type="text" class='actor-skill-name-input' placeholder="Skill name" bind:value={newSkillName}
@@ -53,16 +60,21 @@
 					<i class="fas fa-plus"></i>
 				</button>
 			</div>
-		</div>
-	{/if}
+		{:else}
+			<input bind:value={$searchStore} placeholder="{localize(`LEOBREW.SkillSearch`)}" type="text"/>
+		{/if}
+	</div>
 
 	<div class="actor-skills-list">
 
-		<span class="skill-category-title modesto">Generic</span>
-		<div class="actor-skill">
-			<label class="skill-name clickable clickable-red" on:click={(event) => {
+		<div class="actor-skill" style="margin-top: 0.75rem;">
+			<div class="skill-label">
+				<label class="skill-name clickable clickable-red" on:click={(event) => {
         $doc.rollGeneric({ event });
 			}}>Naked D10 Roll</label>
+				<i class="fas fa-sword skill-edit-button clickable clickable-red"
+				   on:click={(event) => { $doc.rollGeneric({ event, isAttack: true }) }}></i>
+			</div>
 		</div>
 
 		{#each categorizedSkills as [category, skills]}

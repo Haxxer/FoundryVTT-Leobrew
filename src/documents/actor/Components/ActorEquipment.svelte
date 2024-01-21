@@ -4,17 +4,21 @@
   import { TJSDialog } from "#runtime/svelte/application";
   import { slide } from 'svelte/transition'
   import { sineInOut } from 'svelte/easing'
+  import { updateDoc } from "~/documents/base/UpdateDoc.js";
 
   const appState = getContext("ApplicationStateStore");
 
 	export let item;
+	export let index;
+
+	const doc = appState.embeddedDocuments.get(item.id);
 
   $: expanded = $appState.isExpanded.inventory.has(item.id);
 
 </script>
 
 
-<div class="item even-shading">
+<div class="item" class:even-shading={index % 2}>
 	<div class="item-header">
 		<div class="item-name">
 			<div class="item-image-container">
@@ -38,6 +42,7 @@
 				{item.name}
 			</span>
 		</div>
+		<input type="number" use:updateDoc={{ doc, accessor: "system.quantity" }}/>
 		<div class="item-controls flexrow">
 			<a class="item-control item-not-equipped"
 				 data-tooltip={localize(item.system.equipped ? "LEOBREW.Equipped" : "LEOBREW.Unequipped")}
@@ -83,11 +88,22 @@
     margin-top: 5px;
 		border-radius: 4px;
 		padding: 2px;
+	  min-height: 28px;
+	  height: auto !important;
+
+	  input {
+		  flex: 0 1 auto;
+		  width: 35px;
+		  padding: 0 0.25rem;
+		  margin: 0 0.25rem;
+		  height: 20px;
+	  }
 
     .item-header {
       display: flex;
       flex-direction: row;
       align-items: center;
+	    flex: 1;
 
       .item-name {
         display: flex;

@@ -11,7 +11,7 @@
   $: injuries = Object.entries($doc.system.injuries).map(([part, injury]) => {
     return {
       name: part,
-      path: `Images/images/${part}${injury.value !== "" ? "_" + injury.value : ''}.webp`
+      path: `systems/leobrew/images/${part}${injury.value !== "" ? "_" + injury.value : ''}.webp`
     };
   })
 

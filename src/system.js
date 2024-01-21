@@ -18,7 +18,7 @@ Hooks.once("ready",  async() => {
   //game.actors.getName("Ajal Fajir").items.getName("Round Shield").sheet.render(true);
   if (!game.user.isGM) return;
   await runMigrations();
-	//game.actors.getName("Ajal Fajir").sheet.render(true);
+	game.actors.getName("Ajal Fajir").sheet.render(true);
 });
 
 Hooks.on("preCreateActor", (doc) => {
@@ -29,7 +29,7 @@ Hooks.on("preCreateActor", (doc) => {
 
 Hooks.on('updateItem', (item) => {
 	if(!item.parent) return;
-	item.parent.prepareDerivedBonuses();
+	item.parent.prepareDerivedData();
 });
 
 Hooks.on("createActor", (doc) => {

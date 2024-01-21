@@ -1,10 +1,13 @@
 <script>
 
 	import { TJSDocument } from '#runtime/svelte/store/fvtt/document';
+	import { getContext } from "svelte";
+
+	const appState = getContext("ApplicationStateStore");
 
   export let skill;
 
-  const skillDoc = new TJSDocument(skill);
+  const skillDoc = appState.embeddedDocuments.get(skill.id);
 
 	$: bonus = $skillDoc.system.skillBonus || 0;
 

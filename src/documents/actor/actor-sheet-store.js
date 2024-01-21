@@ -4,6 +4,7 @@ import ActorInventory from "./Tabs/ActorInventory.svelte";
 import ActorTraits from "./Tabs/ActorTraits.svelte";
 import ActorBiography from "./Tabs/ActorBiography.svelte";
 import ActorInjuries from "./Tabs/ActorInjuries.svelte";
+import { TJSDocument } from '#runtime/svelte/store/fvtt/document';
 
 export default function createActorSheetState(actor) {
 
@@ -13,6 +14,8 @@ export default function createActorSheetState(actor) {
     { value: "injuries", label: "Injuries", component: ActorInjuries },
     { value: "biography", label: "Biography", component: ActorBiography },
   ]
+
+	const embeddedDocuments = new Map(actor.items.map(item => [item.id, new TJSDocument(item)]))
 
   const { set, update, subscribe } = writable({
     activeTab: tabs[0],
@@ -76,7 +79,7 @@ export default function createActorSheetState(actor) {
     const state = get(this);
     const currentState = (state.leveledUpSkills?.[skillId]?.pointsSpent ?? 0);
     const level = skillLevel + currentState;
-    if (isAbility) {
+    if (isAbility && !state.initialized) {
       return level > -3;
     }
     return currentState > 0;
@@ -167,7 +170,8 @@ export default function createActorSheetState(actor) {
     canAssignSkillPoint,
     canSubtractSkillPoint,
     confirmLevelUp,
-    abortLevelUp
+    abortLevelUp,
+	  embeddedDocuments
   };
 
 }

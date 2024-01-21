@@ -1,35 +1,34 @@
 <script>
-  import { getContext } from "svelte";
-  import { TJSDialog } from "#runtime/svelte/application";
-  import { TJSDocument } from '#runtime/svelte/store/fvtt/document';
+	import { getContext } from "svelte";
+	import { TJSDialog } from "#runtime/svelte/application";
 
-  const appState = getContext("ApplicationStateStore");
+	const appState = getContext("ApplicationStateStore");
 
-  export let skill;
+	export let skill;
 
-  const skillDoc = new TJSDocument(skill);
+	const skillDoc = appState.embeddedDocuments.get(skill.id);
 
-  let canAssignSkillPoint = false;
-  let canSubtractSkillPoint = false;
+	let canAssignSkillPoint = false;
+	let canSubtractSkillPoint = false;
 
-  let subSkills = $skillDoc.stores.subSkills;
-  let skillBonus = $skillDoc.stores.bonus;
-  $: {
-    $appState;
-    $skillDoc;
-    canAssignSkillPoint = appState.canAssignSkillPoint(skill.id, skill.system.level);
-    canSubtractSkillPoint = appState.canSubtractSkillPoint(skill.id, skill.system.level);
-  }
+	let subSkills = $skillDoc.stores.subSkills;
+	let skillBonus = $skillDoc.stores.bonus;
+	$: {
+		$appState;
+		$skillDoc;
+		canAssignSkillPoint = appState.canAssignSkillPoint(skill.id, skill.system.level);
+		canSubtractSkillPoint = appState.canSubtractSkillPoint(skill.id, skill.system.level);
+	}
 
-  $: pointsSpent = $appState.leveledUpSkills?.[skill.id]?.pointsSpent ?? 0;
-  $: realPointsSpent = $appState.leveledUpSkills?.[skill.id]?.cost ?? 0
+	$: pointsSpent = $appState.leveledUpSkills?.[skill.id]?.pointsSpent ?? 0;
+	$: realPointsSpent = $appState.leveledUpSkills?.[skill.id]?.cost ?? 0
 
-  function dragStart(event) {
-    event.dataTransfer.setData('text/plain', JSON.stringify({
-      type: "Item",
-      uuid: skill.uuid
-    }));
-  }
+	function dragStart(event) {
+		event.dataTransfer.setData('text/plain', JSON.stringify({
+			type: "Item",
+			uuid: skill.uuid
+		}));
+	}
 
 </script>
 
@@ -62,24 +61,29 @@
 		></i>
 	{/if}
 	<div class="skill-label">
-		<label class="skill-name clickable clickable-red" on:click={(event) => { skill.roll({ event }) }}>
+		<label class="skill-name" class:clickable={!$appState.levelingUp} class:clickable-red={!$appState.levelingUp}
+		       on:click={(event) => { skill.roll({ event }) }}>
 			{skill.name}{pointsSpent ? ` (+${realPointsSpent})` : ""}
 		</label>
-		<i class="fas fa-sword skill-edit-button clickable clickable-red"
-		   on:click={(event) => { skill.roll({ event, isAttack: true }) }}></i>
+		{#if !$appState.levelingUp}
+			<i class="fas fa-sword skill-edit-button clickable clickable-red"
+			   on:click={(event) => { skill.roll({ event, isAttack: true }) }}></i>
+		{/if}
 	</div>
 	<i class="fas fa-edit skill-edit-button clickable clickable-red" on:click={() => {
 		skill.sheet.render(true);
 	}}></i>
-	<i class="fas fa-trash skill-edit-button clickable clickable-red" on:click={() => {
-		TJSDialog.confirm({
-			title: "Delete Skill",
-			content: `<p style='text-align: center;'>Are you sure you want to delete "${skill.name}"?</p>`,
-			onYes: () => {
-				skill.delete();
-			}
-		}, { width: 270, height: "auto" });
-		}}></i>
+	{#if !$appState.levelingUp}
+		<i class="fas fa-trash skill-edit-button clickable clickable-red" on:click={() => {
+			TJSDialog.confirm({
+				title: "Delete Skill",
+				content: `<p style='text-align: center;'>Are you sure you want to delete "${skill.name}"?</p>`,
+				onYes: () => {
+					skill.delete();
+				}
+			}, { width: 270, height: "auto" });
+			}}></i>
+	{/if}
 </div>
 
 {#if $subSkills.length}
@@ -117,61 +121,3 @@
 	{/each}
 
 {/if}
-
-<style lang="scss">
-
-  .actor-skill {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    text-align: center;
-    margin-bottom: 0.25rem;
-
-	  &.magic-skill .skill-label label {
-		  color: var(--colorMagic);
-	  }
-
-    div {
-      display: flex;
-      flex: 1;
-      text-align: left;
-      align-items: center;
-
-      & > * {
-        margin-right: 0.5rem;
-      }
-    }
-
-    i {
-      margin-right: 0.25rem;
-    }
-
-    .skill-edit-button {
-      display: none;
-      opacity: 0.5;
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-
-    &:hover .skill-edit-button {
-      display: block;
-    }
-
-    input {
-      flex: 0 1 20px;
-      height: 20px;
-      text-align: center;
-      margin-right: 0.25rem;
-    }
-  }
-
-  .actor-subskill {
-    margin: 0 0 0.25rem 0.5rem;
-    font-size: small;
-    font-style: italic;
-  }
-
-</style>

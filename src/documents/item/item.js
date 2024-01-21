@@ -102,7 +102,7 @@ export default class LeobrewItem extends Item {
 				subSkill.bonus += this.system.level + (this.bonus || 0);
 				return subSkill;
 			})
-			.sort((a, b) => a.name > b.name);
+			.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1);
 	}
 
 	getArmorBonus(bodyPart) {
