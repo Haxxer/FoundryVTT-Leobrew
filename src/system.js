@@ -18,7 +18,7 @@ Hooks.once("ready",  async() => {
   //game.actors.getName("Ajal Fajir").items.getName("Round Shield").sheet.render(true);
   if (!game.user.isGM) return;
   await runMigrations();
-	game.actors.getName("Ajal Fajir").sheet.render(true);
+	//game.actors.getName("Ajal Fajir").sheet.render(true);
 });
 
 Hooks.on("preCreateActor", (doc) => {
