@@ -3,6 +3,7 @@
   import { getContext } from "svelte";
   import ActorAbility from "./Components/ActorAbility.svelte";
   import DocumentImage from "../../svelte-components/DocumentImage.svelte";
+	import { updateDoc } from "~/documents/base/UpdateDoc.js";
 
   const doc = getContext("DocumentStore");
   const appState = getContext("ApplicationStateStore");
@@ -15,7 +16,7 @@
 
 	<div class="actor-resource-bar-container">
 
-		<input bind:value="{$doc.name}" class="actor-name-input form-control" placeholder="Name" type="text"/>
+		<input use:updateDoc={{ doc, accessor: `name` }} class="actor-name-input form-control" placeholder="Name" type="text"/>
 
 		<div class="actor-resource-bar">
 
@@ -58,7 +59,7 @@
 					<div class="actor-resource">
 						<span>{CONFIG.LEOBREW.resources[key]}</span>
 						<div class="actor-resource-values">
-							<input type="number" bind:value="{resource.value}" min="0">
+							<input type="number" use:updateDoc={{ doc, accessor: `system.resources.${key}.value` }} min="0">
 							<span>/</span>
 							<input type="number" disabled value="{resource.max}">
 						</div>

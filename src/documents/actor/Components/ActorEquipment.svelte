@@ -90,6 +90,7 @@
 		padding: 2px;
 	  min-height: 28px;
 	  height: auto !important;
+	  width: auto !important;
 
 	  input {
 		  flex: 0 1 auto;

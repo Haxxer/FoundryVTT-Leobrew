@@ -57,6 +57,33 @@ export default class EquipmentDataModel extends foundry.abstract.DataModel {
 					integer: true
 				}),
 			}),
+			armorBonuses: new fields.SchemaField({
+				head: new fields.NumberField({
+					required: true,
+					initial: 0,
+					integer: true
+				}),
+				arms: new fields.NumberField({
+					required: true,
+					initial: 0,
+					integer: true
+				}),
+				guts: new fields.NumberField({
+					required: true,
+					initial: 0,
+					integer: true
+				}),
+				chest: new fields.NumberField({
+					required: true,
+					initial: 0,
+					integer: true
+				}),
+				legs: new fields.NumberField({
+					required: true,
+					initial: 0,
+					integer: true
+				}),
+			}),
 		};
 	}
 }

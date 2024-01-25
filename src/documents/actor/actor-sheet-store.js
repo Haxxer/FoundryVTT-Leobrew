@@ -159,6 +159,21 @@ export default function createActorSheetState(actor) {
     });
   }
 
+	const createItemId = Hooks.on("createItem", (item) => {
+		if(item.parent !== actor) return false;
+		embeddedDocuments.add(item.id, new TJSDocument(item));
+	});
+
+	const deleteItemId = Hooks.on("deleteItem", (item) => {
+		if(item.parent !== actor) return false;
+		embeddedDocuments.delete(item.id);
+	});
+
+	function onDestroy() {
+		Hooks.off("createItem", createItemId);
+		Hooks.off("deleteItem", deleteItemId);
+	}
+
   return {
     set,
     update,
@@ -171,7 +186,8 @@ export default function createActorSheetState(actor) {
     canSubtractSkillPoint,
     confirmLevelUp,
     abortLevelUp,
-	  embeddedDocuments
+	  embeddedDocuments,
+	  onDestroy
   };
 
 }
