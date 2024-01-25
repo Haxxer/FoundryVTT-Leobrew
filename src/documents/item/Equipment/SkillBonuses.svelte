@@ -10,8 +10,8 @@
 
   $: validTiedSkills = Object.entries($doc.system.tiedSkills)
     .filter(([skillId]) => $doc.parent.items.get(skillId))
-  $: skills = Object.fromEntries(validTiedSkills.map(([skillId, skill]) => [
-    skillId, new TJSDocument(skill)
+  $: skills = Object.fromEntries(validTiedSkills.map(([skillId]) => [
+    skillId, new TJSDocument($doc.parent.items.get(skillId))
   ]))
 
 	async function test(data){
