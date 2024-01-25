@@ -1,12 +1,12 @@
 <script>
 	import { getContext } from "svelte";
-	import { TJSDialog } from "#runtime/svelte/application";
+	import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
 
 	const appState = getContext("ApplicationStateStore");
 
 	export let skill;
 
-	const skillDoc = appState.embeddedDocuments.get(skill.id);
+	const skillDoc = new TJSDocument(skill);
 
 	let canAssignSkillPoint = false;
 	let canSubtractSkillPoint = false;

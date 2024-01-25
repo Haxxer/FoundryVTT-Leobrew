@@ -4,14 +4,14 @@
   import { updateDoc } from "../../base/UpdateDoc.js";
   import SkillBonus from "./SkillBonus.svelte";
   import DropZone from "../../../svelte-components/DropZone.svelte";
+	import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
 
   const doc = getContext("DocumentStore");
-  const appState = getContext("ApplicationStateStore");
 
   $: validTiedSkills = Object.entries($doc.system.tiedSkills)
     .filter(([skillId]) => $doc.parent.items.get(skillId))
-  $: skills = Object.fromEntries(validTiedSkills.map(([skillId]) => [
-    skillId, appState.embeddedDocuments.get(skillId)
+  $: skills = Object.fromEntries(validTiedSkills.map(([skillId, skill]) => [
+    skillId, new TJSDocument(skill)
   ]))
 
 	async function test(data){

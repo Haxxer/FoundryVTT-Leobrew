@@ -1,17 +1,18 @@
 <script>
   import { localize } from "#runtime/svelte/helper";
   import { getContext } from "svelte";
-  import { TJSDialog } from "#runtime/svelte/application";
   import { slide } from 'svelte/transition'
   import { sineInOut } from 'svelte/easing'
   import { updateDoc } from "~/documents/base/UpdateDoc.js";
+  import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
+  import { TJSDialog } from "#runtime/svelte/application";
 
   const appState = getContext("ApplicationStateStore");
 
 	export let item;
 	export let index;
 
-	const doc = appState.embeddedDocuments.get(item.id);
+	const doc = new TJSDocument(item);
 
   $: expanded = $appState.isExpanded.inventory.has(item.id);
 

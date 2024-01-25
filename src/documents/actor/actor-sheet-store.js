@@ -4,7 +4,6 @@ import ActorInventory from "./Tabs/ActorInventory.svelte";
 import ActorTraits from "./Tabs/ActorTraits.svelte";
 import ActorBiography from "./Tabs/ActorBiography.svelte";
 import ActorInjuries from "./Tabs/ActorInjuries.svelte";
-import { TJSDocument } from '#runtime/svelte/store/fvtt/document';
 
 export default function createActorSheetState(actor) {
 
@@ -14,8 +13,6 @@ export default function createActorSheetState(actor) {
     { value: "injuries", label: "Injuries", component: ActorInjuries },
     { value: "biography", label: "Biography", component: ActorBiography },
   ]
-
-	const embeddedDocuments = new Map(actor.items.map(item => [item.id, new TJSDocument(item)]))
 
   const { set, update, subscribe } = writable({
     activeTab: tabs[0],
@@ -159,21 +156,6 @@ export default function createActorSheetState(actor) {
     });
   }
 
-	const createItemId = Hooks.on("createItem", (item) => {
-		if(item.parent !== actor) return false;
-		embeddedDocuments.add(item.id, new TJSDocument(item));
-	});
-
-	const deleteItemId = Hooks.on("deleteItem", (item) => {
-		if(item.parent !== actor) return false;
-		embeddedDocuments.delete(item.id);
-	});
-
-	function onDestroy() {
-		Hooks.off("createItem", createItemId);
-		Hooks.off("deleteItem", deleteItemId);
-	}
-
   return {
     set,
     update,
@@ -186,8 +168,6 @@ export default function createActorSheetState(actor) {
     canSubtractSkillPoint,
     confirmLevelUp,
     abortLevelUp,
-	  embeddedDocuments,
-	  onDestroy
   };
 
 }
