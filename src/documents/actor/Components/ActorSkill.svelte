@@ -1,6 +1,7 @@
 <script>
 	import { getContext } from "svelte";
 	import { TJSDocument } from "#runtime/svelte/store/fvtt/document";
+	import { TJSDialog } from "#runtime/svelte/application";
 
 	const appState = getContext("ApplicationStateStore");
 
@@ -73,7 +74,7 @@
 	<i class="fas fa-edit skill-edit-button clickable clickable-red" on:click={() => {
 		skill.sheet.render(true);
 	}}></i>
-	{#if !$appState.levelingUp}
+	{#if $appState.levelingUp}
 		<i class="fas fa-trash skill-edit-button clickable clickable-red" on:click={() => {
 			TJSDialog.confirm({
 				title: "Delete Skill",

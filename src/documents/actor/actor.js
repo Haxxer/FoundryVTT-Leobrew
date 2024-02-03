@@ -33,7 +33,7 @@ export default class LeobrewActor extends Actor {
   }
 
 	get equipmentSkills() {
-		return this.equippedItems.filter(item => item.system.addsSkill);
+		return this.equippedItems.filter(item => item.system.addsSkill || Object.keys(item.system.tiedSkills).length);
 	}
 
   // Prepare Player type specific data

@@ -179,7 +179,8 @@ export default class LeobrewItem extends Item {
 					type: "skill",
 					source: this.uuid,
 					extraTitle: options?.extraTitle ?? "",
-					isAttack: options?.isAttack ?? null
+					isAttack: options?.isAttack ?? null,
+					subSkill: options?.subSkill ?? null
 				}
 			}
 		});
